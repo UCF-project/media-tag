@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Media Tag Decryption</title>
+	<link rel="stylesheet" type="text/css" href="demo.css">
+</head>
+<body>
+
+
+<div class="key">Key: <input><button>generate key</button></div>
+<div class="nonce">Nonce: <input><button>generate nonce</button></div>
+
+<div class="steps encrypt">
+	<div class="step upload">
+		<h2>Upload</h2>
+		<input type="file" name="file" />
+	</div>
+	<div class="step sent">
+		<h2>Image sent</h2>
+		<div class="contents"></div>
+	</div>
+	<div class="step enc">
+		<h2>Image encrypted</h2>
+		<div class="contents"></div>
+		<div class="download">download file</div>
+	</div>
+	<div class="step dec">
+		<h2>Image decrypted</h2>
+		<div class="contents"></div>
+	</div>
+</div>
+
+
+
+<div class="steps decrypt">
+	<div class="step upload">
+		<h2>Upload</h2>
+		<input type="file" name="file" />
+	</div>
+	<div class="step sent">
+		<h2>Image sent</h2>
+		<div class="contents"></div>
+	</div>
+	<div class="step enc">
+		<h2>Image decrypted</h2>
+		<div class="contents"></div>
+	</div>
+	<div class="step dec">
+		<h2>Image view</h2>
+		<div class="contents"></div>
+	</div>
+</div>
+<script type="text/javascript" src="FileSaver.js"></script>
+<script type="text/javascript" src="media-tag.js"></script>
+<script type="text/javascript" src="demo.js"></script>
+
+</body>
+</html>

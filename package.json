@@ -1,0 +1,23 @@
+{
+  "name": "media-tag",
+  "version": "0.2.0",
+  "main": "lib/media-tag.js",
+  "repository": "git@git.rnd.alterway.fr:UCF/media_tag_v2.git",
+  "author": "UCF Project <ucf-project@alterway.fr>",
+  "license": "Apache-2.0",
+  "scripts": {
+    "test": "xo && tsc &&  ava",
+    "build": "webpack",
+    "start": "webpack-dev-server"
+  },
+  "devDependencies": {
+    "ava": "^0.18.2",
+    "awesome-typescript-loader": "^3.0.7",
+    "source-map-loader": "^0.1.6",
+    "tweetnacl": "^1.0.0-rc.1",
+    "typescript": "^2.2.1",
+    "webpack": "^2.2.1",
+    "webpack-dev-server": "^2.4.1",
+    "xo": "^0.17.1"
+  }
+}
