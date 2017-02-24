@@ -14,3 +14,8 @@
 	cursor: pointer;
 	color: blue;
 }
+
+.contents {
+	    max-height: 300px;
+    overflow: auto;
+}

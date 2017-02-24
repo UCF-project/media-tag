@@ -3,11 +3,13 @@
 const inputKey = document.querySelector('.key input');
 document.querySelector('.key button').addEventListener('click', function () {
 	inputKey.value = MediaTag.enc.generateRandomKey();
+	console.log('key l', MediaTag.enc.decodeBase64(inputKey.value).length);
 });
 
 const inputNonce = document.querySelector('.nonce input');
 document.querySelector('.nonce button').addEventListener('click', function () {
 	inputNonce.value = MediaTag.enc.generateRandomNonce();
+	console.log('nonce l', MediaTag.enc.decodeBase64(inputNonce.value).length);
 });
 
 const divContents = document.querySelector('.encrypt .sent .contents');
@@ -15,17 +17,37 @@ const divEnc = document.querySelector('.encrypt .enc .contents');
 const divDec = document.querySelector('.encrypt .dec .contents');
 
 let b;
-function receivedFile(contents) {
+let fileType = '';
+// function receivedFile(contents) {
+// 	divContents.textContent = contents;
+// 	const k = inputKey.value;
+// 	const n = inputNonce.value;
+// 	b = MediaTag.enc.encrypt(k, n, contents);
+// 	divEnc.textContent = b;
+// 	divDec.textContent = MediaTag.enc.decrypt(k, n, b);
+// }
+
+function receivedFileArray(contentsArr) {
+	// const contentsView = Uint8Array(contentsArr);
+	const contents = MediaTag.enc.encodeBase64(contentsArr);
 	divContents.textContent = contents;
 	const k = inputKey.value;
 	const n = inputNonce.value;
 	b = MediaTag.enc.encrypt(k, n, contents);
 	divEnc.textContent = b;
-	divDec.textContent = MediaTag.enc.decrypt(k, n, b);
+	const bDec = MediaTag.enc.decrypt(k, n, b);
+	const bDecdec = MediaTag.enc.decodeBase64(bDec);
+	const data = new Blob([bDecdec], {type: fileType});
+	const dataURL = URL.createObjectURL(data);
+	if (fileType === 'image/png') {
+		divDec.innerHTML = '<img src="' + dataURL + '"/>';
+	} else {
+		divDec.innerHTML = bDec;
+	}
 }
 
 const input = document.querySelector('.encrypt .upload input');
-let fileType = '';
+
 input.addEventListener('change', function (e) {
 	console.log(e.target.files);
 
@@ -34,11 +56,18 @@ input.addEventListener('change', function (e) {
 		const file = e.target.files[0];
 		fileType = file.type;
 		const reader = new FileReader();
+
+		// reader.addEventListener('load', e => {
+		// 	console.log('read', e.target.result);
+		// 	receivedFile(e.target.result);
+		// });
+		// reader.readAsText(file);
+
 		reader.addEventListener('load', e => {
 			console.log('read', e.target.result);
-			receivedFile(e.target.result);
+			receivedFileArray(e.target.result);
 		});
-		reader.readAsText(file);
+		reader.readAsArrayBuffer(file);
 		// FileReader.abort()
 		// FileReader.readAsArrayBuffer()
 		// FileReader.readAsBinaryString()
@@ -68,7 +97,8 @@ function receivedFileEncrypt(contents, fileDecType) {
 	const n = inputNonce.value;
 	const b = MediaTag.enc.decrypt(k, n, contents);
 	divDecEnc.textContent = b;
-	const data = new Blob([b], {type: fileDecType});
+	const bDecdec = MediaTag.enc.decodeBase64(b);
+	const data = new Blob([bDecdec], {type: fileDecType});
 	const dataURL = URL.createObjectURL(data);
 	if (fileDecType === 'image/png') {
 		divDecDec.innerHTML = '<img src="' + dataURL + '"/>';
