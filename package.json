@@ -8,14 +8,18 @@
   "scripts": {
     "test": "xo && tsc &&  ava",
     "build": "webpack",
-    "start": "webpack-dev-server"
+    "start": "webpack-dev-server",
+    "build:docs": "esdoc"
   },
   "devDependencies": {
     "ava": "^0.18.2",
     "awesome-typescript-loader": "^3.0.7",
+    "esdoc": "^0.5.2",
     "jest": "^19.0.2",
     "source-map-loader": "^0.1.6",
     "ts-jest": "^19.0.0",
+    "ts-loader": "^2.0.1",
+    "tslint": "^4.5.1",
     "tweetnacl": "^1.0.0-rc.1",
     "typescript": "^2.2.1",
     "webpack": "^2.2.1",
@@ -32,5 +36,31 @@
       "tsx",
       "js"
     ]
+  },
+  "esdoc": {
+    "source": "./dist",
+    "destination": "./doc",
+    "includes": [
+      "\\.(js|es6|ts)$"
+    ],
+    "manual": {
+      "design": [
+        "./docs/integration.md",
+        "./docs/proposal.md"
+      ]
+    },
+    "experimentalProposal": {
+      "classProperties": true,
+      "objectRestSpread": true,
+      "decorators": true,
+      "doExpressions": true,
+      "functionBind": true,
+      "asyncGenerators": true,
+      "exportExtensions": true,
+      "dynamicImport": true
+    }
+  },
+  "tslint": {
+    "enable": true
   }
 }
