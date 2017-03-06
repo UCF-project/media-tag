@@ -1,6 +1,7 @@
 // import * as nacl from 'tweetnacl';
 
 // // https://developer.mozilla.org/en/docs/Web/API/WindowBase64/Base64_encoding_and_decoding#The_Unicode_Problem
+// tslint:disable-next-line:max-line-length
 // // https://developer.mozilla.org/en-US/docs/Web/API/WindowBase64/Base64_encoding_and_decoding#The_.22Unicode_Problem.22
 
 // // function encodeBase64(str) {

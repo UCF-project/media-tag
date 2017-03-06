@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>My Page with Media Tag</title>
+</head>
+<body>
+	<div class="myMediaTag" data-mime-type="image/png" data-src="http://lorempixel.com/400/200/"></div>
+	<!-- Include Media Tag library -->
+	<script type="text/javascript" src="media-tag.js"></script>
+	<script>
+		// The only way to use as library is with JavaScript.
+		// You will need to select a DOM element that will be the wrapper
+		// element, for example a div.
+		// Then create a new MediaTag Object passing that element as
+		// parameter.
+		var mediaTagObj = MediaTag(document.querySelector('.myMediaTag'));
+	</script>
+</body>
+</html>

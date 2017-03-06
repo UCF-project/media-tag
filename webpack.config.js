@@ -1,7 +1,7 @@
 var path = require('path');
 
 module.exports = {
-	entry: './lib/media-tag.ts',
+	entry: './src/media-tag.ts',
 	output: {
 		filename: 'media-tag.js',
 		path: path.join(__dirname, 'dist'),

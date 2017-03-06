@@ -1,11 +1,12 @@
 {
   "name": "media-tag",
   "version": "0.2.0",
-  "main": "lib/media-tag.js",
+  "main": "src/media-tag.js",
   "repository": "git@git.rnd.alterway.fr:UCF/media_tag_v2.git",
   "author": "UCF Project <ucf-project@alterway.fr>",
   "license": "Apache-2.0",
   "scripts": {
+    "lint:lib": "tslint \"src/**/*.ts\"",
     "test": "xo && tsc &&  ava",
     "build": "webpack",
     "start": "webpack-dev-server",
@@ -38,7 +39,7 @@
     ]
   },
   "esdoc": {
-    "source": "./dist",
+    "source": "./dist/",
     "destination": "./doc",
     "includes": [
       "\\.(js|es6|ts)$"
@@ -62,5 +63,10 @@
   },
   "tslint": {
     "enable": true
+  },
+  "dependencies": {
+    "@types/node": "^7.0.5",
+    "debug": "^2.6.1",
+    "npm-run-all": "^4.0.2"
   }
 }
