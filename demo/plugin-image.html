@@ -4,7 +4,12 @@
 	<title>My Page with Media Tag</title>
 </head>
 <body>
-	<div class="myMediaTag" data-mime-type="image/png" data-src="http://lorempixel.com/400/200/"></div>
+	<media-tag
+		src="image-without-extension"
+        data-type="image"
+        data-attr-width="300px"
+        data-attr-height="200px"
+        ></media-tag>
 	<!-- Include Media Tag library -->
 	<script type="text/javascript" src="media-tag.js"></script>
 	<script>
@@ -13,7 +18,7 @@
 		// element, for example a div.
 		// Then create a new MediaTag Object passing that element as
 		// parameter.
-		var mediaTagObj = MediaTag(document.querySelector('.myMediaTag'));
+		var mediaTagObj = mediaTag(document.querySelector('media-tag'));
 	</script>
 </body>
 </html>

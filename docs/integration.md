@@ -61,7 +61,7 @@ Check out the [Media Tag constructor documentation]() for details.
 		// element, for example a div.
 		// Then create a new MediaTag Object passing that element as
 		// parameter.
-		var mediaTagObj = MediaTag(document.querySelector('.myMediaTag'));
+		var mediaTagObj = mediaTag(document.querySelector('.myMediaTag'));
 	</script>
 </body>
 </html>

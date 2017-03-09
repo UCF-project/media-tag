@@ -1,0 +1,13 @@
+image: ucf:yarn
+
+before_script:
+  - yarn install
+
+build-lib:
+  - yarn run build
+
+build-docs:
+  - yarn run build:docs
+
+test-lint:
+  - yarn test
