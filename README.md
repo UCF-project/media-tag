@@ -1,6 +1,6 @@
 # Media Tag
 
-## Install
+## Build
 
 We recommend the usage of [yarn](https://yarnpkg.com/) as package
 manager but the library remains compatible with
@@ -41,6 +41,28 @@ $ yarn run build       # Create ./dist folder with JS bundled files
 </body>
 </html>
 ```
+
+## Development
+
+To start a web server and automatic builds when changing files you can
+use:
+
+```sh
+$ yarn start
+```
+
+To run tests (linter, unit tests and test coverage) you can use:
+
+```sh
+$ yarn test
+```
+
+To build the documentation at `./dist/docs/` you can use:
+
+```sh
+$ yarn run build:docs
+```
+
 
 # Media Tag Version 0.2
 

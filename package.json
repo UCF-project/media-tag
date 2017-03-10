@@ -6,6 +6,7 @@
   "author": "UCF Project <ucf-project@alterway.fr>",
   "license": "Apache-2.0",
   "scripts": {
+    "xo": "xo",
     "test": "xo && nyc ava",
     "build": "webpack",
     "start": "webpack-dev-server",
@@ -93,6 +94,7 @@
     "sourceMap": false,
     "instrument": false,
     "all": true,
-    "reporter": ["html", "text"]
+    "reporter": ["html", "text"],
+    "report-dir": "./dist/coverage"
   }
 }
