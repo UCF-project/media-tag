@@ -17,7 +17,7 @@ function decodeBase64(s) {
 function decrypt(key, nonce, box) {
 	let decBox;
 	try {
-		decBox = nacl.secretbox.open(key, nonce, box);
+		decBox = nacl.secretbox.open(box, nonce, key);
 		if (decBox === false) {
 			throw new Errors.FailedCrypto();
 		}
@@ -40,6 +40,7 @@ function decryptFile(key, fileBlob) {
 			// const box = decodeBase64(fileBlob);
 			const libKey = decodeBase64(keyParts[1]);
 			const libNonce = decodeBase64(keyParts[2]);
+			console.log('sizes', libKey.length, libNonce.length);
 			return decrypt(libKey, libNonce, box);
 		}
 		default:

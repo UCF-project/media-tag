@@ -5,13 +5,25 @@
 </head>
 <body>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tweetnacl/0.14.5/nacl-fast.min.js"></script>
+
 	<media-tag
+		id="image"
         data-crypto-type="image"
         data-crypto-src="encrypted-image"
-        data-crypto-key="xsalsa20poly1305:81joYgOQWxnk3N7P0b6Qeo/lcMGX8ovoEUOy/wWzqjQ=:gV1i0Z6mBS38fQmqMQgKJSnt3J7EwDuI"
+        data-crypto-key="xsalsa20poly1305:1O9hQmf0QJkjvGnK+q0JLamus1IUAhhqZGWRa1dMMlk=:avR58kfJOeKb0PJ9apcDknTZJ4CilErg"
         data-attr-width="300px"
         data-attr-height="200px"
         ></media-tag>
+
+	<media-tag
+		id="video"
+        data-crypto-type="video"
+        data-crypto-src="encrypted-video"
+        data-crypto-key="xsalsa20poly1305:qriuHMTttPxwimwZiOeFpA+ixBvW7ZPeLpZWdJtYf1k=:GwAPEBJKJiWIBPkRo9tXMnIBaJI1c3+v"
+        data-attr-width="300px"
+        data-attr-height="200px"
+        ></media-tag>
+
 	<!-- Include Media Tag library -->
 	<script type="text/javascript" src="../media-tag.js"></script>
 	<script>
@@ -20,7 +32,8 @@
 		// element, for example a div.
 		// Then create a new MediaTag Object passing that element as
 		// parameter.
-		var mediaTagObj = mediaTag(document.querySelector('media-tag'));
+		var mediaTagObjImage = mediaTag(document.querySelector('media-tag#image'));
+		var mediaTagObjVideo = mediaTag(document.querySelector('media-tag#video'));
 	</script>
 </body>
 </html>

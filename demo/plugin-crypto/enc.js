@@ -37,28 +37,32 @@ function generateRandomNonce() {
 }
 
 function encrypt(key, nonce, message) {
-	console.log('key 2', key.length);
-	console.log('nonce 2', nonce.length);
-	return nacl.secretbox(key, nonce, message);
+	console.log('key enc', key.length);
+	console.log('nonce enc', nonce.length);
+	return nacl.secretbox(message, nonce, key);
 }
 function decrypt(key, nonce, box) {
-	return nacl.secretbox.open(key, nonce, box);
+	console.log('key dec', key.length);
+	console.log('nonce dec', nonce.length);
+	return nacl.secretbox.open(box, nonce, key);
 }
 
 // Generate key
 const inputKey = document.querySelector('.key input');
 document.querySelector('.key button').addEventListener('click', function () {
 	inputKey.value = encodeBase64(generateRandomKey());
-	console.log('key l', decodeBase64(inputKey.value).length);
+	console.log('key gen', decodeBase64(inputKey.value).length);
 });
 
 // Generate nonce
 const inputNonce = document.querySelector('.nonce input');
 document.querySelector('.nonce button').addEventListener('click', function () {
 	inputNonce.value = encodeBase64(generateRandomNonce());
-	console.log('nonce l', decodeBase64(inputNonce.value).length);
+	console.log('nonce gen', decodeBase64(inputNonce.value).length);
 });
 
+
+//  ==> Encrypt
 
 const divContents = document.querySelector('.encrypt .sent .contents');
 const divEnc = document.querySelector('.encrypt .enc .contents');
@@ -73,8 +77,8 @@ function receivedFileArray(contentsArr) {
 	divContents.textContent = encodeBase64(contentsView);
 	const k = decodeBase64(inputKey.value);
 	const n = decodeBase64(inputNonce.value);
-	console.log('key l', decodeBase64(inputKey.value).length);
-	console.log('nonce l', decodeBase64(inputNonce.value).length);
+	console.log('key rec file', k.length);
+	console.log('nonce rec file', n.length);
 	fileBlob = encrypt(k, n, contentsView);
 	divEnc.textContent = encodeBase64(fileBlob);
 	const bDec = decrypt(k, n, fileBlob);
@@ -103,36 +107,42 @@ document.querySelector('.encrypt .upload input')
 		reader.readAsArrayBuffer(file);
 	}
 });
-const divDownload = document.querySelector('.encrypt .enc .download');
-// let dataURL;
-divDownload.addEventListener('click', function () {
+
+// Download encrypt file button
+document.querySelector('.encrypt .enc .download').addEventListener('click', function () {
 	const data = new Blob([fileBlob], {type: fileType});
-	// if (dataURL !== null) {
-	// 	URL.revokeObjectURL(dataURL);
-	// }
-	// dataURL = URL.createObjectURL(data);
 	saveAs(data, 'filename');
 });
+
+//  ==> Decrypt
+
 const divDecContents = document.querySelector('.decrypt .sent .contents');
 const divDecEnc = document.querySelector('.decrypt .enc .contents');
 const divDecDec = document.querySelector('.decrypt .dec .contents');
-function receivedFileEncrypt(contents, fileDecType) {
-	divDecContents.textContent = contents;
-	const k = inputKey.value;
-	const n = inputNonce.value;
-	const b = decrypt(k, n, contents);
-	divDecEnc.textContent = b;
-	const bDecdec = decodeBase64(b);
-	const data = new Blob([bDecdec], {type: fileDecType});
+
+// Handle file read
+function receivedFileEncrypt(contentsArr, fileDecType) {
+	const contentsView = new Uint8Array(contentsArr);
+	divDecContents.textContent = encodeBase64(contentsView);
+	const k = decodeBase64(inputKey.value);
+	const n = decodeBase64(inputNonce.value);
+	console.log('key rec enc file', k.length);
+	console.log('nonce rec enc file', n.length);
+	const b = decrypt(k, n, contentsView);
+	divDecEnc.textContent = encodeBase64(b);
+	const data = new Blob([b], {type: fileDecType});
 	const dataURL = URL.createObjectURL(data);
 	if (fileDecType === 'image/png') {
 		divDecDec.innerHTML = '<img src="' + dataURL + '"/>';
+	} else if (fileType === 'video/mp4') {
+		divDecDec.innerHTML = '<video src="' + dataURL + '"/>';
 	} else {
 		divDecDec.innerHTML = '';
 	}
 }
-const inputDecrypt = document.querySelector('.decrypt .upload input');
-inputDecrypt.addEventListener('change', function (e) {
+
+// Handle file upload
+document.querySelector('.decrypt .upload input').addEventListener('change', function (e) {
 	console.log(e.target.files);
 	// Only do things with one file
 	if (e.target.files.length > 0) {
@@ -142,6 +152,6 @@ inputDecrypt.addEventListener('change', function (e) {
 			console.log('read dec', e.target.result, file.type);
 			receivedFileEncrypt(e.target.result, file.type);
 		});
-		reader.readAsText(file);
+		reader.readAsArrayBuffer(file);
 	}
 });

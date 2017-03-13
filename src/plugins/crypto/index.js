@@ -1,14 +1,15 @@
-/* global document, mediaTag, URL, fetch */
+/* global document, mediaTag, URL, fetch, Blob */
 import Errors from '../../core/errors';
 import decryptFile from './decrypt-file';
 
 function getBlobFromUrl(fileURL) {
 	return fetch(fileURL).then(response => {
 		if (response.ok) {
-			return response.blob();
+			console.log('returning blob');
+			return response.arrayBuffer();
 		}
 		throw new Errors.FetchFail(response);
-	});
+	}).then(blob => blob);
 }
 
 function createUrlFromBlob(fileBlob) {
@@ -21,7 +22,7 @@ const CryptoPlugin = {
 	 */
 	identifier: 'crypto',
 
-	validCryptoTypes: ['image'],
+	validCryptoTypes: ['image', 'video'],
 
 	/**
 	 * Check if the media tag instance is a Crypto type
@@ -45,7 +46,8 @@ const CryptoPlugin = {
 
 		// TODO: handle failure
 		getBlobFromUrl(elementSource).then(fileEncryptedBlob => {
-			const fileDecryptedBlob = decryptFile(key, fileEncryptedBlob);
+			const fileArrayBuffer = decryptFile(key, fileEncryptedBlob);
+			const fileDecryptedBlob = new Blob([fileArrayBuffer]);
 			const fileDecryptedUrl = createUrlFromBlob(fileDecryptedBlob);
 
 			const newElement = document.createElement('media-tag');
