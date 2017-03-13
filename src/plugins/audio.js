@@ -1,5 +1,9 @@
 /* global document */
 
+/**
+ * @module AudioPlugin
+ * @since 0.2.0
+ */
 const AudioPlugin = {
 	identifier: 'audio',
 	typeCheck: mediaObj => {

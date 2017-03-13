@@ -17,6 +17,7 @@ function getAttributesObject(element) {
  * Media Tag Core
  * @example
  * var mediaTagObj = MediaTag(document.querySelector('.myMediaTag'));
+ * @since 0.2.0
  */
 function MediaTag(node) {
     // If this element has already a mediaObject just return it
@@ -32,7 +33,8 @@ function MediaTag(node) {
 /**
  * Register a new plugin.
  * @public
- * @memberof MediaTag
+ * @memberOf MediaTag
+ * @since 0.2.0
  */
 MediaTag.registerPlugin = Plugin.registerPlugin;
 

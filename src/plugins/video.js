@@ -1,5 +1,9 @@
 /* global document */
 
+/**
+ * @module VideoPlugin
+ * @since 0.2.0
+ */
 const VideoPlugin = {
 	identifier: 'video',
 	typeCheck: mediaObj => {

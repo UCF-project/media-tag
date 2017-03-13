@@ -10,11 +10,13 @@ before_script:
 build-lib:
   script:
     - yarn run build
+  stage: build
 
 # Build documentation, create files at ./dist/docs
 build-docs:
   script:
     - yarn run build:docs
+  stage: build
 
 # Run all tests:
 # - linter
@@ -23,3 +25,4 @@ build-docs:
 test:
   script:
     - yarn test
+  stage: test

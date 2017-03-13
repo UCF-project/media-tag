@@ -16,13 +16,17 @@ function createUrlFromBlob(fileBlob) {
 	return URL.createObjectURL(fileBlob);
 }
 
+const validCryptoTypes = ['image', 'video'];
+
+/**
+ * @module CryptoPlugin
+ * @since 0.2.0
+ */
 const CryptoPlugin = {
 	/**
 	 * Identifies the plugin.
 	 */
 	identifier: 'crypto',
-
-	validCryptoTypes: ['image', 'video'],
 
 	/**
 	 * Check if the media tag instance is a Crypto type
@@ -36,7 +40,7 @@ const CryptoPlugin = {
 		return	mediaObj.hasAttribute('data-crypto-key') &&
 				mediaObj.hasAttribute('data-crypto-type') &&
 				mediaObj.hasAttribute('data-crypto-src') &&
-				CryptoPlugin.validCryptoTypes.indexOf(mediaObj.getAttribute('data-crypto-type')) !== -1;
+				validCryptoTypes.indexOf(mediaObj.getAttribute('data-crypto-type')) !== -1;
 	},
 
 	startup: mediaObj => {

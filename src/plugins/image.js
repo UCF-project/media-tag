@@ -1,5 +1,9 @@
 /* global document */
 
+/**
+ * @module ImagePlugin
+ * @since 0.2.0
+ */
 const ImagePlugin = {
 	identifier: 'image',
 	typeCheck: mediaObj => {
