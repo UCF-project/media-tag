@@ -1,13 +1,25 @@
+# This image is created with Dockerfile available at
+# https://git.rnd.alterway.fr/UCF/docker_yarn
 image: ucf:yarn
 
+# Install project dependencies in all cases
 before_script:
-  - yarn install
+    - yarn install
 
+# Build library, create JS bundles at ./dist
 build-lib:
-  - yarn run build
+  script:
+    - yarn run build
 
+# Build documentation, create files at ./dist/docs
 build-docs:
-  - yarn run build:docs
+  script:
+    - yarn run build:docs
 
-test-lint:
-  - yarn test
+# Run all tests:
+# - linter
+# - unit tests
+# - test coverage
+test:
+  script:
+    - yarn test

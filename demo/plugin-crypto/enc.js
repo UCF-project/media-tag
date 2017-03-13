@@ -61,7 +61,6 @@ document.querySelector('.nonce button').addEventListener('click', function () {
 	console.log('nonce gen', decodeBase64(inputNonce.value).length);
 });
 
-
 //  ==> Encrypt
 
 const divContents = document.querySelector('.encrypt .sent .contents');
@@ -69,7 +68,6 @@ const divEnc = document.querySelector('.encrypt .enc .contents');
 const divDec = document.querySelector('.encrypt .dec .contents');
 let fileBlob;
 let fileType = '';
-
 
 // Handle file ArrayBuffer
 function receivedFileArray(contentsArr) {
