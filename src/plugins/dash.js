@@ -1,7 +1,7 @@
 /* global document, shaka */
 
 /**
- * @module ImagePlugin
+ * @module DashPlugin
  * @since 0.2.0
  */
 
