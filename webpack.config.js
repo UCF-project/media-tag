@@ -5,7 +5,7 @@ module.exports = {
 	// Media Tag entry point
 	entry: [
 		'babel-polyfill', // Needed for IE11
-		'./src/media-tag.js'
+		'./src/media-tag-xwiki.js'
 	],
 
 	// Output library bundle at ./dist

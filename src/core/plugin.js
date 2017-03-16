@@ -38,7 +38,7 @@ class Plugin {
 		}
 
 		pluginStorage[plugin.identifier] = plugin;
-		debug(`Plugin ${plugin.identifier} registered`);
+		debug(`Plugin ${plugin.identifier} registered.`);
 	}
 
 	/**
