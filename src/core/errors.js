@@ -27,8 +27,8 @@ const Errors = {
 	 * @since 0.2.0
 	 */
 	TypeNotFound: class TypeNotFound extends Error {
-		constructor(mediaObject) {
-			super(`Media Tag could not find the content type of an instance. Please check element ${mediaObject.getRootElement()}.`);
+		constructor() {
+			super(`Media Tag could not find the content type of an instance.}.`);
 		}
 	},
 

@@ -63,6 +63,34 @@ To build the documentation at `./dist/docs/` you can use:
 $ yarn run build:docs
 ```
 
+## Examples
+
+To check out the examples you can start a webserver in the demo
+folder. Make sure you have built the library before. Then, access in
+your browser the webserver URL for example
+`http://localhost:8080/plugin-crypto/plugin-crypto-image.html`.
+
+```sh
+$ git clone git@git.rnd.alterway.fr:UCF/media_tag_v2.git  # Clone  the project
+$ cd media_tag_v2      # Enter the project folder
+$ yarn install         # Install dependencies
+$ yarn run build       # Create ./dist folder with JS bundled files
+$ http-server ./demo   # Start any webserver at demo folder
+```
+
+You can also use the development server to visualize the examples. In
+this mode there is no need to build the library since the development
+server does an auto-build at start and at each time source file
+changes. Again you can access it in your browser, with the webserver
+URL, for example
+`http://localhost:8080/plugin-crypto/plugin-crypto-image.html`.
+
+```sh
+$ git clone git@git.rnd.alterway.fr:UCF/media_tag_v2.git  # Clone  the project
+$ cd media_tag_v2      # Enter the project folder
+$ yarn install         # Install dependencies
+$ yarn start           # Start dev webserver and auto-builds the library
+```
 
 # Media Tag Version 0.2
 
