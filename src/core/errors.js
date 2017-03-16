@@ -59,7 +59,6 @@ const Errors = {
 		}
 	},
 
-
 	/**
 	 * @class {InvalidCryptoLib} InvalidCryptoLib Error thrown when
 	 * using the crypto plugin. The key contains an invalid algorithm

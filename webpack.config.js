@@ -3,7 +3,10 @@ const path = require('path');
 
 module.exports = {
 	// Media Tag entry point
-	entry: './src/media-tag.js',
+	entry: [
+		'babel-polyfill', // Needed for IE11
+		'./src/media-tag.js'
+	],
 
 	// Output library bundle at ./dist
 	output: {
@@ -14,6 +17,24 @@ module.exports = {
 
 	// Enable sourcemaps for debugging webpack output.
 	devtool: 'source-map',
+
+	// Needed for IE11
+	module: {
+		rules: [
+			// TODO: add transform-runtime plugin
+			// the 'transform-runtime' plugin tells babel to require the runtime
+			// instead of inlining it.
+			{
+				test: /\.js$/,
+				exclude: /(node_modules|bower_components)/,
+				loader: 'babel-loader',
+				query: {
+					presets: ['env']
+					// plugins: ['transform-runtime']
+				}
+			}
+		]
+	},
 
 	// Enable development server
 	devServer: {
