@@ -1,11 +1,13 @@
 /* global document, mediaTag, URL, fetch, Blob */
+import debugFactory from 'debug';
 import Errors from '../../core/errors';
 import decryptFile from './decrypt-file';
+
+const debug = debugFactory('MT:Crypto');
 
 function getBlobFromUrl(fileURL) {
 	return fetch(fileURL).then(response => {
 		if (response.ok) {
-			console.log('returning blob');
 			return response.arrayBuffer();
 		}
 		throw new Errors.FetchFail(response);
@@ -58,9 +60,13 @@ const CryptoPlugin = {
 			newElement.setAttribute('src', fileDecryptedUrl);
 			newElement.setAttribute('data-type', elementType);
 			mediaObj.utilsPassAllDataAttributes(newElement);
+
+			debug('Passed all data attributes.');
 			mediaTag(newElement);
+			debug('Started new element.');
 
 			mediaObj.replaceContents([newElement]);
+			debug('Replaced contents.');
 		});
 	}
 

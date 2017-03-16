@@ -1,4 +1,7 @@
+import debugFactory from 'debug';
 import Errors from './errors';
+
+const debug = debugFactory('MT:Plugin');
 
 /**
  * Stores registered plugins in a private space.
@@ -35,6 +38,7 @@ class Plugin {
 		}
 
 		pluginStorage[plugin.identifier] = plugin;
+		debug(`Plugin ${plugin.identifier} registered`);
 	}
 
 	/**
@@ -62,13 +66,13 @@ class Plugin {
 	 * @memberOf Plugin
 	 */
 	static findType(mediaObject) {
-		console.log({pluginStorage});
+		// console.log({pluginStorage});
 		const pluginIds = Object.keys(pluginStorage);
 		for (let i = 0; i < pluginIds.length; i++) {
 			const pluginId = pluginIds[i];
-			console.log({pluginId});
+			// console.log({pluginId});
 			const plugin = Plugin.getPlugin(pluginId);
-			console.log({plugin});
+			// console.log({plugin});
 			if (plugin.typeCheck(mediaObject)) {
 				return pluginId;
 			}

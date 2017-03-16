@@ -1,5 +1,8 @@
+import debugFactory from 'debug';
 import Errors from './errors';
 import Plugin from './plugin';
+
+const debug = debugFactory('MT:MediaObject');
 
 /**
  * Media Object is created for each media-tag and contains the
@@ -28,9 +31,19 @@ class MediaObject {
 		 * @type {HTMLElement} rootElement HTMLElement DOM Node that acts as
 		 * container to this object.
 		 */
-		this.rootElement = rootElement;
+		// this.rootElement = rootElement;
 
-		console.log({options});
+		// TODO: rethink about what is the best, explicit bind needed
+		// functions OR saving the node
+		this.hookedFns = {
+			hasChildNodes: rootElement.hasChildNodes.bind(rootElement),
+			removeChild: rootElement.removeChild.bind(rootElement),
+			getLastChild: () => rootElement.lastChild,
+			appendChild: rootElement.appendChild.bind(rootElement)
+		};
+
+		debug(`Creating media object.`);
+		// console.log({options});
 		// Identify type
 
 		/**
@@ -41,10 +54,12 @@ class MediaObject {
 		if (!this.contentTypeId) {
 			throw new Errors.TypeNotFound(this);
 		}
+		debug(`Found media type ${this.contentTypeId}.`);
 
 		// Startup
 		const contentType = Plugin.getPlugin(this.contentTypeId);
 		contentType.startup(this);
+		debug(`Starting media`);
 	}
 
 	/**
@@ -54,9 +69,9 @@ class MediaObject {
 	 *
 	 * @memberOf MediaObject
 	 */
-	getRootElement() {
-		return this.rootElement;
-	}
+	// getRootElement() {
+	// 	return this.rootElement;
+	// }
 
 	// TODO: define what will be direct method and what will be by getAttribute
 	/**
@@ -130,6 +145,14 @@ class MediaObject {
 		return this.__info['data-type'];
 	}
 
+	clearContents() {
+		while (this.hookedFns.hasChildNodes()) {
+			this.hookedFns.removeChild(this.hookedFns.getLastChild());
+		}
+
+		debug(`All media contents cleared.`);
+	}
+
 	/**
 	 * Replace the contents of the container, associated to the object,
 	 * by the given nodes. All previous contents of the container are
@@ -141,10 +164,13 @@ class MediaObject {
 	 */
 	replaceContents(nodes) {
 		// Cleanup element
-		this.rootElement.innerHTML = '';
+		// this.rootElement.innerHTML = '';
+		this.clearContents();
 
 		// Add nodes to rootElement
-		nodes.forEach(node => this.rootElement.appendChild(node));
+		// nodes.forEach(node => this.rootElement.appendChild(node));
+		nodes.forEach(node => this.hookedFns.appendChild(node));
+		debug(`Media contents replaced.`);
 	}
 
 	/**
@@ -158,6 +184,7 @@ class MediaObject {
 	 * @memberOf MediaObject
 	 */
 	utilsSetAllDataAttributes(element) {
+		debug(`Setting data attributes.`);
 		const dataAttributes = this.getAllDataAttrKeys();
 		dataAttributes.forEach(dataAttr => element.setAttribute(dataAttr.substr(10), this.getAttribute(dataAttr)));
 	}
@@ -173,6 +200,7 @@ class MediaObject {
 	 * @memberOf MediaObject
 	 */
 	utilsPassAllDataAttributes(element) {
+		debug(`Passing data attributes.`);
 		const dataAttributes = this.getAllDataAttrKeys();
 		dataAttributes.forEach(dataAttr => element.setAttribute(dataAttr, this.getAttribute(dataAttr)));
 	}
