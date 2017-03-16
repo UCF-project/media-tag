@@ -6,11 +6,11 @@ We can add new plugins to current media-tag v2.
 
 Under ```src/plugins/```, the first set consist to create a extended plugin component.
 
-| Tables   |      Are      |  Cool |
-|----------|:-------------:|------:|
-| col 1 is |  left-aligned | $1600 |
-| col 2 is |    centered   |   $12 |
-| col 3 is | right-aligned |    $1 |
+| Propertie | Description |
+|----------|-------------|
+| identifier | Plugin identifier |
+| typeCheck | Type checking  |
+| startup | right-aligned |
 
 Example with dash plugin adding ```dash.js```
 
@@ -72,7 +72,7 @@ export default DashPlugin;
 
 ## Setup your plugin reference
 
-Into to ```src/media-tag.js``` you need to register your fresh plugin by insert this :
+Into ```src/media-tag.js``` you need to register your fresh plugin by insert this :
 
 ```
 // Plugin :: Dash
