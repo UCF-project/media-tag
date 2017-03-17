@@ -28,7 +28,7 @@ const DashPlugin = {
 	startup: mediaObj => {
 		const video = document.createElement('video');
 		const player = new shaka.Player(video);
-		const array = mediaObj.rootElement.getAttribute('data-crypto-key').split(':');
+		const array = mediaObj.getAttribute('data-crypto-key').split(':');
 		const tag = array[0];
 		const id = array[1];
 		const key = array[2];
@@ -46,7 +46,7 @@ const DashPlugin = {
 			});
 		}
 
-		player.load(mediaObj.rootElement.getAttribute('data-crypto-src')).then(() => {});
+		player.load(mediaObj.getAttribute('data-crypto-src')).then(() => {});
 	}
 };
 

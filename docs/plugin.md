@@ -1,4 +1,4 @@
-#Plugin
+# Plugin
 
 We can add new plugins to current media-tag v2.
 
@@ -83,7 +83,7 @@ MediaTag.registerPlugin(DashPlugin);
 
 ## Add a new plugin using crypto plugin
 
-The <media-tag> element should have at least three attributes:
+The ```<media-tag>``` element should have at least three attributes:
    - data-crypto-type: which is the file type associated to the decrypted file, check CryptoPlugin.validCryptoTypes for valid values
    - data-crypto-src: encrypted file URL
    - data-crypto-key: key to decrypt the file
