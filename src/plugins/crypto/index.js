@@ -26,11 +26,10 @@ function type2Mime(typeStr) {
 	switch (typeStr) {
 		case 'image':
 			return 'image';
-			break;
 		case 'video':
 			return 'video/mp4';
-			break;
-		default: return null;
+		default:
+			return null;
 	}
 }
 
