@@ -98,7 +98,8 @@ If you want use the current encryption/decryption algorithm that's all.
 Else, into ```src/plugins/crypto/decrypt-file.js``` , you need to add your own algorithm in the switch case
 and should return a bufferArray aka Array
 
-example : ```
+example : 
+```
 switch (libType) {
 		case 'xsalsa20poly1305': {
 			if (keyParts.length !== 3) {
