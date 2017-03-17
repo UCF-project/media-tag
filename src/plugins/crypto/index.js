@@ -20,6 +20,20 @@ function createUrlFromBlob(fileBlob) {
 
 const validCryptoTypes = ['image', 'video'];
 
+// TODO: maybe this should be avoided and the type (data-crypto-type)
+// should be mimetype
+function type2Mime(typeStr) {
+	switch (typeStr) {
+		case 'image':
+			return 'image';
+			break;
+		case 'video':
+			return 'video/mp4';
+			break;
+		default: return null;
+	}
+}
+
 /**
  * @module CryptoPlugin
  * @since 0.2.0
@@ -53,7 +67,7 @@ const CryptoPlugin = {
 		// TODO: handle failure
 		getBlobFromUrl(elementSource).then(fileEncryptedBlob => {
 			const fileArrayBuffer = decryptFile(key, fileEncryptedBlob);
-			const fileDecryptedBlob = new Blob([fileArrayBuffer]);
+			const fileDecryptedBlob = new Blob([fileArrayBuffer], {type: type2Mime(elementType)});
 			const fileDecryptedUrl = createUrlFromBlob(fileDecryptedBlob);
 
 			const newElement = document.createElement('media-tag');
