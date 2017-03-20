@@ -28,6 +28,11 @@ const AudioPlugin = require('./plugins/audio').default;
 
 MediaTag.registerPlugin(AudioPlugin);
 
+// Plugin :: Dash
+const DashPlugin = require('./plugins/dash').default;
+
+MediaTag.registerPlugin(DashPlugin);
+
 // Plugin :: Crypto
 const CryptoPlugin = require('./plugins/crypto').default;
 

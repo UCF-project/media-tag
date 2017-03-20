@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta content-type="text/html" charset="UTF-8"/>
+		<title>Plugin Dash</title>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/2.0.6/shaka-player.compiled.js"></script>
+		<script type="text/javascript" src="../media-tag.js"></script>
+	</head>
+	<body>
+		<media-tag
+			id="dash"
+	        data-crypto-type="dash"
+	        data-crypto-src="bbb_encrypt/bbb_dash.mpd"
+	        data-crypto-key="clearkey:0ebf43152d2de26431e271a9872fbc0a:e2a48174c0c424e605def5368e59636e"
+	        data-attr-width="1240px"
+	        data-attr-height="720px"
+	        data-attr-controls="true"
+	        data-attr-autoplay="true"
+	        ></media-tag>
+	        <script>
+				// The only way to use as library is with JavaScript.
+				// You will need to select a DOM element that will be the wrapper
+				// element, for example a div.
+				// Then create a new MediaTag Object passing that element as
+				// parameter.
+				var mediaTagObjVideo = mediaTag(document.querySelector('media-tag'));
+			</script>
+	</body>
+</html>
