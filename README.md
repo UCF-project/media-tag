@@ -13,6 +13,21 @@ $ yarn install         # Install dependencies
 $ yarn run build       # Create ./dist folder with JS bundled files
 ```
 
+The build will create two files named `./dist/media-tag.js` and
+`./dist/media-tag-crypto.js`. The first, `./dist/media-tag.js`,
+contains all the [implemented plugins](docs/plugin-implemented.md).
+The last, `./dist/media-tag-crypto.js`, has a minimal selection of
+plugins (crypto + image), target for CryptPad integration.
+
+### Production
+
+If you target a production build you should inform the correct
+`NODE_ENV` at the build.
+
+```sh
+$ NODE_ENV=production yarn run build # Create ./dist folder with optimized JS bundled files
+```
+
 ## Usage
 
 ```html
@@ -121,3 +136,6 @@ in our [proposal](docs/proposal.md) documentation.
 
 Discussion about the integration (usage in a HTML page) of Media Tag
 v0.2 is detailed at [integration](docs/integration.md) document.
+
+How to include a new type of content or any other plugin is described
+at [plugin](docs/plugin.md) document.

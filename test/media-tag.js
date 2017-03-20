@@ -14,12 +14,16 @@ describe('Create different media tag contents: ', () => {
 		// Create contents based on the attributes
 		mediaTag(mediaTagContainer);
 
-		// Can't use snapshots for now https://github.com/avajs/ava/issues/1218
-		// Compare contents of media container
-		// TODO: remove eslint-disable when it lands in xo https://github.com/avajs/eslint-plugin-ava/issues/169
-		// t.snapshot({mediaInnerHtml: mediaTagContainer.innerHTML}); // eslint-disable-line  ava/use-t-well
+		// Create the expected element
+		const expectedResult = document.createElement('img');
+		expectedResult.setAttribute('src', 'image-without-extension');
+		expectedResult.setAttribute('width', '300px');
+		expectedResult.setAttribute('height', '200px');
 
-		chai.assert.equal(mediaTagContainer.innerHTML, '<img xsrc="image-without-extension" height="200px" width="300px">');
+		// Compare expected contents
+		// Like this we avoid problems when browsers change the order
+		// of the attributes
+		chai.assert.isTrue(mediaTagContainer.firstChild.isEqualNode(expectedResult), 'media tag result element is like the expected element');
 	});
 
 	it('can create a media-tag containing an audio', () => {
@@ -32,12 +36,15 @@ describe('Create different media tag contents: ', () => {
 		// Create contents based on the attributes
 		mediaTag(mediaTagContainer);
 
-		// Can't use snapshots for now https://github.com/avajs/ava/issues/1218
-		// Compare contents of media container
-		// TODO: remove eslint-disable when it lands in xo https://github.com/avajs/eslint-plugin-ava/issues/169
-		// t.snapshot({mediaInnerHtml: mediaTagContainer.innerHTML}); // eslint-disable-line  ava/use-t-well
+		// Create the expected element
+		const expectedResult = document.createElement('audio');
+		expectedResult.setAttribute('src', 'alterway.mp3');
+		expectedResult.setAttribute('controls', 'controls');
 
-		chai.assert.equal(mediaTagContainer.innerHTML, '<audio src="alterway.mp3" controls="controls"></audio>');
+		// Compare expected contents
+		// Like this we avoid problems when browsers change the order
+		// of the attributes
+		chai.assert.isTrue(mediaTagContainer.firstChild.isEqualNode(expectedResult), 'media tag result element is like the expected element');
 	});
 
 	it('can create a media-tag containing a video', () => {
@@ -51,11 +58,15 @@ describe('Create different media tag contents: ', () => {
 		// Create contents based on the attributes
 		mediaTag(mediaTagContainer);
 
-		// Can't use snapshots for now https://github.com/avajs/ava/issues/1218
-		// Compare contents of media container
-		// TODO: remove eslint-disable when it lands in xo https://github.com/avajs/eslint-plugin-ava/issues/169
-		// t.snapshot({mediaInnerHtml: mediaTagContainer.innerHTML}); // eslint-disable-line  ava/use-t-well
+		// Create the expected element
+		const expectedResult = document.createElement('video');
+		expectedResult.setAttribute('src', 'cube.mp4');
+		expectedResult.setAttribute('width', '300px');
+		expectedResult.setAttribute('height', '200px');
 
-		chai.assert.equal(mediaTagContainer.innerHTML, '<video src="cube.mp4" height="200px" width="300px"></video>');
+		// Compare expected contents
+		// Like this we avoid problems when browsers change the order
+		// of the attributes
+		chai.assert.isTrue(mediaTagContainer.firstChild.isEqualNode(expectedResult), 'media tag result element is like the expected element');
 	});
 });
