@@ -103,6 +103,9 @@
       "babel-register",
       "./test/helpers/setup-browser-env.js"
     ],
+    "exclude": [
+      "demo/"
+    ],
     "sourceMap": false,
     "instrument": false,
     "all": true,
