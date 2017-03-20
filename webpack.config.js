@@ -2,16 +2,58 @@ const path = require('path');
 const webpack = require('webpack');
 // const ClosureCompiler = require('google-closure-compiler-js').webpack;
 
+const pluginsByEnv = process.env.NODE_ENV === 'production' ?
+[
+// 	new ClosureCompiler({
+// 		options: {
+// 			languageIn: 'ECMASCRIPT6',
+// 			languageOut: 'ECMASCRIPT5',
+// 			compilationLevel: 'ADVANCED',
+// 			warningLevel: 'VERBOSE'
+// 		}
+// 	})
+	new webpack.LoaderOptionsPlugin({
+		minimize: true,
+		debug: false
+	}),
+
+	new webpack.DefinePlugin({
+		'process.env.NODE_ENV': JSON.stringify('production')
+	}),
+
+	new webpack.optimize.UglifyJsPlugin({
+		sourceMap: true,
+		beautify: false,
+		mangle: {
+			screw_ie8: true, // eslint-disable-line camelcase
+			keep_fnames: false // eslint-disable-line camelcase
+		},
+		compress: {
+			screw_ie8: true // eslint-disable-line camelcase
+		},
+		comments: false
+	})
+] : [
+	// new webpack.ProvidePlugin({
+	// 	describe: 'mocha',
+	// 	assert: 'chai'
+	// })
+];
+
 module.exports = {
 	// Media Tag entry point
 	entry: {
 		'media-tag': [
-			'babel-polyfill', // Needed for IE11
+			// 'babel-polyfill', // Needed for IE11
 			'./src/media-tag.js'
 		],
 		'media-tag-crypto': [
-			'babel-polyfill', // Needed for IE11
+			// 'babel-polyfill', // Needed for IE11
 			'./src/media-tag-crypto.js'
+		],
+		test: [
+			'babel-polyfill', // Needed for IE11
+			'./test/media-tag.js'
 		]
 	},
 
@@ -33,7 +75,7 @@ module.exports = {
 			// instead of inlining it.
 			{
 				test: /\.js$/,
-				exclude: /(node_modules|bower_components)/,
+				exclude: /node_modules/,
 				loader: 'babel-loader',
 				query: {
 					presets: ['env'] // ,
@@ -54,35 +96,5 @@ module.exports = {
 		compress: true
 	},
 
-	plugins: [
-	// 	new ClosureCompiler({
-	// 		options: {
-	// 			languageIn: 'ECMASCRIPT6',
-	// 			languageOut: 'ECMASCRIPT5',
-	// 			compilationLevel: 'ADVANCED',
-	// 			warningLevel: 'VERBOSE'
-	// 		}
-	// 	})
-		new webpack.LoaderOptionsPlugin({
-			minimize: true,
-			debug: false
-		}),
-
-		new webpack.DefinePlugin({
-			'process.env.NODE_ENV': JSON.stringify('production')
-		}),
-
-		new webpack.optimize.UglifyJsPlugin({
-			sourceMap: true,
-			beautify: false,
-			mangle: {
-				screw_ie8: true, // eslint-disable-line camelcase
-				keep_fnames: false // eslint-disable-line camelcase
-			},
-			compress: {
-				screw_ie8: true // eslint-disable-line camelcase
-			},
-			comments: false
-		})
-	]
+	plugins: pluginsByEnv
 };
