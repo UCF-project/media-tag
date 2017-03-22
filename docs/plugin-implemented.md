@@ -33,9 +33,19 @@
 	></media-tag>
 ```
 
+### Pdf
+
+```html
+<media-tag
+	src="file.pdf"
+	data-type="pdf"
+	></media-tag>
+```
+
 ### Crypto
 
 ```html
+<h1>Image:</h1>
 <media-tag
 	id="image"
 	data-crypto-type="image"
@@ -43,6 +53,26 @@
 	data-crypto-key="xsalsa20poly1305:1O9hQmf0QJkjvGnK+q0JLamus1IUAhhqZGWRa1dMMlk=:avR58kfJOeKb0PJ9apcDknTZJ4CilErg"
 	data-attr-width="300px"
 	data-attr-height="200px"
+	></media-tag>
+
+<h1>Video:</h1>
+<media-tag
+	id="video"
+	data-crypto-type="video"
+	data-crypto-src="encrypted-video"
+	data-crypto-key="xsalsa20poly1305:gZO+B16pTH5vyvzL9d/PIljh1JU8teJWEf7GHX/KA0g=:WTG3GM1y9yWsGPo3i0aQcVyDiDuofCUE"
+	data-attr-width="300px"
+	data-attr-height="200px"
+	data-attr-controls="controls"
+	></media-tag>
+
+<h1>Pdf:</h1>
+<media-tag
+	id="pdf"
+	data-crypto-type="pdf"
+	data-crypto-src="encrypted-pdf"
+	data-crypto-key="xsalsa20poly1305:r0YjVXdLRrLprrocK60z5Pp+DRzBzokh6vmZEDGL5ic=:I+eyjXjsMu8zR+3KtGAWh96HNFaYMbkM"
+	data-attr-style="border: 1px solid black"
 	></media-tag>
 ```
 

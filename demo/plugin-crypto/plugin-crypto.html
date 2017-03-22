@@ -6,7 +6,9 @@
 <body>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tweetnacl/0.14.5/nacl-fast.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/1.7.376/pdf.js"></script>
 
+	<h1>Image:</h1>
 	<media-tag
 		id="image"
 		data-crypto-type="image"
@@ -16,6 +18,7 @@
 		data-attr-height="200px"
 		>text <p>aqqq</p><a>qqq</a></media-tag>
 
+	<h1>Video:</h1>
 	<media-tag
 		id="video"
 		data-crypto-type="video"
@@ -24,6 +27,15 @@
 		data-attr-width="300px"
 		data-attr-height="200px"
 		data-attr-controls="controls"
+		></media-tag>
+
+	<h1>Pdf:</h1>
+	<media-tag
+		id="pdf"
+		data-crypto-type="pdf"
+		data-crypto-src="encrypted-pdf"
+		data-crypto-key="xsalsa20poly1305:r0YjVXdLRrLprrocK60z5Pp+DRzBzokh6vmZEDGL5ic=:I+eyjXjsMu8zR+3KtGAWh96HNFaYMbkM"
+		data-attr-style="border: 1px solid black"
 		></media-tag>
 
 	<!-- Include Media Tag library -->
@@ -36,6 +48,7 @@
 		// parameter.
 		var mediaTagObjImage = mediaTag(document.querySelector('media-tag#image'));
 		var mediaTagObjVideo = mediaTag(document.querySelector('media-tag#video'));
+		var mediaTagObjPdf = mediaTag(document.querySelector('media-tag#pdf'));
 	</script>
 </body>
 </html>
