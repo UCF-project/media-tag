@@ -61,7 +61,8 @@ module.exports = {
 	output: {
 		filename: '[name].js',
 		path: path.join(__dirname, 'dist'),
-		library: 'mediaTag'
+		library: 'mediaTag',
+		libraryTarget: 'umd'
 	},
 
 	// Enable sourcemaps for debugging webpack output.
