@@ -1,5 +1,4 @@
 .nyc_output/
 .vscode/
-dist/
 node_modules/
 npm-debug.log
