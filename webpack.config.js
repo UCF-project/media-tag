@@ -22,7 +22,7 @@ const pluginsByEnv = process.env.NODE_ENV === 'production' ?
 	}),
 
 	new webpack.optimize.UglifyJsPlugin({
-		sourceMap: true,
+		sourceMap: false,
 		beautify: false,
 		mangle: {
 			screw_ie8: true, // eslint-disable-line camelcase
@@ -66,7 +66,7 @@ module.exports = {
 	},
 
 	// Enable sourcemaps for debugging webpack output.
-	devtool: 'source-map', // No difference in the output JS
+	//devtool: 'source-map', // No difference in the output JS
 
 	// Needed for IE11
 	module: {
