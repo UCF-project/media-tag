@@ -3,11 +3,9 @@ const webpack = require('webpack');
 
 const plugin = (() => {
 	if (process.env.NODE_ENV !== 'production') {
-		console.log(process.env.NODE_ENV);
-	}
-
-	if (process.env.BABEL_ENV !== 'production') {
-		console.log(process.env.BABEL_ENV);
+		console.log(
+			'Your NODE_ENV is: %s, type "export NODE_ENV=production" before to make a production build'
+			, process.env.NODE_ENV);
 	}
 
 	switch (process.env.NODE_ENV) {
@@ -20,6 +18,17 @@ const plugin = (() => {
 
 				new webpack.DefinePlugin({
 					'process.env.NODE_ENV': JSON.stringify('production')
+				}),
+
+				/**
+				 * Clear code
+				 */
+				new webpack.optimize.UglifyJsPlugin({
+					sourceMap: false,
+					beautify: true,
+					mangle: false,
+					compress: false,
+					comments: /[a-zA-Z]+[ ]*[0-9]*[ ]*/
 				})
 
 				// new webpack.optimize.UglifyJsPlugin({
@@ -65,8 +74,7 @@ module.exports = {
 	output: {
 		filename: '[name].js',
 		path: path.join(__dirname, 'dist'),
-		library: 'mediaTag',
-		libraryTarget: 'umd'
+		library: 'mediaTag'
 	},
 
 	// devtool: 'source-map',
@@ -78,7 +86,7 @@ module.exports = {
 				exclude: '/node_modules/',
 				loader: 'babel-loader',
 				query: {
-					presets: ['es2015']
+					presets: ['env']
 				}
 			}
 		]
