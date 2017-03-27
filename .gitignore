@@ -3,3 +3,5 @@
 dist/
 node_modules/
 npm-debug.log
+cryptpad_example/www/bower_components/
+cryptpad_example/www/node_modules/
