@@ -1,100 +1,88 @@
 const path = require('path');
 const webpack = require('webpack');
-// const ClosureCompiler = require('google-closure-compiler-js').webpack;
 
-const pluginsByEnv = process.env.NODE_ENV === 'production' ?
-[
-// 	new ClosureCompiler({
-// 		options: {
-// 			languageIn: 'ECMASCRIPT6',
-// 			languageOut: 'ECMASCRIPT5',
-// 			compilationLevel: 'ADVANCED',
-// 			warningLevel: 'VERBOSE'
-// 		}
-// 	})
-	new webpack.LoaderOptionsPlugin({
-		minimize: true,
-		debug: false
-	}),
+const plugin = (() => {
+	if (process.env.NODE_ENV !== 'production') {
+		console.log(process.env.NODE_ENV);
+	}
 
-	new webpack.DefinePlugin({
-		'process.env.NODE_ENV': JSON.stringify('production')
-	}),
+	if (process.env.BABEL_ENV !== 'production') {
+		console.log(process.env.BABEL_ENV);
+	}
 
-	new webpack.optimize.UglifyJsPlugin({
-		sourceMap: true,
-		beautify: false,
-		mangle: {
-			screw_ie8: true, // eslint-disable-line camelcase
-			keep_fnames: false // eslint-disable-line camelcase
-		},
-		compress: {
-			screw_ie8: true // eslint-disable-line camelcase
-		},
-		comments: false
-	})
-] : [
-	// new webpack.ProvidePlugin({
-	// 	describe: 'mocha',
-	// 	assert: 'chai'
-	// })
-];
+	switch (process.env.NODE_ENV) {
+		case 'production':
+			return [
+				new webpack.LoaderOptionsPlugin({
+					minimize: false,
+					debug: false
+				}),
+
+				new webpack.DefinePlugin({
+					'process.env.NODE_ENV': JSON.stringify('production')
+				})
+
+				// new webpack.optimize.UglifyJsPlugin({
+				// 	sourceMap: false,
+				// 	beautify: false,
+				// 	mangle: {
+				// 		screw_ie8: true, 	// eslint-disable-line camelcase
+				// 		keep_fnames: false 	// eslint-disable-line camelcase
+				// 	},
+				// 	compress: {
+				// 		screw_ie8: true 	// eslint-disable-line camelcase
+				// 	},
+				// 	comments: false
+				// })
+			];
+		default:
+			return [];
+	}
+})();
 
 module.exports = {
-	// Media Tag entry point
+	/**
+	 * Polyfill  required for IE11
+	 */
 	entry: {
 		'media-tag': [
-			// 'babel-polyfill', // Needed for IE11
+			'babel-polyfill',
 			'./src/media-tag.js'
 		],
 		'media-tag-crypto': [
-			// 'babel-polyfill', // Needed for IE11
+			'babel-polyfill',
 			'./src/media-tag-crypto.js'
 		],
 		test: [
-			'babel-polyfill', // Needed for IE11
+			'babel-polyfill',
 			'./test/media-tag.js'
 		]
 	},
 
-	// Output library bundle at ./dist
+	/**
+	 * Output library bundle at ./dist
+	 */
 	output: {
 		filename: '[name].js',
 		path: path.join(__dirname, 'dist'),
-		library: 'mediaTag'
+		library: 'mediaTag',
+		libraryTarget: 'umd'
 	},
 
-	// Enable sourcemaps for debugging webpack output.
-	devtool: 'source-map', // No difference in the output JS
+	// devtool: 'source-map',
 
-	// Needed for IE11
 	module: {
-		rules: [
-			// TODO: add transform-runtime plugin
-			// the 'transform-runtime' plugin tells babel to require the runtime
-			// instead of inlining it.
+		loaders: [
 			{
 				test: /\.js$/,
-				exclude: /node_modules/,
+				exclude: '/node_modules/',
 				loader: 'babel-loader',
 				query: {
-					presets: ['env'] // ,
-					// plugins: ['transform-runtime', {
-					// 	helpers: true, // defaults to true
-					// 	polyfill: true, // defaults to true
-					// 	regenerator: true, // defaults to true
-					// 	moduleName: 'babel-runtime' // defaults to "babel-runtime"
-					// }]
+					presets: ['es2015']
 				}
 			}
 		]
 	},
 
-	// Enable development server
-	devServer: {
-		contentBase: path.join(__dirname, 'demo'),
-		compress: true
-	},
-
-	plugins: pluginsByEnv
+	plugins: plugin
 };

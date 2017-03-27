@@ -7,7 +7,7 @@
   "license": "Apache-2.0",
   "scripts": {
     "test": "xo && nyc _mocha ./test/media-tag.js",
-    "build": "webpack",
+    "build": "webpack && node fix.js",
     "start": "webpack-dev-server",
     "build:docs": "esdoc",
     "xo": "xo",

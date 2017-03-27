@@ -33,6 +33,11 @@ const DashPlugin = require('./plugins/dash').default;
 
 MediaTag.registerPlugin(DashPlugin);
 
+// Plugin :: Pdf
+const PdfPlugin = require('./plugins/pdf').default;
+
+MediaTag.registerPlugin(PdfPlugin);
+
 // Plugin :: Crypto
 const CryptoPlugin = require('./plugins/crypto').default;
 

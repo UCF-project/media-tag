@@ -18,7 +18,7 @@ function createUrlFromBlob(fileBlob) {
 	return URL.createObjectURL(fileBlob);
 }
 
-const validCryptoTypes = ['image', 'video'];
+const validCryptoTypes = ['image', 'video', 'pdf'];
 
 // TODO: maybe this should be avoided and the type (data-crypto-type)
 // should be mimetype
