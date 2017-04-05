@@ -7,7 +7,7 @@ describe('Create different media tag contents: ', () => {
 		// Create container for media tag
 		const mediaTagContainer = document.createElement('media-tag');
 		mediaTagContainer.setAttribute('src', 'image-without-extension');
-		mediaTagContainer.setAttribute('data-type', 'image');
+		mediaTagContainer.setAttribute('data-type', 'image/png');
 		mediaTagContainer.setAttribute('data-attr-width', '300px');
 		mediaTagContainer.setAttribute('data-attr-height', '200px');
 
@@ -30,7 +30,7 @@ describe('Create different media tag contents: ', () => {
 		// Create container for media tag
 		const mediaTagContainer = document.createElement('media-tag');
 		mediaTagContainer.setAttribute('src', 'alterway.mp3');
-		mediaTagContainer.setAttribute('data-type', 'audio');
+		mediaTagContainer.setAttribute('data-type', 'audio/mp3');
 		mediaTagContainer.setAttribute('data-attr-controls', 'controls');
 
 		// Create contents based on the attributes
@@ -51,7 +51,7 @@ describe('Create different media tag contents: ', () => {
 		// Create container for media tag
 		const mediaTagContainer = document.createElement('media-tag');
 		mediaTagContainer.setAttribute('src', 'cube.mp4');
-		mediaTagContainer.setAttribute('data-type', 'video');
+		mediaTagContainer.setAttribute('data-type', 'video/mp4');
 		mediaTagContainer.setAttribute('data-attr-width', '300px');
 		mediaTagContainer.setAttribute('data-attr-height', '200px');
 

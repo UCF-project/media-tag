@@ -7,9 +7,10 @@
   "license": "Apache-2.0",
   "scripts": {
     "test": "xo && nyc _mocha ./test/media-tag.js",
-    "build": "webpack && node clean-eval.js",
-    "start": "webpack-dev-server",
+    "build": "webpack",
     "build:docs": "esdoc",
+    "build:clean-eval": "webpack && node clean-eval.js",
+    "start": "webpack-dev-server",
     "xo": "xo",
     "karma": "karma start",
     "mocha": "nyc _mocha ./test/media-tag.js"
@@ -44,7 +45,9 @@
     "ignores": [
       "dist/**/*.js",
       "demo/media-tag*.js",
-      "demo/test*.js"
+      "demo/test*.js",
+      "demo/requirejs/**/*",
+      "test/dependencies/**/*"
     ],
     "overrides": [
       {
@@ -104,7 +107,8 @@
       "./test/helpers/setup-browser-env.js"
     ],
     "exclude": [
-      "demo/"
+      "demo/",
+      "test/dependencies/"
     ],
     "sourceMap": false,
     "instrument": false,

@@ -2,30 +2,21 @@ const fs = require('fs');
 
 const files = [
 	'./dist/media-tag.js',
-	'./dist/media-tag-crypto',
+	'./dist/media-tag-crypto.js',
 	'./dist/test.js'];
 
-const originals = [
-	'|| (1,eval)("this");',
-	'|| (1,eval)("this");',
-	'|| (1,eval)("this");'
-];
-
-const modifications = [
-	';// || (1,eval)("this");',
-	';// || (1,eval)("this");',
-	';// || (1,eval)("this");'
-];
+const replacements = {
+	'g = g || Function("return this")() || (1, eval)("this");': 'g = g || Function("return this")();'
+};
 
 /**
  * To replace some matching substrings by another and save it;
  *
  * @param      {String}  		files          The files
- * @param      {Array<String>}  originals      The originals
- * @param      {Array<String>}  modifications  The modifications
+ * @param      {Object}  replacements      The replacements
  */
 
-function replace(files, originals, modifications) {
+function replace(files, replacements) {
 	for (const file of files) {
 		console.log('Processing %s', file);
 		fs.exists(file, exists => {
@@ -35,17 +26,20 @@ function replace(files, originals, modifications) {
 					if (error) {
 						throw error;
 					}
-					const index = files.indexOf(file);
-					const string = String(data);
-					const replaced = string.replace(originals[index], modifications[index]);
 
-					console.log('replace all "%s" by "%s"', originals[index], modifications[index]);
+					let dataString = String(data);
 
-					fs.writeFile(file, replaced, error => {
+					for (const substring in replacements) {
+						if (substring !== '') {
+							dataString = dataString.replace(substring, replacements[substring]);
+						}
+					}
+
+					fs.writeFile(file, dataString, error => {
 						if (error) {
 							throw error;
 						}
-						console.log(file + ' is fixed');
+						console.log(file + ' is eval cleaned');
 					});
 				});
 			}
@@ -53,4 +47,4 @@ function replace(files, originals, modifications) {
 	}
 }
 
-replace(files, originals, modifications);
+replace(files, replacements);

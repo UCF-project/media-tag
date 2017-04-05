@@ -38,9 +38,19 @@ const PdfPlugin = require('./plugins/pdf').default;
 
 MediaTag.registerPlugin(PdfPlugin);
 
-// Plugin :: Crypto
-const CryptoPlugin = require('./plugins/crypto').default;
+// Filter :: Default
+const DefaultFilter = require('./filters/default').default;
 
-MediaTag.registerPlugin(CryptoPlugin);
+MediaTag.registerFilter(DefaultFilter);
+
+// Filter :: Crypto
+const CryptoFilter = require('./filters/crypto').default;
+
+MediaTag.registerFilter(CryptoFilter);
+
+// Filter :: ClearKey
+const ClearKeyFilter = require('./filters/clear-key').default;
+
+MediaTag.registerFilter(ClearKeyFilter);
 
 module.exports = MediaTag;

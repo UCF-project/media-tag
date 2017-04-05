@@ -21,9 +21,9 @@ const ImagePlugin = require('./plugins/image').default;
 
 MediaTag.registerPlugin(ImagePlugin);
 
-// Plugin :: Crypto
-const CryptoPlugin = require('./plugins/crypto').default;
+// Filter :: Crypto
+const CryptoFilter = require('./filters/crypto').default;
 
-MediaTag.registerPlugin(CryptoPlugin);
+MediaTag.registerFilter(CryptoFilter);
 
 module.exports = MediaTag;

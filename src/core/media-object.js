@@ -1,6 +1,6 @@
 import debugFactory from 'debug';
-import Errors from './errors';
-import Plugin from './plugin';
+import Engine from './engine';
+import Parser from './parser';
 
 const debug = debugFactory('MT:MediaObject');
 
@@ -23,10 +23,19 @@ class MediaObject {
 	 */
 	constructor(options, rootElement) {
 		// TODO: parse src into url parts (protocol, domain, extension, etc)
+
+		debug(`Creating media object.`);
+
+		/**
+		 * Generate a unique id for this MediaObject.
+		 */
+		this.__uid = Engine.uid();
+
 		/**
 		 * @type {Object} __info Object with attributes that will specify the contents.
 		 */
 		this.__info = options;
+
 		/**
 		 * @type {HTMLElement} rootElement HTMLElement DOM Node that acts as
 		 * container to this object.
@@ -42,24 +51,41 @@ class MediaObject {
 			appendChild: rootElement.appendChild.bind(rootElement)
 		};
 
-		debug(`Creating media object.`);
-		// console.log({options});
-		// Identify type
+		/**
+		 * Parsing of options to extract mediaObject's properties
+		 */
+		this.setProperties(Parser.parse(this));
 
 		/**
-		 * @type {string} contentTypeId plugin identifier that matches
-		 * typeCheck with this media
+		 * Starts up the engine on mediaObject which process all operations
+		 * possible from filters until plugin detection.
 		 */
-		this.contentTypeId = Plugin.findType(this);
-		if (!this.contentTypeId) {
-			throw new Errors.TypeNotFound(this);
-		}
-		debug(`Found media type ${this.contentTypeId}.`);
+		Engine.startup(this);
 
-		// Startup
-		const contentType = Plugin.getPlugin(this.contentTypeId);
-		contentType.startup(this);
 		debug(`Starting media`);
+	}
+
+	/**
+	 * Sets the properties. Properties are unique, no redefinition otherwise throws error.
+	 *
+	 * @param      {Object}  properties  The properties
+	 */
+	setProperties(properties) {
+		for (const key in properties) {
+			if (this[key]) {
+				throw new Error('The property ' + key + ' already exists in this MediaObject !');
+			}
+			this[key] = properties[key];
+		}
+	}
+
+	/**
+	 * Gets the identifier.
+	 *
+	 * @return     {Number}  The identifier.
+	 */
+	getId() {
+		return this.__uid;
 	}
 
 	/**
@@ -107,7 +133,7 @@ class MediaObject {
 	 * @memberOf MediaObject
 	 */
 	getExtension() {
-		return this.__info.extension;
+		return this.extension;
 	}
 
 	/**
@@ -119,7 +145,7 @@ class MediaObject {
 	 * @memberOf MediaObject
 	 */
 	getMimeType() {
-		return this.__info.mimeType;
+		return this.mime;
 	}
 
 	/**
@@ -142,7 +168,7 @@ class MediaObject {
 	 * @memberOf MediaObject
 	 */
 	getType() {
-		return this.__info['data-type'];
+		return this.type;
 	}
 
 	clearContents() {
@@ -205,6 +231,13 @@ class MediaObject {
 		dataAttributes.forEach(dataAttr => element.setAttribute(dataAttr, this.getAttribute(dataAttr)));
 	}
 
+	setAttribute(name, value) {
+		this.__info[name] = value;
+	}
+
+	removeAttribute(name) {
+		delete this.__info[name];
+	}
 }
 
 export default MediaObject;

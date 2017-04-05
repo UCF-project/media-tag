@@ -1,5 +1,6 @@
 import MediaObject from './media-object';
-import Plugin from './plugin';
+import FilterManager from './filter-manager';
+import PluginManager from './plugin-manager';
 
 function getAttributesObject(element) {
 	const attrsObj = {};
@@ -30,12 +31,14 @@ function MediaTag(node) {
 	return node.mediaObject;
 }
 
+MediaTag.registerFilter = FilterManager.register;
+
 /**
  * Register a new plugin.
  * @public
  * @memberOf MediaTag
  * @since 0.2.0
  */
-MediaTag.registerPlugin = Plugin.registerPlugin;
+MediaTag.registerPlugin = PluginManager.register;
 
 export default MediaTag;

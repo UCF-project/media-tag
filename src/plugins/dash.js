@@ -5,48 +5,34 @@
  * @since 0.2.0
  */
 
-const validCryptoKeyTags = ['clearkey'];
-
 const DashPlugin = {
 	identifier: 'dash',
-	typeCheck: mediaObj => {
-		const contract = [
-			mediaObj.hasAttribute('data-crypto-src'),
-			mediaObj.hasAttribute('data-crypto-key'),
-			mediaObj.hasAttribute('data-crypto-type'),
-			mediaObj.getAttribute('data-crypto-type') === 'dash'
-		];
+	typeCheck: mediaObject => {
+		const regexExtensions = new RegExp('^dash[+]xml$');
+		const regexMimes = new RegExp('^application/dash[+]xml$');
 
-		for (const condition of contract) {
-			if (!condition) {
-				console.log(contract);
-				return false;
-			}
-		}
-		return true;
+		return	mediaObject.hasAttribute('src') &&
+				mediaObject.getType() === 'application' &&
+				regexExtensions.exec(mediaObject.getExtension()) !== null &&
+				regexMimes.exec(mediaObject.getMimeType()) !== null;
 	},
-	startup: mediaObj => {
+	startup: mediaObject => {
 		const video = document.createElement('video');
 		const player = new shaka.Player(video);
-		const array = mediaObj.getAttribute('data-crypto-key').split(':');
-		const tag = array[0];
-		const id = array[1];
-		const key = array[2];
-		const clearkeyText = '{"' + id + '": "' + key + '"}';
-
-		video.controls = true;
-		mediaObj.utilsSetAllDataAttributes(video);
-		mediaObj.replaceContents([video]);
-
-		if (validCryptoKeyTags.includes(tag)) {
+		const id = mediaObject.getAttribute('id');
+		const key = mediaObject.getAttribute('key');
+		if (id && key) {
+			const clearKeyStringObject = '{"' + id + '": "' + key + '"}';
+			const clearKey = JSON.parse(clearKeyStringObject);
 			player.configure({
 				drm: {
-					clearKeys: JSON.parse(clearkeyText)
+					clearKeys: clearKey
 				}
 			});
 		}
-
-		player.load(mediaObj.getAttribute('data-crypto-src')).then(() => {});
+		mediaObject.utilsSetAllDataAttributes(video);
+		mediaObject.replaceContents([video]);
+		player.load(mediaObject.getAttribute('src')).then(() => {});
 	}
 };
 

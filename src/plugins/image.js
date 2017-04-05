@@ -6,44 +6,27 @@
  */
 const ImagePlugin = {
 	identifier: 'image',
-	typeCheck: mediaObj => {
-        // Verify if there is mandatory 'src' field
-		if (!mediaObj.hasAttribute('src')) {
-			return false;
-		}
+	typeCheck: mediaObject => {
+		const regexExtensions = new RegExp('^png|jpg|jpeg|gif$');
+		const regexMimes = new RegExp('^image/(png|svg+xml|jpeg|gif)$');
 
-        // Verify extensions
-		const regexExt = new RegExp('^png|jpg|jpeg|gif$');
-		if (regexExt.exec(mediaObj.getExtension())) {
-			return true;
-		}
-
-        // Verify mime type
-		const regexMime = new RegExp('^image/(png|svg+xml|jpeg|gif)$');
-		if (regexMime.exec(mediaObj.getMimeType())) {
-			return true;
-		}
-
-        // Verify type
-		if (mediaObj.getType() === 'image') {
-			return true;
-		}
-
-        // Otherwise is not an image
-		return false;
+		return	mediaObject.hasAttribute('src') &&
+				mediaObject.getType() === 'image' &&
+				regexExtensions.exec(mediaObject.getExtension()) !== null &&
+				regexMimes.exec(mediaObject.getMimeType()) !== null;
 	},
-	startup: mediaObj => {
+	startup: mediaObject => {
         // Create image element
 		const element = document.createElement('img');
 
         // Set the source file
-		element.setAttribute('src', mediaObj.getAttribute('src'));
+		element.setAttribute('src', mediaObject.getAttribute('src'));
 
         // Set all data-attr-something to the element.setAttribute('something', value)
-		mediaObj.utilsSetAllDataAttributes(element);
+		mediaObject.utilsSetAllDataAttributes(element);
 
-        // Update mediaObj contents with the created element
-		mediaObj.replaceContents([element]);
+        // Update mediaObject contents with the created element
+		mediaObject.replaceContents([element]);
 	}
 };
 

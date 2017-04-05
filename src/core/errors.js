@@ -32,6 +32,18 @@ const Errors = {
 		}
 	},
 
+	/**
+	 * @class {FilterExists} FilterExists Error thrown when a try to
+	 * register a filter but the same identifier has been already
+	 * registered.
+	 * @since 0.2.1
+	 */
+	FilterExists: class FilterExists extends Error {
+		constructor(filter) {
+			super(`Filter with same "${filter.identifier} identifier found."`);
+		}
+	},
+
 	// Fetch //
 
 	/**

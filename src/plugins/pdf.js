@@ -6,41 +6,26 @@
  */
 const PdfPlugin = {
 	identifier: 'pdf',
-	typeCheck: mediaObj => {
-		// Verify if there is mandatory 'src' field
-		if (!mediaObj.hasAttribute('src')) {
-			return false;
-		}
+	typeCheck: mediaObject => {
+		const regexExtensions = new RegExp('^pdf$');
+		const regexMimes = new RegExp('^application/pdf$');
 
-		// Verify extensions
-		const regexExt = new RegExp('^pdf$');
-		if (regexExt.exec(mediaObj.getExtension())) {
-			return true;
-		}
-
-		// Verify mime type
-		const regexMime = new RegExp('^application/pdf$');
-		if (regexMime.exec(mediaObj.getMimeType())) {
-			return true;
-		}
-
-		// Verify type
-		if (mediaObj.getType() === 'pdf') {
-			return true;
-		}
-
-		// Otherwise is not a pdf
-		return false;
+		return	mediaObject.hasAttribute('src') &&
+				mediaObject.getType() === 'application' &&
+				regexExtensions.exec(mediaObject.getExtension()) !== null &&
+				regexMimes.exec(mediaObject.getMimeType()) !== null;
 	},
-	startup: mediaObj => {
+	startup: mediaObject => {
 		// Get the pdf url
-		const url = mediaObj.getAttribute('src');
+		const url = mediaObject.getAttribute('src');
 
 		// Create canvas element
 		const canvas = document.createElement('canvas');
 
-		// Update mediaObj contents with the created element
-		mediaObj.replaceContents([canvas]);
+		mediaObject.utilsSetAllDataAttributes(canvas);
+
+		// Update mediaObject contents with the created element
+		mediaObject.replaceContents([canvas]);
 
 		// Disable workers for now
 		// TODO: verify what workers do and how to integrate it
@@ -49,14 +34,11 @@ const PdfPlugin = {
 		// Asynchronous download of PDF
 		const loadingTask = PDFJS.getDocument(url);
 		loadingTask.promise.then(pdf => {
-			console.log('PDF loaded');
-
 			// Fetch the first page
-			const pageNumber = 1;
-			pdf.getPage(pageNumber).then(page => {
-				console.log('Page loaded');
+			let pageNumber = 1;
 
-				const scale = 1.5;
+			function render(page) {
+				const scale = 1;
 				const viewport = page.getViewport(scale);
 
 				// Prepare canvas using PDF page dimensions
@@ -71,9 +53,52 @@ const PdfPlugin = {
 				};
 				const renderTask = page.render(renderContext);
 				renderTask.then(() => {
-					console.log('Page rendered');
 				});
+			}
+
+			/**
+			 * Update the pageNumber after each call.
+			 * Based on click events.
+			 *
+			 * @param      {MouseEvent}  mouseEvent  The mouse event
+			 */
+			function update(mouseEvent) {
+				if (!mouseEvent) {
+					console.log('no event');
+				}
+				if (mouseEvent.buttons === 0) { 		// Left click
+					if (pageNumber === pdf.numPages) {
+						pageNumber = 1;
+					} else {
+						pageNumber++;
+					}
+				} else if (mouseEvent.buttons === 4) { 	// Left click + Wheel click
+					if (pageNumber === 1) {
+						pageNumber = pdf.numPages;
+					} else {
+						pageNumber--;
+					}
+				}
+			}
+
+			/**
+			 * First render.
+			 */
+			pdf.getPage(pageNumber).then(page => {
+				render(page);
 			});
+
+			/**
+			 * Renders on click event.
+			 *
+			 * @param      {MouseEvent}  event   The event
+			 */
+			canvas.onclick = event => {
+				update(event);
+				pdf.getPage(pageNumber).then(page => {
+					render(page);
+				});
+			};
 		}, reason => {
 			// PDF loading error
 			console.error(reason);

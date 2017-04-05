@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>My Page with Media Tag</title>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/1.7.376/pdf.js"></script>
+</head>
+<body>
+	<media-tag
+		src="/assets/documents/file.pdf"
+		data-type="application/pdf"
+		data-attr-style="border: solid black 1px"
+		></media-tag>
+	<!-- Include Media Tag library -->
+	<script type="text/javascript" src="/media-tag.js"></script>
+	<script>
+		// The only way to use as library is with JavaScript.
+		// You will need to select a DOM element that will be the wrapper
+		// element, for example a div.
+		// Then create a new MediaTag Object passing that element as
+		// parameter.
+		var mediaTagObj = mediaTag(document.querySelector('media-tag'));
+	</script>
+</body>
+</html>
