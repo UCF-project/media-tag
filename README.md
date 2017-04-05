@@ -25,7 +25,25 @@ If you target a production build you should inform the correct
 `NODE_ENV` at the build.
 
 ```sh
-$ NODE_ENV=production yarn run build # Create ./dist folder with optimized JS bundled files
+$ NODE_ENV=production-cjs yarn run build # Create ./dist folder with optimized JS bundled files
+```
+
+Have currently these `NODE_ENV`
+
+|    Environnement    |    Description    |
+|    -------------    |    -----------    |
+|   development-es6   | ES6, CommonJS, no Source map |
+|   development-es5   | ES5, CommonJS, no Source map |
+|   production-cjs    | ES6, CommonJS, Source map, Minified  |
+|   production-umd    | ES5, UMD, no Source map |
+
+You can create your own environnements by adding a new configuration file into `config` folder and 
+adding your keyword to `webpack.config.js` like this :
+
+```
+	# Add 'my-env' to available environnements
+	case 'my-env':
+			return require('./config/my-env.js');
 ```
 
 ## Usage
@@ -139,3 +157,7 @@ v0.2 is detailed at [integration](docs/integration.md) document.
 
 How to include a new type of content or any other plugin is described
 at [plugin](docs/plugin.md) document.
+
+The same for filters at [filter](docs/filter.md) document.
+
+If you are interested by the mechanismes of media-tag v2 you can take a look here : [model](docs/model)
