@@ -1,6 +1,6 @@
 # This image is created with Dockerfile available at
 # https://git.rnd.alterway.fr/UCF/docker_yarn
-image: ucf:yarn
+# image: ucf:yarn
 
 # Install project dependencies in all cases
 before_script:
