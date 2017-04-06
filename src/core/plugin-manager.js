@@ -16,7 +16,9 @@ class PluginManager {
 	 * @return     {Array<Plugin>}  Plugins array
 	 */
 	static plugins() {
-		return Object.values(PluginManager.pluginsMap);
+		return Object.keys(PluginManager.pluginsMap).map(key => {
+			return PluginManager.pluginsMap[key];
+		});
 	}
 
 	/**

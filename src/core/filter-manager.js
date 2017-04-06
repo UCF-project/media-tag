@@ -22,7 +22,9 @@ class FilterManager {
 	 * @return     {Array<Filter>}  Filters array
 	 */
 	static filters() {
-		return Object.values(FilterManager.filtersMap);
+		return Object.keys(FilterManager.filtersMap).map(key => {
+			return FilterManager.filtersMap[key];
+		});
 	}
 
 	/**

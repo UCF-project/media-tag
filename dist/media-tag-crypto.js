@@ -889,9 +889,7 @@
                         if (arrayBuffer) {
                             var u8 = new Uint8Array(arrayBuffer);
                             var binStr = Crypto.decrypt(u8, cryptoKey);
-                            // const blob = new Blob([binStr], {type: mediaObject.getType()});
-                            var url = DataManager.getBlobUrl(binStr, mediaObject.getMimeType());
-                            // const url = DataManager.getDataUrl(binStr, mediaObject.getMimeType());
+                            var url = DataManager.getDataUrl(binStr, mediaObject.getMimeType());
                             /**
      * Modifications applied on mediaObject.
      * After these modifications the typeCheck
@@ -1143,7 +1141,9 @@
                 }, {
                     key: "filters",
                     value: function filters() {
-                        return Object.values(FilterManager.filtersMap);
+                        return Object.keys(FilterManager.filtersMap).map(function(key) {
+                            return FilterManager.filtersMap[key];
+                        });
                     }
                 }, {
                     key: "isRegistered",
@@ -1263,7 +1263,9 @@
                 }, {
                     key: "plugins",
                     value: function plugins() {
-                        return Object.values(PluginManager.pluginsMap);
+                        return Object.keys(PluginManager.pluginsMap).map(function(key) {
+                            return PluginManager.pluginsMap[key];
+                        });
                     }
                 }, {
                     key: "isRegistered",

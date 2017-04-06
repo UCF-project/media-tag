@@ -1,1 +1,0 @@
-/home/dradeau/git/media_tag_v2/dist/media-tag.js

@@ -171,9 +171,7 @@ const CryptoFilter = {
 			if (arrayBuffer) {
 				const u8 = new Uint8Array(arrayBuffer);
 				const binStr = Crypto.decrypt(u8, cryptoKey);
-				// const blob = new Blob([binStr], {type: mediaObject.getType()});
-				const url = DataManager.getBlobUrl(binStr, mediaObject.getMimeType());
-				// const url = DataManager.getDataUrl(binStr, mediaObject.getMimeType());
+				const url = DataManager.getDataUrl(binStr, mediaObject.getMimeType());
 
 				/**
 				 * Modifications applied on mediaObject.
