@@ -1,8 +1,6 @@
-import debugFactory from 'debug';
-import Engine from './engine';
-import Parser from './parser';
+// const debugFactory = require('debug');
 
-const debug = debugFactory('MT:MediaObject');
+// const debug = debugFactory('MT:MediaObject');
 
 /**
  * Media Object is created for each media-tag and contains the
@@ -16,53 +14,36 @@ class MediaObject {
 
 	/**
 	 * Creates an instance of MediaObject.
-	 * @param {Object} options Object with attributes that will specify the contents.
+	 * @param {Object} attributes Object with attributes that will specify the contents.
 	 * @param {HTMLElement} rootElement HTMLElement DOM Node that acts as container to this object.
 	 *
 	 * @memberOf MediaObject
 	 */
-	constructor(options, rootElement) {
-		// TODO: parse src into url parts (protocol, domain, extension, etc)
-
-		debug(`Creating media object.`);
+	constructor(rootElement) {
+		/**
+		 * Generate a unique id for this MediaObject, currently necessary to handle
+		 * multiple MediaObject in the various engines.
+		 */
+		this.id = MediaObject.uid();
 
 		/**
-		 * Generate a unique id for this MediaObject.
+		 * @type {Object} attributesObject Object with attributes that will specify the contents.
 		 */
-		this.__uid = Engine.uid();
-
-		/**
-		 * @type {Object} __info Object with attributes that will specify the contents.
-		 */
-		this.__info = options;
+		this.attributesObject = MediaObject.attributesObject(rootElement);
 
 		/**
 		 * @type {HTMLElement} rootElement HTMLElement DOM Node that acts as
 		 * container to this object.
 		 */
-		// this.rootElement = rootElement;
 
 		// TODO: rethink about what is the best, explicit bind needed
-		// functions OR saving the node
+		// functions OR saving the element
 		this.hookedFns = {
 			hasChildNodes: rootElement.hasChildNodes.bind(rootElement),
 			removeChild: rootElement.removeChild.bind(rootElement),
 			getLastChild: () => rootElement.lastChild,
 			appendChild: rootElement.appendChild.bind(rootElement)
 		};
-
-		/**
-		 * Parsing of options to extract mediaObject's properties
-		 */
-		this.setProperties(Parser.parse(this));
-
-		/**
-		 * Starts up the engine on mediaObject which process all operations
-		 * possible from filters until plugin detection.
-		 */
-		Engine.startup(this);
-
-		debug(`Starting media`);
 	}
 
 	/**
@@ -85,19 +66,8 @@ class MediaObject {
 	 * @return     {Number}  The identifier.
 	 */
 	getId() {
-		return this.__uid;
+		return this.id;
 	}
-
-	/**
-	 * Returns the associated HTMLElement.
-	 *
-	 * @returns HTMLElement rootElement HTMLElement DOM Node that acts as container to this object.
-	 *
-	 * @memberOf MediaObject
-	 */
-	// getRootElement() {
-	// 	return this.rootElement;
-	// }
 
 	// TODO: define what will be direct method and what will be by getAttribute
 	/**
@@ -109,7 +79,26 @@ class MediaObject {
 	 * @memberOf MediaObject
 	 */
 	getAttribute(attrName) {
-		return this.__info[attrName];
+		return this.attributesObject[attrName];
+	}
+
+	/**
+	 * Sets the attribute.
+	 *
+	 * @param      {String}  name    The name
+	 * @param      {?}  value   The value
+	 */
+	setAttribute(name, value) {
+		this.attributesObject[name] = value;
+	}
+
+	/**
+	 * Removes an attribute.
+	 *
+	 * @param      {String}  name    The name
+	 */
+	removeAttribute(name) {
+		delete this.attributesObject[name];
 	}
 
 	/**
@@ -121,7 +110,7 @@ class MediaObject {
 	 * @memberOf MediaObject
 	 */
 	getAllDataAttrKeys() {
-		return Object.keys(this.__info).filter(field => field.startsWith('data-attr'));
+		return Object.keys(this.attributesObject).filter(field => field.startsWith('data-attr'));
 	}
 
 	/**
@@ -157,7 +146,7 @@ class MediaObject {
 	 * @memberOf MediaObject
 	 */
 	hasAttribute(attributeName) {
-		return attributeName in this.__info;
+		return attributeName in this.attributesObject;
 	}
 
 	/**
@@ -171,32 +160,37 @@ class MediaObject {
 		return this.type;
 	}
 
+	/**
+	 * Cleans up the mediaTag element.
+	 */
 	clearContents() {
 		while (this.hookedFns.hasChildNodes()) {
 			this.hookedFns.removeChild(this.hookedFns.getLastChild());
 		}
 
-		debug(`All media contents cleared.`);
+		// debug(`All media contents cleared.`);
 	}
 
 	/**
 	 * Replace the contents of the container, associated to the object,
-	 * by the given nodes. All previous contents of the container are
+	 * by the given elements. All previous contents of the container are
 	 * erased.
 	 *
-	 * @param {HTMLElement[]} nodes List of HTMLElement nodes.
+	 * @param {HTMLElement[]} elements List of HTMLElement elements.
 	 *
 	 * @memberOf MediaObject
 	 */
-	replaceContents(nodes) {
-		// Cleanup element
-		// this.rootElement.innerHTML = '';
+	replaceContents(elements) {
+		/**
+		 * Cleans up <media-tag> element. (root)
+		 */
 		this.clearContents();
 
-		// Add nodes to rootElement
-		// nodes.forEach(node => this.rootElement.appendChild(node));
-		nodes.forEach(node => this.hookedFns.appendChild(node));
-		debug(`Media contents replaced.`);
+		/**
+		 * Adds elements to <media-tag> element. (root)
+		 */
+		elements.forEach(element => this.hookedFns.appendChild(element));
+		// debug(`Media contents replaced.`);
 	}
 
 	/**
@@ -210,7 +204,7 @@ class MediaObject {
 	 * @memberOf MediaObject
 	 */
 	utilsSetAllDataAttributes(element) {
-		debug(`Setting data attributes.`);
+		// debug(`Setting data attributes.`);
 		const dataAttributes = this.getAllDataAttrKeys();
 		dataAttributes.forEach(dataAttr => element.setAttribute(dataAttr.substr(10), this.getAttribute(dataAttr)));
 	}
@@ -226,18 +220,38 @@ class MediaObject {
 	 * @memberOf MediaObject
 	 */
 	utilsPassAllDataAttributes(element) {
-		debug(`Passing data attributes.`);
+		// debug(`Passing data attributes.`);
 		const dataAttributes = this.getAllDataAttrKeys();
 		dataAttributes.forEach(dataAttr => element.setAttribute(dataAttr, this.getAttribute(dataAttr)));
 	}
-
-	setAttribute(name, value) {
-		this.__info[name] = value;
-	}
-
-	removeAttribute(name) {
-		delete this.__info[name];
-	}
 }
 
-export default MediaObject;
+/**
+ * Unique id generator.
+ */
+MediaObject.uid = (i => () => i++)(0);
+
+/**
+ * Builds a attributesObject with a DOM element.
+ *
+ * @param      {DOMElement}  element    The element
+ * @return     {Object}  { description_of_the_return_value }
+ */
+
+MediaObject.attributesObject = element => {
+	const attributesObject = {};
+
+	if (element.hasAttributes()) {
+		for (const attribute of element.attributes) {
+			attributesObject[attribute.name] = attribute.value;
+		}
+	}
+
+	attributesObject.hasAttribute = name => {
+		return true && attributesObject[name];
+	};
+
+	return attributesObject;
+};
+
+module.exports = MediaObject;

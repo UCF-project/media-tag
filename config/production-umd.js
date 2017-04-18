@@ -3,7 +3,7 @@ const webpack = require('webpack');
 
 const plugin = [
 	new webpack.LoaderOptionsPlugin({
-		minimize: false,
+		minimize: true,
 		debug: false
 	}),
 
@@ -13,10 +13,10 @@ const plugin = [
 
 	new webpack.optimize.UglifyJsPlugin({
 		sourceMap: false,
-		beautify: true,
-		mangle: false,
-		compress: false,
-		comments: /[a-zA-Z]+[ ]*[0-9]*[ ]*/
+		beautify: false,
+		mangle: true,
+		compress: true,
+		comments: false // /[a-zA-Z]+[ ]*[0-9]*[ ]*/
 	})
 ];
 
@@ -25,9 +25,6 @@ module.exports = function () {
 		entry: {
 			'media-tag': [
 				'./src/media-tag.js'
-			],
-			'media-tag-crypto': [
-				'./src/media-tag-crypto.js'
 			],
 			test: [
 				'./test/media-tag.js'

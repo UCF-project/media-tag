@@ -6,15 +6,15 @@
  */
 const PdfPlugin = {
 	identifier: 'pdf',
-	typeCheck: mediaObject => {
-		const regexExtensions = new RegExp('^pdf$');
-		const regexMimes = new RegExp('^application/pdf$');
+	// typeCheck: mediaObject => {
+	// 	const regexExtensions = new RegExp('^pdf$');
+	// 	const regexMimes = new RegExp('^application/pdf$');
 
-		return	mediaObject.hasAttribute('src') &&
-				mediaObject.getType() === 'application' &&
-				regexExtensions.exec(mediaObject.getExtension()) !== null &&
-				regexMimes.exec(mediaObject.getMimeType()) !== null;
-	},
+	// 	return	mediaObject.hasAttribute('src') &&
+	// 			mediaObject.getType() === 'application' &&
+	// 			regexExtensions.exec(mediaObject.getExtension()) !== null &&
+	// 			regexMimes.exec(mediaObject.getMimeType()) !== null;
+	// },
 	startup: mediaObject => {
 		// Get the pdf url
 		const url = mediaObject.getAttribute('src');
@@ -106,4 +106,4 @@ const PdfPlugin = {
 	}
 };
 
-export default PdfPlugin;
+module.exports = PdfPlugin;

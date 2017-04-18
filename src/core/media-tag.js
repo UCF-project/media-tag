@@ -1,17 +1,8 @@
-import MediaObject from './media-object';
-import FilterManager from './filter-manager';
-import PluginManager from './plugin-manager';
-
-function getAttributesObject(element) {
-	const attrsObj = {};
-	if (element.hasAttributes()) {
-		const attrs = element.attributes;
-		for (let i = attrs.length - 1; i >= 0; i--) {
-			attrsObj[attrs[i].name] = attrs[i].value;
-		}
-	}
-	return attrsObj;
-}
+const MediaObject = require('./media-object');
+const Parser = require('./parser');
+const FilterManager = require('./filter-manager');
+const PluginManager = require('./plugin-manager');
+const Orchestrator = require('./orchestrator');
 
 /**
  * @module MediaTag
@@ -20,17 +11,64 @@ function getAttributesObject(element) {
  * var mediaTagObj = MediaTag(document.querySelector('.myMediaTag'));
  * @since 0.2.0
  */
-function MediaTag(node) {
-    // If this element has already a mediaObject just return it
-	if (node.mediaObject) {
-		return node.mediaObject;
-	}
+function MediaTag(element) {
+	let mediaObject = element.mediaObject;
 
-    // Otherwise we create a new mediaObject
-	node.mediaObject = new MediaObject(getAttributesObject(node), node);
-	return node.mediaObject;
+    /**
+     * If this element has already a mediaObject just return it,
+     * the mediaObject presence prevent to apply several times the
+     * MediaTag processing.
+     */
+	if (mediaObject) {
+		return mediaObject;
+	}
+	/**
+	 * Else create one and startup a processing on it.
+	 */
+	mediaObject = new MediaObject(element);
+
+	/**
+	 * Starts up the MediaTag processing.
+	 */
+	return MediaTag.startup(mediaObject);
 }
 
+/**
+ * Applies all treatement on a mediaObject to display a content.
+ *
+ * @param      {Object}  mediaObject  The media object
+ * @return     {MediaObject}  { description_of_the_return_value }
+ */
+MediaTag.startup = mediaObject => {
+	/**
+	 * Parses properties from mediaObject.
+	 *
+	 * @type       {Object}
+	 */
+	const properties = Parser.parse(mediaObject);
+
+	/**
+	 * Sets properties to the mediaObject.
+	 */
+	mediaObject.setProperties(properties);
+
+	/**
+	 * Starts up the processing which select the best rendering method.
+	 */
+	Orchestrator.startup(mediaObject);
+
+	/**
+	 * Returns the mediaObject in this final state.
+	 */
+	return mediaObject;
+};
+
+/**
+ * Register a new filter.
+ * @public
+ * @memberOf MediaTag
+ * @since 0.2.1
+ */
 MediaTag.registerFilter = FilterManager.register;
 
 /**
@@ -41,4 +79,8 @@ MediaTag.registerFilter = FilterManager.register;
  */
 MediaTag.registerPlugin = PluginManager.register;
 
-export default MediaTag;
+MediaTag.Orchestrator = Orchestrator;
+MediaTag.MediaObject = MediaObject;
+MediaTag.Parser = Parser;
+
+module.exports = MediaTag;

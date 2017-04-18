@@ -1,6 +1,7 @@
 /* global fetch, window, XMLHttpRequest, Blob */
-import Errors from '../core/errors';
-import Engine from '../core/engine';
+const Errors = require('../core/errors');
+// const Engine = require('../core/engine');
+const Orchestrator = require('../core/orchestrator');
 
 /**
  * Class for crypto.
@@ -12,7 +13,7 @@ class Crypto {
 	 * Convert a Uint8Array into Array.
 	 *
 	 * @param      {Uint8Array}  u8      The u 8
-	 * @return     {Array}  Array from Uint8Array.
+	 * @return     {Array}  Array = require(Uint8Array.
 	 */
 	static slice(u8) {
 		return Array.prototype.slice.call(u8);
@@ -30,10 +31,10 @@ class Crypto {
 	}
 
 	/**
-	 * Gets the key from string.
+	 * Gets the key = require(string.
 	 *
 	 * @param      {String}  str     The string
-	 * @return     {Uint8Array}  The key from string.
+	 * @return     {Uint8Array}  The key = require(string.
 	 */
 	static getKeyFromStr(str) {
 		const Nacl = Crypto.Nacl;
@@ -93,7 +94,7 @@ Crypto.Nacl = window.nacl;
  */
 class DataManager {
 	/**
-	 * Gets the array buffer from a source url.
+	 * Gets the array buffer = require(a source url.
 	 *
 	 * @param      {<type>}  url     The url
 	 * @return     {<type>}  The array buffer.
@@ -151,13 +152,13 @@ class DataManager {
  */
 const CryptoFilter = {
 	identifier: 'crypto',
-	typeCheck: mediaObject => {
-		const result =
-			mediaObject.hasAttribute('src') &&
-			mediaObject.hasAttribute('data-type') &&
-			mediaObject.hasAttribute('data-crypto-key');
-		return result;
-	},
+	// typeCheck: mediaObject => {
+	// 	const result =
+	// 		mediaObject.hasAttribute('src') &&
+	// 		mediaObject.hasAttribute('data-type') &&
+	// 		mediaObject.hasAttribute('data-crypto-key');
+	// 	return result;
+	// },
 	startup: mediaObject => {
 		const src = mediaObject.getAttribute('src');
 		const strKey = mediaObject.getAttribute('data-crypto-key');
@@ -186,11 +187,11 @@ const CryptoFilter = {
 				 * Filters must call chain to try if the
 				 * current mediaObject matches other filters.
 				 */
-				Engine.chain(mediaObject);
+				Orchestrator.chain(mediaObject);
 			}
 		};
 		xhr.send(null);
 	}
 };
 
-export default CryptoFilter;
+module.exports = CryptoFilter;

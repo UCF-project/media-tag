@@ -7,15 +7,15 @@
 
 const DashPlugin = {
 	identifier: 'dash',
-	typeCheck: mediaObject => {
-		const regexExtensions = new RegExp('^dash[+]xml$');
-		const regexMimes = new RegExp('^application/dash[+]xml$');
+	// typeCheck: mediaObject => {
+	// 	const regexExtensions = new RegExp('^dash[+]xml$');
+	// 	const regexMimes = new RegExp('^application/dash[+]xml$');
 
-		return	mediaObject.hasAttribute('src') &&
-				mediaObject.getType() === 'application' &&
-				regexExtensions.exec(mediaObject.getExtension()) !== null &&
-				regexMimes.exec(mediaObject.getMimeType()) !== null;
-	},
+	// 	return	mediaObject.hasAttribute('src') &&
+	// 			mediaObject.getType() === 'application' &&
+	// 			regexExtensions.exec(mediaObject.getExtension()) !== null &&
+	// 			regexMimes.exec(mediaObject.getMimeType()) !== null;
+	// },
 	startup: mediaObject => {
 		const video = document.createElement('video');
 		const player = new shaka.Player(video);
@@ -36,4 +36,4 @@ const DashPlugin = {
 	}
 };
 
-export default DashPlugin;
+module.exports = DashPlugin;

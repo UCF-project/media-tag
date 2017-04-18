@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Orchestrator</title>
+
+</head>
+<body>
+	<media-tag
+		src="/assets/audios/alterway.mp3"
+        data-type="audio/mp3"
+        data-attr-controls=true
+        ></media-tag>
+	<!-- Include Media Tag library -->
+	<script type="text/javascript" src="/dist/media-tag.js"></script>
+	<script>
+		// The only way to use as library is with JavaScript.
+		// You will need to select a DOM element that will be the wrapper
+		// element, for example a div.
+		// Then create a new MediaTag Object passing that element as
+		// parameter.
+		const MediaTag = mediaTag;
+		const element = document.querySelector('media-tag');
+		const mediaObject = new MediaTag.MediaObject(element);
+		const properties = MediaTag.Parser.parse(mediaObject);
+		mediaObject.setProperties(properties);
+		const modules = MediaTag.Orchestrator.findModuleChain(mediaObject);
+		console.log(modules);
+		MediaTag(element);
+	</script>
+</body>
+</html>

@@ -6,15 +6,15 @@
  */
 const ImagePlugin = {
 	identifier: 'image',
-	typeCheck: mediaObject => {
-		const regexExtensions = new RegExp('^png|jpg|jpeg|gif$');
-		const regexMimes = new RegExp('^image/(png|svg+xml|jpeg|gif)$');
+	// typeCheck: mediaObject => {
+	// 	const regexExtensions = new RegExp('^png|jpg|jpeg|gif$');
+	// 	const regexMimes = new RegExp('^image/(png|svg+xml|jpeg|gif)$');
 
-		return	mediaObject.hasAttribute('src') &&
-				mediaObject.getType() === 'image' &&
-				regexExtensions.exec(mediaObject.getExtension()) !== null &&
-				regexMimes.exec(mediaObject.getMimeType()) !== null;
-	},
+	// 	return	mediaObject.hasAttribute('src') &&
+	// 			mediaObject.getType() === 'image' &&
+	// 			regexExtensions.exec(mediaObject.getExtension()) !== null &&
+	// 			regexMimes.exec(mediaObject.getMimeType()) !== null;
+	// },
 	startup: mediaObject => {
         // Create image element
 		const element = document.createElement('img');
@@ -30,4 +30,4 @@ const ImagePlugin = {
 	}
 };
 
-export default ImagePlugin;
+module.exports = ImagePlugin;

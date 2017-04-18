@@ -1,5 +1,8 @@
-import Errors from './errors';
-
+/**
+ * Class for plugin manager.
+ *
+ * @class      PluginManager (name)
+ */
 class PluginManager {
 	/**
 	 * Returns an array with all plugin identifiers.
@@ -38,8 +41,9 @@ class PluginManager {
 	 */
 	static register(plugin) {
 		if (plugin) {
+			// TODO Something when register the same again
 			if (PluginManager.isRegistered(plugin)) {
-				throw new Errors.PluginExists(plugin);
+				console.warn(`Plugin "${plugin.identifier}" is already registered and will be overwritten`);
 			}
 			PluginManager.pluginsMap[plugin.identifier] = plugin;
 		}
@@ -81,4 +85,4 @@ class PluginManager {
  */
 PluginManager.pluginsMap = {};
 
-export default PluginManager;
+module.exports = PluginManager;

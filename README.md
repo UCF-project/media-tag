@@ -75,6 +75,23 @@ adding your keyword to `webpack.config.js` like this :
 </html>
 ```
 
+## True AMD builds
+
+
+
+You can produce builds for AMD targets with these commands :
+
+```
+	yarn build 			# Produce an UMD bundle and an AMD and ES5 translation of sources.
+	yarn build:amd-es5 	# Produces an AMD and ES5 translation of sources. 
+	yarn build:amd-es6 	# Produces an AMD translation of sources.
+```
+
+To use an AMD build you need to require ```core/dynamic/media-tag.js```.
+Currently is a preset of all features through orchestator detection rules.
+Filters and plugins are loaded on the demand, rules are loaded statically.
+
+
 ## Development
 
 To start a web server and automatic builds when changing files you can

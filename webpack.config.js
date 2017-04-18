@@ -9,6 +9,8 @@ function config(env) {
 			return require('./config/development-es6.js');
 		case 'development-es5':
 			return require('./config/development-es5.js');
+		case 'dynamic':
+			return require('./config/dynamic.js');
 		default:
 			throw new Error('Unknown environnement : %s', env);
 	}

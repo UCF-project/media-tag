@@ -1,5 +1,3 @@
-import Errors from './errors';
-
 /**
  * Class for filter manager.
  *
@@ -44,8 +42,9 @@ class FilterManager {
 	 */
 	static register(filter) {
 		if (filter) {
+			// TODO Something when register the same again
 			if (FilterManager.isRegistered(filter)) {
-				throw new Errors.FilterExists(filter);
+				console.warn(`Filter "${filter.identifier}" is already registered and will be overwritten`);
 			}
 			FilterManager.filtersMap[filter.identifier] = filter;
 		}
@@ -87,4 +86,4 @@ class FilterManager {
  */
 FilterManager.filtersMap = {};
 
-export default FilterManager;
+module.exports = FilterManager;

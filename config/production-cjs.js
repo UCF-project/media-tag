@@ -34,9 +34,6 @@ module.exports = function () {
 			'media-tag': [
 				'./src/media-tag.js'
 			],
-			'media-tag-crypto': [
-				'./src/media-tag-crypto.js'
-			],
 			test: [
 				'./test/media-tag.js'
 			]

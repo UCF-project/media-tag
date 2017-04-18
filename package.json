@@ -7,9 +7,10 @@
   "license": "Apache-2.0",
   "scripts": {
     "test": "xo && nyc _mocha ./test/media-tag.js",
-    "build": "webpack",
+    "build": "webpack && r.js -convert src/ temp/ && babel temp/ -d dist/amd-es5/ && rm -r temp/",
     "build:docs": "esdoc",
-    "build:clean-eval": "webpack && node clean-eval.js",
+    "build:amd-es5": "r.js -convert src/ temp/ && babel temp/ -d dist/amd-es5/ && rm -r temp/",
+    "build:amd-es6": "r.js -convert src/ dist/amd-es6/",
     "start": "webpack-dev-server",
     "xo": "xo",
     "karma": "karma start",
@@ -60,6 +61,7 @@
     ]
   },
   "dependencies": {
+    "babel-cli": "^6.24.1",
     "babel-core": "^6.24.0",
     "babel-loader": "^6.4.0",
     "babel-plugin-istanbul": "^4.0.0",
@@ -91,7 +93,7 @@
     ],
     "env": {
       "development": {
-        "sourceMaps": "inline",
+        "sourceMaps": false,
         "plugins": [
           "istanbul"
         ]

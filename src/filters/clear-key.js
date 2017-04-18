@@ -1,4 +1,5 @@
-import Engine from '../core/engine';
+// const Engine = require('../core/engine');
+const Orchestrator = require('../core/orchestrator');
 
 /**
  * Filter which checking the presence of 'data-clear-key' attribute and
@@ -9,9 +10,9 @@ import Engine from '../core/engine';
 
 const ClearKeyFilter = {
 	identifier: 'clear-key',
-	typeCheck: mediaObject => {
-		return	mediaObject.hasAttribute('data-clear-key');
-	},
+	// typeCheck: mediaObject => {
+	// 	return	mediaObject.hasAttribute('data-clear-key');
+	// },
 	startup: mediaObject => {
 		const clearKey = mediaObject.getAttribute('data-clear-key');
 		const id = clearKey.substring(0, 32);
@@ -19,8 +20,8 @@ const ClearKeyFilter = {
 		mediaObject.setAttribute('id', id);
 		mediaObject.setAttribute('key', key);
 		mediaObject.removeAttribute('data-clear-key');
-		Engine.chain(mediaObject);
+		Orchestrator.chain(mediaObject);
 	}
 };
 
-export default ClearKeyFilter;
+module.exports = ClearKeyFilter;
