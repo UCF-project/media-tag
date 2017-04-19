@@ -263,4 +263,29 @@ Orchestrator.allowedCycles = 1;
  */
 Orchestrator.forbiddenIdentifiers = [];
 
+/**
+ * Prints the history.
+ */
+Orchestrator.printHistory = () => {
+	let result = String();
+	Object.keys(Orchestrator.history).forEach(key => {
+		const history = Orchestrator.history[key];
+
+		result += 'Cycle[' + key + ']: \n';
+		Object.keys(history.cycles).forEach(identifier => {
+			result += identifier + ': ' + history.cycles[identifier] + '\n';
+		});
+		result += 'Identifiers[' + key + ']: \n';
+		history.identifiers.forEach(identifiers => {
+			result += '[';
+			identifiers.forEach(identifier => {
+				result += identifier + ', ';
+			});
+			result += ']';
+			result = result.replace(', ]', ']\n');
+		});
+	});
+	console.log(result);
+};
+
 module.exports = Orchestrator;
