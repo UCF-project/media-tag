@@ -13,7 +13,7 @@
 		id="video"
 		data-type="video/mp4"
 		src="/assets/videos/encrypted/video-encrypted"
-		data-crypto-key="gxGQi0zzmj/w8GrV+/xGgaMI"
+		data-crypto-key="salsa20poly1305:gxGQi0zzmj/w8GrV+/xGgaMI"
 		data-attr-width="600px"
 		data-attr-height="400px"
 		data-attr-controls=true
@@ -27,7 +27,7 @@
 		// element, for example a div.
 		// Then create a new MediaTag Object passing that element as
 		// parameter.
-		var mediaTagObjVideo = mediaTag(document.querySelector('media-tag#video'));
+		var mediaTagObjVideo = MediaTag(document.querySelector('media-tag#video'));
 	</script>
 </body>
 </html>

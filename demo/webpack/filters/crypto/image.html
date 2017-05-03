@@ -16,7 +16,7 @@
 		id="image"
 		data-type="image/png"
 		src="/assets/images/encrypted/raccoon.png.encrypted"
-		data-crypto-key="mhor3LYgGqropiJwFib7yCPD"
+		data-crypto-key="salsa20poly1305:mhor3LYgGqropiJwFib7yCPD"
 		data-attr-width="900px"
 		data-attr-height="600px"
 		>text <p>aqqq</p><a>qqq</a></media-tag>
@@ -30,7 +30,7 @@
 		// element, for example a div.
 		// Then create a new MediaTag Object passing that element as
 		// parameter.
-		var mediaTagObjImage = mediaTag(document.querySelector('media-tag#image'));
+		var mediaTagObjImage = MediaTag(document.querySelector('media-tag#image'));
 	</script>
 </body>
 </html>

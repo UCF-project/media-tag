@@ -44,11 +44,10 @@
   "xo": {
     "esnext": true,
     "ignores": [
-      "dist/**/*.js",
-      "demo/media-tag*.js",
-      "demo/test*.js",
-      "demo/requirejs/**/*",
-      "test/dependencies/**/*"
+      "dist/**/*",
+      "demo/**/*",
+      "test/**/*",
+      "src/**/*/loading*.js"
     ],
     "overrides": [
       {
@@ -75,12 +74,14 @@
     "chai": "^3.5.0",
     "debug": "^2.6.1",
     "esdoc": "^0.5.2",
+    "file-saver": "^1.3.3",
     "karma": "^1.5.0",
     "karma-chrome-launcher": "^2.0.0",
     "karma-firefox-launcher": "^1.0.1",
     "karma-mocha": "^1.3.0",
     "mocha": "^3.2.0",
     "nyc": "^10.1.2",
+    "requirejs": "^2.3.3",
     "webpack": "^2.2.1",
     "webpack-dev-server": "^2.4.1",
     "xo": "^0.17.1",

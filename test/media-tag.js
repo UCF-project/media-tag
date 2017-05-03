@@ -1,6 +1,6 @@
 /* global document, describe, it */
 import chai from 'chai';
-import mediaTag from '../src/media-tag';
+import mediaTag from '../src/presets/media-tag';
 
 describe('Create different media tag contents: ', () => {
 	it('can create a media-tag containing an image', () => {

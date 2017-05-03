@@ -14,7 +14,7 @@
 		id="image"
 		data-type="image/png"
 		src="/assets/images/encrypted/image.png-encrypted"
-		data-crypto-key="TBo77200c0e/FdldQFcnQx4Y"
+		data-crypto-key="salsa20poly1305:TBo77200c0e/FdldQFcnQx4Y"
 		data-attr-width="600px"
 		data-attr-height="400px"
 		>text <p>aqqq</p><a>qqq</a></media-tag>
@@ -24,7 +24,7 @@
 		id="audio"
 		data-type="audio/mp3"
 		src="/assets/audios/encrypted/audio-encrypted"
-		data-crypto-key="WKPuoxzA+s66qS5y8NDxoDSs"
+		data-crypto-key="salsa20poly1305:WKPuoxzA+s66qS5y8NDxoDSs"
 		data-attr-controls=true
 		></media-tag>
 
@@ -33,7 +33,7 @@
 		id="video"
 		data-type="video/mp4"
 		src="/assets/videos/encrypted/video-encrypted"
-		data-crypto-key="gxGQi0zzmj/w8GrV+/xGgaMI"
+		data-crypto-key="salsa20poly1305:gxGQi0zzmj/w8GrV+/xGgaMI"
 		data-attr-width="600px"
 		data-attr-height="400px"
 		data-attr-controls=true
@@ -44,8 +44,19 @@
 		id="pdf"
 		data-type="application/pdf"
 		src="/assets/documents/encrypted/file.pdf-encrypted"
-		data-crypto-key="UR5bLSwuyBak41oJrN2dRq1a"
+		data-crypto-key="salsa20poly1305:UR5bLSwuyBak41oJrN2dRq1a"
 		data-attr-style="border: 1px solid black"
+		></media-tag>
+
+	<h1>Download:</h1>
+	<media-tag
+		id="download"
+		data-type="nothing"
+		src="/assets/videos/encrypted/video-encrypted"
+		data-crypto-key="salsa20poly1305:gxGQi0zzmj/w8GrV+/xGgaMI"
+		data-attr-width="600px"
+		data-attr-height="400px"
+		data-attr-controls=true
 		></media-tag>
 
 	<!-- Include Media Tag library -->
@@ -56,10 +67,16 @@
 		// element, for example a div.
 		// Then create a new MediaTag Object passing that element as
 		// parameter.
-		var mediaTagObjImage = mediaTag(document.querySelector('media-tag#image'));
-		var mediaTagObjVideo = mediaTag(document.querySelector('media-tag#video'));
-		var mediaTagObjAudio = mediaTag(document.querySelector('media-tag#audio'));
-		var mediaTagObjPdf = mediaTag(document.querySelector('media-tag#pdf'));
+
+		document.addEventListener('decryption', event => {
+			console.log('catched event', event);
+		});
+
+		var mediaTagObjImage = MediaTag(document.querySelector('media-tag#image'));
+		var mediaTagObjVideo = MediaTag(document.querySelector('media-tag#video'));
+		var mediaTagObjAudio = MediaTag(document.querySelector('media-tag#audio'));
+		var mediaTagObjPdf = MediaTag(document.querySelector('media-tag#pdf'));
+		var mediaTagObjDownload = MediaTag(document.querySelector('media-tag#download'));
 	</script>
 </body>
 </html>

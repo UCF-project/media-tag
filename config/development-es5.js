@@ -16,7 +16,7 @@ module.exports = function () {
 	return {
 		entry: {
 			'media-tag': [
-				'./src/media-tag.js'
+				'./src/presets/media-tag.js'
 			],
 			test: [
 				'./test/media-tag.js'
@@ -26,7 +26,7 @@ module.exports = function () {
 		output: {
 			filename: '[name].js',
 			path: path.join(__dirname, '../dist'),
-			library: 'mediaTag'
+			library: 'MediaTag'
 		},
 
 		devtool: 'source-map',
