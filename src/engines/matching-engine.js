@@ -22,7 +22,7 @@ class MatchingEngine {
 
 		matchedIdentifiers.forEach(identifier => {
 			if (MatchingEngine.map) {
-				object[identifier] = MatchingEngine.map[identifier];
+				object[identifier] = MatchingEngine.map.get(identifier);
 			} else {
 				throw new Error('No map registrated for the matching engine');
 			}

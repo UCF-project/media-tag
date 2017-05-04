@@ -6,6 +6,7 @@
         <script type="text/javascript" src="/ext-lib/shaka-player.compiled.js"></script>
         <script type="text/javascript" src="/ext-lib/pdf.js"></script>
         <script type="text/javascript" src="/ext-lib/pdf.worker.js"></script>
+        <script type="text/javascript" src="/ext-lib/FileSaver.min.js"></script>
         <script data-main="app" src="/ext-lib/require.js"></script>
     </head>
     <body>
@@ -15,7 +16,7 @@
         id="image-encrypted"
         data-type="image/png"
         src="/assets/images/encrypted/image.png-encrypted"
-        data-crypto-key="TBo77200c0e/FdldQFcnQx4Y"
+        data-crypto-key="salsa20poly1305:TBo77200c0e/FdldQFcnQx4Y"
         data-attr-width="620px"
         data-attr-height="360px"
         >Waitting for loading or the configuration has blocked it</media-tag>
@@ -25,7 +26,7 @@
         id="audio-encrypted"
         data-type="audio/mp3"
         src="/assets/audios/encrypted/audio-encrypted"
-        data-crypto-key="WKPuoxzA+s66qS5y8NDxoDSs"
+        data-crypto-key="salsa20poly1305:WKPuoxzA+s66qS5y8NDxoDSs"
         data-attr-controls=true
         >Waitting for loading or the configuration has blocked it</media-tag>
 
@@ -34,7 +35,7 @@
         id="video-encrypted"
         data-type="video/mp4"
         src="/assets/videos/encrypted/video-encrypted"
-        data-crypto-key="gxGQi0zzmj/w8GrV+/xGgaMI"
+        data-crypto-key="salsa20poly1305:gxGQi0zzmj/w8GrV+/xGgaMI"
         data-attr-type="video/mp4"
         data-attr-width="620px"
         data-attr-height="360px"
@@ -46,7 +47,7 @@
         id="pdf-encrypted"
         data-type="application/pdf"
         src="/assets/documents/encrypted/file.pdf-encrypted"
-        data-crypto-key="UR5bLSwuyBak41oJrN2dRq1a"
+        data-crypto-key="salsa20poly1305:UR5bLSwuyBak41oJrN2dRq1a"
         data-attr-style="border: 1px solid black"
         >Waitting for loading or the configuration has blocked it</media-tag>
 

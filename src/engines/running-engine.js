@@ -80,10 +80,12 @@ class RunningEngine {
 			return matcher.getIdentifier();
 		});
 		const plugins = PluginStore.values();
+
 		const matchedPlugins = plugins.filter(plugin => {
 			return 	plugin.type !== Type.MATCHER &&
 					matchedIdentifiers.includes(plugin.identifier);
 		});
+
 		const pluginsByOccurrencies = PluginStore.filterByOccurrencies(matchedPlugins);
 
 		for (const plugin of pluginsByOccurrencies.once) {

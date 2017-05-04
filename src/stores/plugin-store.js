@@ -1,6 +1,4 @@
-const Store = require('./store');
-
-class PluginStore extends Store {
+class PluginStore {
 	/**
 	 * Gets the plugins.
 	 *
@@ -8,7 +6,7 @@ class PluginStore extends Store {
 	 * @return     {Array<Plugin>}  The plugins.
 	 */
 	static getPlugins(type) {
-		const plugins = super.values();
+		const plugins = PluginStore.values();
 
 		return plugins.filter(plugin => {
 			if (plugin.type === type) {
@@ -24,7 +22,10 @@ class PluginStore extends Store {
 	 * @param      {Plugin}  plugin  The plugin
 	 */
 	static store(plugin) {
-		super.store([plugin.identifier, plugin.type], plugin);
+		if (PluginStore.isStored([plugin.identifier, plugin.type])) {
+			console.warn(`The key "${[plugin.identifier, plugin.type]}" is already registered, the content will be overwritten.`);
+		}
+		PluginStore.map[[plugin.identifier, plugin.type]] = plugin;
 	}
 
 	/**
@@ -33,7 +34,11 @@ class PluginStore extends Store {
 	 * @param      {Plugin}  plugin  The plugin
 	 */
 	static unstore(plugin) {
-		super.unstore([plugin.identifier, plugin.type]);
+		if (PluginStore.isStored([plugin.identifier, plugin.type])) {
+			delete PluginStore.map[[plugin.identifier, plugin.type]];
+		} else {
+			console.warn(`The key "${[plugin.identifier, plugin.type]}" not exists in this manager`);
+		}
 	}
 
 	/**
@@ -78,6 +83,62 @@ class PluginStore extends Store {
 		}
 		return result;
 	}
+
+	static isStored(key) {
+		if (PluginStore.get(key)) {
+			return true;
+		}
+		return false;
+	}
+
+	static get(key) {
+		return PluginStore.map[key];
+	}
+
+	static keys() {
+		return Object.keys(PluginStore.map);
+	}
+
+	static values() {
+		const keys = PluginStore.keys();
+		return keys.map(key => {
+			return PluginStore.get(key);
+		});
+	}
+
+	/* TODO Experimental */
+
+	static knows(object) {
+		const keys = Object.keys(PluginStore.map);
+		const values = Object.keys(PluginStore.map).map(key => {
+			return PluginStore.map[key];
+		});
+		return keys.some(key => {
+			const obj = {};
+			obj[object] = null;
+			return key === Object.keys(obj)[0];
+		}) || values.some(key => {
+			return key === object;
+		});
+	}
+
+	/* TODO Experimental */
+
+	static like(object) {
+		const keys = Object.keys(PluginStore.map);
+
+		return keys.filter(key => {
+			const obj = {};
+			obj[object] = null;
+			return key === Object.keys(obj)[0] || PluginStore.map[key] === object;
+		}).map(key => {
+			const result = {};
+			result[key] = PluginStore.map[key];
+			return result;
+		});
+	}
 }
+
+PluginStore.map = {};
 
 module.exports = PluginStore;

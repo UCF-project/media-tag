@@ -1,5 +1,4 @@
-/* global document, XMLHttpRequest */
-const FileSaver =	require('file-saver');
+/* global document, XMLHttpRequest, saveAs */
 const Renderer =	require('../renderer');
 const Identifier = 	require('../../enums/identifier');
 
@@ -36,7 +35,7 @@ class DownloadRenderer extends Renderer {
 			xhr.onload = () => {
 				const blob = xhr.response;
 				if (blob) {
-					FileSaver.saveAs(blob);
+					saveAs(blob);
 				}
 			};
 			xhr.send();

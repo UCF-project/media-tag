@@ -18,6 +18,9 @@ class CryptoFilter extends Filter {
 	process(mediaObject) {
 		const dataCryptoKey = mediaObject.getAttribute('data-crypto-key');
 		const schemes = /\w+:/.exec(dataCryptoKey);
+		if (schemes === null) {
+			throw new Error('No algorithm scheme found in data-crypto-key');
+		}
 		const algorithmScheme = schemes[0];	/* Takes the first encountered scheme */
 		const algorithmName = algorithmScheme.replace(':', '');
 		const stringKey = dataCryptoKey.replace(algorithmScheme, '');
@@ -36,6 +39,8 @@ class CryptoFilter extends Filter {
 			 * the running engine when its job is done.
 			 */
 			algorithm(mediaObject);
+		} else {
+			throw new Error(`Algorithm ${algorithmName} is not registered`);
 		}
 	}
 }

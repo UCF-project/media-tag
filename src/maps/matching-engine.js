@@ -20,3 +20,5 @@ UriStore.store(Identifier.CRYPTO, Type.FILTER);
 UriStore.store(Identifier.CLEAR_KEY, Type.FILTER);
 
 UriStore.store(Identifier.MEDIA_OBJECT, Type.SANITIZER);
+
+module.exports = UriStore;

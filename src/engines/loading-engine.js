@@ -24,16 +24,34 @@ class LoadingEngine {
 
 		const allowedRelations = LoadingEngine.filterRelations(relations);
 
+		// console.warn(allowedRelations);
+
 		const uris = Object.keys(allowedRelations).map(identifier => {
 			return allowedRelations[identifier];
 		});
 
-		require(uris, (plugins, mediaObject) => {
-			plugins.forEach(plugin => {
-				PluginStore.store(plugin);
-			});
-			RunningEngine.start(mediaObject);
-		});
+		require(uris, LoadingEngine.register.bind(null, mediaObject));
+	}
+
+	static register() {
+		const mediaObject = arguments[0];
+
+		if (!mediaObject) {
+			throw new Error('No MediaObject at registration');
+		}
+
+		for (const PluginClass of arguments) {
+			if (PluginClass === mediaObject) {
+				continue;
+			}
+			const pluginInstance = new PluginClass();
+
+			if (!PluginStore.isStored(pluginInstance)) {
+				PluginStore.store(pluginInstance);
+			}
+		}
+
+		RunningEngine.start(mediaObject);
 	}
 
 	/**

@@ -13,7 +13,7 @@ define((require, exports, module) => {
 		 * @param      {<type>}  data    The data
 		 */
 		constructor(data) {
-			this.data = data;
+			this.data = data || {};
 		}
 
 		/**
