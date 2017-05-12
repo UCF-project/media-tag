@@ -3,7 +3,6 @@ const Parser = require('../../parser');
 const MediaObject = require('../../media-object');
 const LoadingEngine = require('../../engines/loading-engine');
 const MatchingEngine = require('../../engines/matching-engine');
-const RunningEngine = require('../../engines/running-engine');
 const PluginStore = require('../../stores/plugin-store');
 const UriStore = require('../../stores/uri-store');
 

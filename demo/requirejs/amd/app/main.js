@@ -60,7 +60,7 @@ define(require => {
 
 	const configuration = new Configuration();
 
-	configuration.setPermission(Identifier.IMAGE, Permission.ALLOWED);
+	configuration.setPermission(Identifier.IMAGE, Permission.FORBIDDEN);
 	configuration.setPermission(Identifier.AUDIO, Permission.ALLOWED);
 	configuration.setPermission(Identifier.VIDEO, Permission.ALLOWED);
 	configuration.setPermission(Identifier.PDF, Permission.ALLOWED);

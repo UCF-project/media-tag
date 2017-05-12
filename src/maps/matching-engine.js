@@ -18,6 +18,7 @@ UriStore.store(Identifier.DASH, Type.RENDERER);
 
 UriStore.store(Identifier.CRYPTO, Type.FILTER);
 UriStore.store(Identifier.CLEAR_KEY, Type.FILTER);
+UriStore.store(Identifier.TEST, Type.FILTER);
 
 UriStore.store(Identifier.MEDIA_OBJECT, Type.SANITIZER);
 

@@ -1,69 +1,52 @@
 # Plugin
 
-We can add new plugins to current media-tag v2.
+The Media-Tag architecture enable plugin creation.
 
-## Create a plugin
+## Structure
 
-Under ```src/plugins/```, the first set consist to create a extended plugin component.
+A full functional plugin is constructed in two parts :
 
-| Propertie | Type | Description |
-|-----------|------|-------------|
-| identifier | string | Plugin unique identifier |
-| typeCheck | callback | Type checking for media objects matching |
-| startup | callback | Stuff to process with media object after matches them |
+* An analytic part which used to determine if a plugin must be used.
+* An active job part which operate modifications on MediaObject or the DOM.
 
-Example with dash plugin adding ```dash.js```
+### Analytic part
+
+Analytic part is associated to matcher plugin type.
+
+A matcher plugin provide a main method process() which analyses MediaObject with criterions and returns the boolean true if the job part can be applied or else false.
+
+Analytic parts are defined into `src/plugins/matchers/<plugins type name>`
 
 ```
-/* global document, shaka */
+class ImageMatcher extends Matcher {
+	/**
+	 * Constructs the object.
+	 */
+	constructor() {
+		super(Identifier.IMAGE, Type.RENDERER);
+	}
 
-/**
- * @module DashPlugin
- * @since 0.2.0
- */
-
-const DashPlugin = {
-	identifier: 'dash',
-	typeCheck: mediaObject => {
-		const regexExtensions = new RegExp('^dash[+]xml$');
-		const regexMimes = new RegExp('^application/dash[+]xml$');
+	/**
+	 * Job to realise to render a image with a mediaObject.
+	 *
+	 * @param      {MediaObject}  mediaObject  The media object
+	 */
+	process(mediaObject) {
+		const regexExtensions = new RegExp('^png|jpg|jpeg|gif$');
+		const regexMimes = new RegExp('^image/(png|svg+xml|jpeg|gif)$');
 
 		return	mediaObject.hasAttribute('src') &&
-				mediaObject.getType() === 'application' &&
+				mediaObject.getType() === 'image' &&
 				regexExtensions.exec(mediaObject.getExtension()) !== null &&
 				regexMimes.exec(mediaObject.getMimeType()) !== null;
-	},
-	startup: mediaObject => {
-		const video = document.createElement('video');
-		const player = new shaka.Player(video);
-		const id = mediaObject.getAttribute('id');
-		const key = mediaObject.getAttribute('key');
-		if (id && key) {
-			const clearKeyStringObject = '{"' + id + '": "' + key + '"}';
-			const clearKey = JSON.parse(clearKeyStringObject);
-			player.configure({
-				drm: {
-					clearKeys: clearKey
-				}
-			});
-		}
-		mediaObject.utilsSetAllDataAttributes(video);
-		mediaObject.replaceContents([video]);
-		player.load(mediaObject.getAttribute('src')).then(() => {});
 	}
-};
-
-export default DashPlugin;
-
+}
 ```
 
-## Setup your plugin reference
+### Job part
 
-Into ```src/media-tag.js``` you need to register your fresh plugin by insert this :
+Job part is associated to any other plugin type than matcher.
 
-```
-// Plugin :: Dash
-const DashPlugin = require('./plugins/dash').default;
+Its role is realise any kind of action on MediaObject or the DOM or other.
 
-MediaTag.registerPlugin(DashPlugin);
-```
+Job parts are defined into `src/plugins/<plugins type name>`

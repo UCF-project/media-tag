@@ -16,7 +16,7 @@ class MediaObjectSanitizer extends Sanitizer {
 	 * @param      {MediaObject}  mediaObject  The media object
 	 */
 	process(mediaObject) {
-		console.log('Some stuff to sanitize media object');
+		// TODO Add a library to sanitize content.
 		RunningEngine.return(mediaObject);
 	}
 }

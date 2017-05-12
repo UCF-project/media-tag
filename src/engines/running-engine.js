@@ -1,9 +1,6 @@
 const Type = require('../enums/type');
-const Occurrence = require('../enums/occurrence');
 const PluginStore = require('../stores/plugin-store');
 const DownloadPlugin = require('../plugins/renderers/download');
-
-/* TODO Correction of the multiple same sanitizer stacking */
 
 /**
  * Class for running engine.
@@ -88,41 +85,27 @@ class RunningEngine {
 
 		const pluginsByOccurrencies = PluginStore.filterByOccurrencies(matchedPlugins);
 
-		for (const plugin of pluginsByOccurrencies.once) {
-			stack.push(plugin);
-			if (pluginsByOccurrencies.every) {
-				stack.push(...pluginsByOccurrencies.every);
+		pluginsByOccurrencies.once.forEach(plugin => {
+			if (!RunningEngine.isStacked(mediaObject, plugin)) {
+				stack.push(plugin);
 			}
-		}
+		});
 
-		for (const plugin of pluginsByOccurrencies.any) {
-			stack.push(plugin);
-			if (pluginsByOccurrencies.every) {
-				stack.push(...pluginsByOccurrencies.every);
+		pluginsByOccurrencies.any.forEach(plugin => {
+			if (!RunningEngine.isStacked(mediaObject, plugin)) {
+				stack.push(plugin);
 			}
-		}
+		});
+
+		pluginsByOccurrencies.every.forEach(plugin => {
+			stack.push(plugin);
+		});
 
 		if (RunningEngine.stacks[stackId]) {
-			const plugin = stack.shift(); // Shifts the renderer.
-
-			if (plugin) {
-				if (plugin.occurrence === Occurrence.ONCE) {
-					RunningEngine.stacks[stackId].push(...stack);
-				} else {
-					throw new Error('The last plugin is not runnable once');
-				}
-			} else {
-				/**
-				 * Something goes wrong with the current media object,
-				 * nevertheless engine try to process it as best of its
-				 * capabilities.
-				 */
-				RunningEngine.stacks[stackId].push(...stack);
-			}
+			RunningEngine.stacks[stackId].push(...stack);
 		} else {
 			RunningEngine.stacks[stackId] = stack;
 		}
-		// TODO console.warn('stack', RunningEngine.stacks[stackId]);
 	}
 
 	/**
@@ -166,9 +149,7 @@ class RunningEngine {
 		});
 
 		if (rendererCount < 1) {
-			// TODO Externalize default the fallback binding.
 			RunningEngine.stacks[stackId].unshift(RunningEngine.defaultPlugin);
-			// throw new Error('No renderer in the stack');
 		}
 
 		if (rendererCount > 1) {
@@ -203,6 +184,27 @@ class RunningEngine {
 			throw new Error('Impossible to run a undefined plugin');
 		}
 	}
+
+	/**
+	 * Determines if stacked.
+	 *
+	 * @param      {MediaObject}   mediaObject  The media object
+	 * @param      {Plugin}   plugin       The plugin
+	 * @return     {boolean}  True if stacked, False otherwise.
+	 */
+	static isStacked(mediaObject, plugin) {
+		const stackId = mediaObject.getId();
+
+		if (RunningEngine.stacks[stackId]) {
+			if (!RunningEngine.stacks[stackId].includes(plugin)) {
+				return false;
+			}
+		} else {
+			return false;
+		}
+
+		return true;
+	}
 }
 
 /**
@@ -213,7 +215,7 @@ RunningEngine.stacks = {};
 /**
  * Maximum stack size.
  */
-RunningEngine.STACK_LIMIT = 1000;
+RunningEngine.STACK_LIMIT = 100;
 
 /**
  * Snapshots of each media object's stack.
@@ -221,10 +223,15 @@ RunningEngine.STACK_LIMIT = 1000;
 RunningEngine.snapshots = {};
 
 /**
- * Maximum snapshots size.
+ * Maximum snapshots count.
  */
-RunningEngine.SNAPSHOT_LIMIT = 1000;
+RunningEngine.SNAPSHOT_LIMIT = 100;
 
-RunningEngine.defaultPlugin = new DownloadPlugin();
+/**
+ * Default rendering plugin.
+ */
+RunningEngine.defaultPlugin = new DownloadPlugin(
+	'<p> MediaTag cannot find a plugin able to renderer your content </p>',
+	'Download');
 
 module.exports = RunningEngine;

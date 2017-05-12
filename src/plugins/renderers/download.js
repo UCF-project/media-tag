@@ -6,12 +6,10 @@ class DownloadRenderer extends Renderer {
 	/**
 	 * Constructs the object.
 	 */
-	constructor() {
+	constructor(message, buttonMessage) {
 		super(Identifier.DOWNLOAD);
-		this.message = 	'<p>' +
-						'MediaTag hasn\'t found the best renderer for your source, ' +
-						'please can download the content by clicking the button below' +
-						'</p>';
+		this.message = 	message;
+		this.buttonMessage = buttonMessage || 'Download';
 	}
 
 	/**
@@ -24,7 +22,7 @@ class DownloadRenderer extends Renderer {
 		const button = document.createElement('button');
 
 		container.innerHTML = this.message;
-		button.innerHTML = 'Download';
+		button.innerHTML = this.buttonMessage;
 
 		button.onclick = () => {
 			const xhr = new XMLHttpRequest();
