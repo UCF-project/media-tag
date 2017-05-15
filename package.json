@@ -21,7 +21,9 @@
     "destination": "./dist/docs",
     "manual": {
       "design": [
-        "./docs/proposal.md"
+        "./docs/proposal.md",
+        "./docs/plugin.md",
+        "./docs/filter.md"
       ],
       "usage": [
         "./docs/integration.md"

@@ -5,7 +5,7 @@ CryptPad).
 
 We propose and define two strategies:
 
-# Web Component
+## Web Component
 
 Supported natively by Chrome and with polyfill
 (42k [xtag](http://x-tag.github.io/)) in other browsers.
@@ -37,7 +37,7 @@ Whenever a <media-tag> tag is attached to DOM it will 'just work'.
 ```
 
 
-# JavaScript library
+## JavaScript library
 
 This will require from application developers to 'activate' Media Tag
 for any time they will attach it to the DOM. This is the behavior

@@ -1,80 +1,25 @@
-# Plugin
+# Filters
 
-We can add new filters to current media-tag v2.
+A filters musts :
+* Do structural modification on its MediaObject.
+* Bring back the MediaObject to the RunningEngine.
 
-## Create a filter
+## Crypto
 
-Under ```src/filters/```, the first set consist to create a extended filter component.
+Crypto is a filter for data decryption.
+Crypto can register several algorithm to decrypt a content.
+Each algorithm takes the MediaObject as entry and must return it to RunningEngine with its return() method when the filter processing is ended.
 
-| Propertie | Type | Description |
-|-----------|------|-------------|
-| identifier | string | Filter unique identifier |
-| typeCheck | callback | Type checking for media objects matching |
-| startup | callback | Stuff to process on media object after matches them |
+Algorithms are identified by a scheme declared at registration : 
+`CryptoFilter.FunctionStore.store('salsa20poly1305', Salsa20Poly1305Algorithm);`
 
-Example with crypto filter adding ```crypto.js```
+The scheme must by placed into `data-crypto-key` :
+`data-crypto-key="salsa20poly1305:gxGQi0zzmj/w8GrV+/xGgaMI"`
 
-```
-/**
- * CryptoFilter to decrypt contents.
- *
- * @type       {Filter}
- */
-const CryptoFilter = {
-	identifier: 'crypto',
-	typeCheck: mediaObject => {
-		const result =
-			mediaObject.hasAttribute('src') &&
-			mediaObject.hasAttribute('data-type') &&
-			mediaObject.hasAttribute('data-crypto-key');
-		return result;
-	},
-	startup: mediaObject => {
-		const src = mediaObject.getAttribute('src');
-		const strKey = mediaObject.getAttribute('data-crypto-key');
-		const cryptoKey = Crypto.getKeyFromStr(strKey);
+## Clear-Key
 
-		const xhr = new XMLHttpRequest();
-		xhr.open('GET', src, true);
-		xhr.responseType = 'arraybuffer';
-		xhr.onload = () => {
-			const arrayBuffer = xhr.response;
-			if (arrayBuffer) {
-				const u8 = new Uint8Array(arrayBuffer);
-				const binStr = Crypto.decrypt(u8, cryptoKey);
-				const url = DataManager.getBlobUrl(binStr, mediaObject.getMimeType());
+Clear-Key is filter for dedicated to MPEG-DASH and DRM.
+Clear-Key as a single behavior, take `data-clear-key` from MediaObject, split it into encryption `id` and `key`, add these data to MediaObject for the futur rendering and remove `data-clear-key` from the MediaObject before bringing it back to RunningEngine.
 
-				/**
-				 * Modifications applied on mediaObject.
-				 * After these modifications the typeCheck
-				 * method must return false otherwise the
-				 * filter may infinite loop.
-				 */
-				mediaObject.setAttribute('src', url);
-				mediaObject.removeAttribute('data-crypto-key');
-
-				/**
-				 * Filters must call chain to try if the
-				 * current mediaObject matches other filters.
-				 */
-				Engine.chain(mediaObject);
-			}
-		};
-		xhr.send(null);
-	}
-};
-
-export default CryptoFilter;
-
-```
-
-## Setup your filter reference
-
-Into ```src/media-tag.js``` you need to register your fresh filter by insert this :
-
-```
-// Filter :: Crypto
-const CryptoFilter = require('./filters/crypto').default;
-
-MediaTag.registerPlugin(CryptoFilter);
-```
+Example :
+`data-clear-key="0ebf43152d2de26431e271a9872fbc0a:e2a48174c0c424e605def5368e59636e"`

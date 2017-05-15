@@ -27,7 +27,7 @@ class ImageMatcher extends Matcher {
 	}
 
 	/**
-	 * Job to realise to render a image with a mediaObject.
+	 * Analyse to identify if an image renderer is appliable.
 	 *
 	 * @param      {MediaObject}  mediaObject  The media object
 	 */
@@ -50,3 +50,48 @@ Job part is associated to any other plugin type than matcher.
 Its role is realise any kind of action on MediaObject or the DOM or other.
 
 Job parts are defined into `src/plugins/<plugins type name>`
+
+```
+class ImageRenderer extends Renderer {
+	/**
+	 * Constructs the object.
+	 */
+	constructor() {
+		super(Identifier.IMAGE);
+	}
+
+	/**
+	 * Job to realise to render a image with a mediaObject.
+	 *
+	 * @param      {MediaObject}  mediaObject  The media object
+	 */
+	process(mediaObject) {
+		const element = document.createElement('img');
+
+		element.setAttribute('src', mediaObject.getAttribute('src'));
+		mediaObject.utilsSetAllDataAttributes(element);
+		mediaObject.replaceContents([element]);
+	}
+}
+```
+
+## Type
+
+Plugins are divided into several types :
+
+* RENDERER : To render a MediaObject referenced content. A renderer should be applied at MediaObject processing end.
+* FILTER : To modify a MediaObject before a rendering. A filter could be applied any times you want but after applying it on MediaObject it didn't match again with MediaObject. So the MediaObject must have changed between before filter processing and after it.
+* MATCHER : To find if a plugin is appliable on a MediaObject. Matcher should identify accuratly which other plugin must be used on a specific MediaObject.
+* SANITIZER : To clear MediaObject content. Use any method to clear MediaObject data only (shouldn't modifity MediaObject structure like attributes count...).
+
+## Registration
+
+All plugins should be registrated into the PluginStore. 
+Now the PluginStore referenced by the MediaTag.
+
+```
+	MediaTag.PluginStore.store(~a plugin instance~);
+```
+
+See `src/presets/` for an example for a MediaTag feature filled with lot of plugins.
+

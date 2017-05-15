@@ -18,14 +18,13 @@ define(require => {
 		document.querySelector('media-tag#audio-encrypted'),
 		document.querySelector('media-tag#video-encrypted'),
 		document.querySelector('media-tag#dash-encrypted'),
-		document.querySelector('media-tag#pdf-encrypted')
+		document.querySelector('media-tag#pdf-encrypted'),
+		document.querySelector('media-tag#failure-encrypted')
 	];
 
 	/**
 	 * Returns nothing, results are accessibles
 	 * from <media-tag> node with attribute mediaObject
 	 */
-	nodes.forEach(node => {
-		MediaTag(node);
-	});
+	MediaTag(nodes);
 });
