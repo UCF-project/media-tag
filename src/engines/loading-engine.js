@@ -1,39 +1,69 @@
-const PluginStore = require('../stores/plugin-store');
+const Assert = require('../utils/assert');
 const Permission = require('../enums/permission');
-const UriStore = require('../stores/uri-store');
-const MatchingEngine = require('./matching-engine');
-const RunningEngine = require('./running-engine');
 
 /**
  * Class for loading engine.
  *
  * @class      LoadingEngine (name)
+ * @bundbleable false
  */
 class LoadingEngine {
+	/**
+	 * Constructs the object.
+	 *
+	 * @param      {PluginStore}  pluginStore     The plugin store
+	 * @param      {UriStore}  uriStore        The uri store
+	 * @param      {MatchingEngine}  matchingEngine  The matching engine
+	 * @param      {ProcessingEngine}  processingEngine   The processing engine
+	 */
+	constructor(pluginStore, uriStore, matchingEngine, processingEngine) {
+		Assert.that(pluginStore).not(undefined);
+		Assert.that(uriStore).not(undefined);
+		Assert.that(matchingEngine).not(undefined);
+		Assert.that(processingEngine).not(undefined);
+
+		this.pluginStore = pluginStore;
+		this.uriStore = uriStore;
+		this.matchingEngine = matchingEngine;
+		this.processingEngine = processingEngine;
+	}
 	/**
 	 * Configures the loading engine.
 	 *
 	 * @param      {Configuration}  configuration  The configuration
 	 */
-	static configure(configuration) {
-		LoadingEngine.configuration = configuration;
+	configure(configuration) {
+		this.configuration = configuration;
 	}
 
-	static load(mediaObject) {
-		const relations = MatchingEngine.start(mediaObject);
-
-		const allowedRelations = LoadingEngine.filterRelations(relations);
-
-		// console.warn(allowedRelations);
-
+	/**
+	 * Loads active plugin parts by media object analysis.
+	 *
+	 * @param      {MediaObject}  mediaObject  The media object
+	 * @return     {MediaObject}  Processed MediaObject.
+	 */
+	load(mediaObject) {
+		const relations = this.matchingEngine.start(mediaObject);
+		const allowedRelations = this.filterRelations(relations);
 		const uris = Object.keys(allowedRelations).map(identifier => {
 			return allowedRelations[identifier];
 		});
 
-		require(uris, LoadingEngine.register.bind(null, mediaObject));
+		try {
+			require(uris, this.register.bind(this, mediaObject));
+		} catch (err) {
+			if (require === undefined) {
+				console.warn(err);
+				return this.processingEngine.start(mediaObject);
+			}
+			throw err;
+		}
 	}
 
-	static register() {
+	/**
+	 * Register dynamically loaded plugins.
+	 */
+	register() {
 		const mediaObject = arguments[0];
 
 		if (!mediaObject) {
@@ -46,12 +76,12 @@ class LoadingEngine {
 			}
 			const pluginInstance = new PluginClass();
 
-			if (!PluginStore.isStored(pluginInstance)) {
-				PluginStore.store(pluginInstance);
+			if (!this.pluginStore.isStored(pluginInstance)) {
+				this.pluginStore.store(pluginInstance);
 			}
 		}
 
-		RunningEngine.start(mediaObject);
+		this.processingEngine.start(mediaObject);
 	}
 
 	/**
@@ -60,24 +90,27 @@ class LoadingEngine {
 	 * @param      {Object}  relations  The relations
 	 * @return     {Object}  Filtered relations.
 	 */
-	static filterRelations(relations) {
+	filterRelations(relations) {
 		const result = relations;
-		const data = LoadingEngine.configuration.getData();
 
-		Object.keys(data).forEach(identifier => {
-			switch (data[identifier]) {
-				case Permission.REQUIRED:
-					result[identifier] = UriStore.get(identifier);
-					break;
-				case Permission.FORBIDDEN:
-					delete result[identifier];
-					break;
-				case Permission.ALLOWED:
-					break;
-				default:
-					throw new Error('Unknown configuration permission');
-			}
-		});
+		if (this.configuration) {
+			const data = this.configuration.getData();
+
+			Object.keys(data).forEach(identifier => {
+				switch (data[identifier]) {
+					case Permission.REQUIRED:
+						result[identifier] = this.uriStore.get(identifier);
+						break;
+					case Permission.FORBIDDEN:
+						delete result[identifier];
+						break;
+					case Permission.ALLOWED:
+						break;
+					default:
+						throw new Error('Unknown configuration permission');
+				}
+			});
+		}
 		return result;
 	}
 }

@@ -1,6 +1,6 @@
 /* global document, describe, it */
 import chai from 'chai';
-import mediaTag from '../src/presets/media-tag';
+import mediaTag from '../src/presets/static/media-tag';
 import Identifier from '../src/enums/identifier';
 import Type from '../src/enums/type';
 import FakePluginUtils from './helpers/fake-plugin-utils';
@@ -99,7 +99,7 @@ describe('Several plugins usage', () => {
 	});
 
 	it('can create filters templated elements', () => {
-		const filters = mediaTag.PluginStore.getPlugins(Type.FILTER);
+		const filters = mediaTag.pluginStore.getPlugins(Type.FILTER);
 
 		filters.forEach(filter => {
 			if (filter.called) {
@@ -113,7 +113,7 @@ describe('Several plugins usage', () => {
 	});
 
 	it('can run media-tag on filter templated elements', () => {
-		const filters = mediaTag.PluginStore.getPlugins(Type.FILTER);
+		const filters = mediaTag.pluginStore.getPlugins(Type.FILTER);
 		const filterTemplatedElements = FakePluginUtils.Templater.createMediaTagElements(filters);
 		mediaTag(filterTemplatedElements);
 	});

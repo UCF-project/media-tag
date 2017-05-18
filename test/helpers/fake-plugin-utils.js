@@ -1,9 +1,8 @@
 /* global document */
-const MediaTag = require('../../src/presets/media-tag');
+const MediaTag = require('../../src/presets/static/media-tag');
 const Matcher = require('../../src/plugins/matcher');
 const Filter = require('../../src/plugins/filter');
 const Sanitizer = require('../../src/plugins/sanitizer');
-const RunningEngine = require('../../src/engines/running-engine');
 
 const Identifier = require('../../src/enums/identifier');
 const Type = require('../../src/enums/type');
@@ -27,7 +26,6 @@ class FakePluginFactory {
 		matcher.process = mediaObject => {
 			this.called = true;
 			this.times = 0 || this.times++;
-			// console.log(`Matcher ${identifier} is processing`);
 			return mediaObject.hasAttribute(matcher.identifier);
 		};
 
@@ -47,7 +45,6 @@ class FakePluginFactory {
 		matcher.process = mediaObject => {
 			this.called = true;
 			this.times = 0 || this.times++;
-			// console.log(`Matcher sanitizer ${identifier} is processing`);
 			return mediaObject.hasAttribute('src') && mediaObject.hasAttribute('data-type');
 		};
 
@@ -66,9 +63,8 @@ class FakePluginFactory {
 		filter.process = mediaObject => {
 			this.called = true;
 			this.times = 0 || this.times++;
-			// console.log(`Filter ${identifier} is processing`);
 			mediaObject.removeAttribute(filter.identifier);
-			RunningEngine.return(mediaObject);
+			MediaTag.processingEngine.return(mediaObject);
 		};
 
 		return filter;
@@ -86,8 +82,7 @@ class FakePluginFactory {
 		sanitizer.process = mediaObject => {
 			this.called = true;
 			this.times = 0 || this.times++;
-			// console.log(`Sanitizer ${identifier} is processing ${mediaObject}`);
-			RunningEngine.return(mediaObject);
+			MediaTag.processingEngine.return(mediaObject);
 		};
 
 		return sanitizer;
@@ -192,7 +187,7 @@ FakePluginUtils.generate = (quantity, type) => {
 
 FakePluginUtils.register = plugins => {
 	for (const plugin of plugins) {
-		MediaTag.PluginStore.store(plugin);
+		MediaTag.pluginStore.store(plugin);
 	}
 };
 

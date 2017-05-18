@@ -1,6 +1,6 @@
 /* global window, fetch, XMLHttpRequest, Blob, Event */
-const Errors = 			require('../errors');
-const RunningEngine = 	require('../engines/running-engine');
+const Errors = require('../core/errors');
+const MediaTag = require('../core/media-tag');
 
 /**
  * Class for crypto.
@@ -178,7 +178,7 @@ function algorithm(mediaObject) {
 			 * Filters must call chain to try if the
 			 * current mediaObject matches other filters.
 			 */
-			RunningEngine.return(mediaObject);
+			MediaTag.processingEngine.return(mediaObject);
 		}
 	};
 	xhr.send(null);

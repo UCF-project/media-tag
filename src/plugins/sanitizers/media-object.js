@@ -1,6 +1,6 @@
 const Sanitizer =	require('../sanitizer');
 const Identifier = 	require('../../enums/identifier');
-const RunningEngine = require('../../engines/running-engine');
+const MediaTag = 	require('../../core/media-tag');
 
 class MediaObjectSanitizer extends Sanitizer {
 	/**
@@ -17,7 +17,7 @@ class MediaObjectSanitizer extends Sanitizer {
 	 */
 	process(mediaObject) {
 		// TODO Add a library to sanitize content.
-		RunningEngine.return(mediaObject);
+		MediaTag.processingEngine.return(mediaObject);
 	}
 }
 

@@ -1,32 +1,60 @@
+const Assert = require('../utils/assert');
 const Type = require('../enums/type');
-const PluginStore = require('../stores/plugin-store');
+const PluginUtils = require('../utils/plugin-utils');
 const DownloadPlugin = require('../plugins/renderers/download');
 
 /**
- * Class for running engine.
+ * Class for processing engine.
  *
- * @class      RunningEngine (name)
+ * @class      ProcessingEngine (name)
  */
-class RunningEngine {
+class ProcessingEngine {
+	/**
+	 * Constructs the object.
+	 *
+	 * @param      {PluginStore}  pluginStore  The plugin store
+	 */
+	constructor(pluginStore) {
+		Assert.that(pluginStore).not(undefined);
+
+		this.pluginStore = pluginStore;
+
+		/**
+		 * Stacks for each media object instances.
+		 */
+		this.stacks = {};
+
+		/**
+		 * Snapshots of each media object's stack.
+		 */
+		this.snapshots = {};
+	}
 
 	/**
 	 * Starts a processing over an instance of mediaObject.
 	 *
 	 * @param      {MediaObject}  mediaObject  The media object
 	 */
-	static start(mediaObject) {
-		const lastPlugin = RunningEngine.unstack(mediaObject);
+	start(mediaObject) {
+		this.fill(mediaObject);
+		this.snapshot(mediaObject);
+		this.check(mediaObject);
+		this.run(mediaObject);
+	}
 
-		if (lastPlugin) {
-			if (lastPlugin.type !== Type.SANITIZER) {
-				RunningEngine.fill(mediaObject);
-			}
-		} else {
-			RunningEngine.fill(mediaObject);
+	run(mediaObject) {
+		const plugin = this.unstack(mediaObject);
+
+		if (!plugin) {
+			return mediaObject; // Maybe emit an event instead ?
 		}
-		RunningEngine.snapshot(mediaObject);
-		RunningEngine.check(mediaObject);
-		RunningEngine.run(mediaObject);
+
+		this.process(mediaObject);
+		if (plugin.type !== Type.SANITIZER) {
+			this.fill(mediaObject);
+		}
+		this.snapshot(mediaObject);
+		this.check(mediaObject);
 	}
 
 	/**
@@ -34,30 +62,30 @@ class RunningEngine {
 	 *
 	 * @param      {MediaObject}  mediaObject  The media object
 	 */
-	static snapshot(mediaObject) {
+	snapshot(mediaObject) {
 		const stackId = mediaObject.getId();
 
-		if (RunningEngine.stacks[stackId]) {
+		if (this.stacks[stackId]) {
 			const dataStack = [];
 
-			RunningEngine.stacks[stackId].forEach(plugin => {
+			this.stacks[stackId].forEach(plugin => {
 				const metaDataObject = {};
 
 				metaDataObject.identifier = plugin.getIdentifier();
 				metaDataObject.type = plugin.getType();
 				dataStack.push(metaDataObject);
 			});
-			if (RunningEngine.snapshots[stackId]) {
-				RunningEngine.snapshots[stackId].push({
+			if (this.snapshots[stackId]) {
+				this.snapshots[stackId].push({
 					stack: dataStack
 				});
 			} else {
-				RunningEngine.snapshots[stackId] = [{
+				this.snapshots[stackId] = [{
 					stack: dataStack
 				}];
 			}
 		} else {
-			RunningEngine.snapshots[stackId] = [];
+			this.snapshots[stackId] = [];
 		}
 	}
 
@@ -66,33 +94,33 @@ class RunningEngine {
 	 *
 	 * @param      {MediaObject}  mediaObject  The media object
 	 */
-	static fill(mediaObject) {
+	fill(mediaObject) {
 		const stack = [];
 		const stackId = mediaObject.getId();
-		const matchers = PluginStore.getPlugins(Type.MATCHER);
+		const matchers = this.pluginStore.getPlugins(Type.MATCHER);
 		const matchedMatchers = matchers.filter(matcher => {
 			return matcher.process(mediaObject);
 		});
 		const matchedIdentifiers = matchedMatchers.map(matcher => {
 			return matcher.getIdentifier();
 		});
-		const plugins = PluginStore.values();
+		const plugins = this.pluginStore.values();
 
 		const matchedPlugins = plugins.filter(plugin => {
 			return 	plugin.type !== Type.MATCHER &&
 					matchedIdentifiers.includes(plugin.identifier);
 		});
 
-		const pluginsByOccurrencies = PluginStore.filterByOccurrencies(matchedPlugins);
+		const pluginsByOccurrencies = PluginUtils.filterByOccurrencies(matchedPlugins);
 
 		pluginsByOccurrencies.once.forEach(plugin => {
-			if (!RunningEngine.isStacked(mediaObject, plugin)) {
+			if (!this.isStacked(mediaObject, plugin)) {
 				stack.push(plugin);
 			}
 		});
 
 		pluginsByOccurrencies.any.forEach(plugin => {
-			if (!RunningEngine.isStacked(mediaObject, plugin)) {
+			if (!this.isStacked(mediaObject, plugin)) {
 				stack.push(plugin);
 			}
 		});
@@ -101,10 +129,10 @@ class RunningEngine {
 			stack.push(plugin);
 		});
 
-		if (RunningEngine.stacks[stackId]) {
-			RunningEngine.stacks[stackId].push(...stack);
+		if (this.stacks[stackId]) {
+			this.stacks[stackId].push(...stack);
 		} else {
-			RunningEngine.stacks[stackId] = stack;
+			this.stacks[stackId] = stack;
 		}
 	}
 
@@ -113,11 +141,11 @@ class RunningEngine {
 	 *
 	 * @param      {MediaObject}  mediaObject  The media object
 	 */
-	static unstack(mediaObject) {
+	unstack(mediaObject) {
 		const stackId = mediaObject.getId();
 
-		if (RunningEngine.stacks[stackId]) {
-			return RunningEngine.stacks[stackId].pop();
+		if (this.stacks[stackId]) {
+			return this.stacks[stackId].pop();
 		}
 		return null;
 	}
@@ -127,29 +155,29 @@ class RunningEngine {
 	 *
 	 * @param      {MediaObject}  mediaObject  The media object
 	 */
-	static check(mediaObject) {
+	check(mediaObject) {
 		const stackId = mediaObject.getId();
 
-		if (RunningEngine.stacks[stackId].length >= RunningEngine.STACK_LIMIT) {
-			console.error(RunningEngine.snapshots[stackId]);
+		if (this.stacks[stackId].length >= this.STACK_LIMIT) {
+			console.error(this.snapshots[stackId]);
 			throw new Error('Plugin stack size exceed');
 		}
 
-		if (RunningEngine.snapshots[stackId].length >= RunningEngine.SNAPSHOT_LIMIT) {
-			console.error(RunningEngine.snapshots[stackId]);
+		if (this.snapshots[stackId].length >= this.SNAPSHOT_LIMIT) {
+			console.error(this.snapshots[stackId]);
 			throw new Error('Plugin snapshots size exceed');
 		}
 
 		let rendererCount = 0;
 
-		RunningEngine.stacks[stackId].forEach(plugin => {
+		this.stacks[stackId].forEach(plugin => {
 			if (plugin.type === Type.RENDERER) {
 				rendererCount++;
 			}
 		});
 
 		if (rendererCount < 1) {
-			RunningEngine.stacks[stackId].unshift(RunningEngine.defaultPlugin);
+			this.stacks[stackId].unshift(ProcessingEngine.defaultPlugin);
 		}
 
 		if (rendererCount > 1) {
@@ -158,29 +186,29 @@ class RunningEngine {
 	}
 
 	/**
-	 * Returns the media object to the running engine.
+	 * Returns the media object to the processing engine.
 	 * Every plugin must call this function when their job is done.
 	 *
 	 * @param      {MediaObject}  mediaObject  The media object
 	 */
-	static return(mediaObject) {
-		RunningEngine.start(mediaObject);
+	return(mediaObject) {
+		this.run(mediaObject);
 	}
 
 	/**
-	 * Runs the top stack plugin.
+	 * Processes the top stack plugin.
 	 *
 	 * @param      {MediaObject}  mediaObject  The media object
 	 */
-	static run(mediaObject) {
+	process(mediaObject) {
 		const stackId = mediaObject.getId();
-		const size = RunningEngine.stacks[stackId].length;
-		const plugin = RunningEngine.stacks[stackId][size - 1];
+		const size = this.stacks[stackId].length;
+		const plugin = this.stacks[stackId][size - 1];
 
 		if (plugin) {
 			plugin.process(mediaObject);
 		} else {
-			console.log(RunningEngine.stacks);
+			console.log(this.stacks);
 			throw new Error('Impossible to run a undefined plugin');
 		}
 	}
@@ -192,46 +220,33 @@ class RunningEngine {
 	 * @param      {Plugin}   plugin       The plugin
 	 * @return     {boolean}  True if stacked, False otherwise.
 	 */
-	static isStacked(mediaObject, plugin) {
+	isStacked(mediaObject, plugin) {
 		const stackId = mediaObject.getId();
 
-		if (RunningEngine.stacks[stackId]) {
-			if (!RunningEngine.stacks[stackId].includes(plugin)) {
-				return false;
+		if (this.stacks[stackId]) {
+			if (this.stacks[stackId].includes(plugin)) {
+				return true;
 			}
-		} else {
-			return false;
 		}
-
-		return true;
+		return false;
 	}
 }
 
 /**
- * Stacks for each media object instances.
- */
-RunningEngine.stacks = {};
-
-/**
  * Maximum stack size.
  */
-RunningEngine.STACK_LIMIT = 100;
-
-/**
- * Snapshots of each media object's stack.
- */
-RunningEngine.snapshots = {};
+ProcessingEngine.STACK_LIMIT = 100;
 
 /**
  * Maximum snapshots count.
  */
-RunningEngine.SNAPSHOT_LIMIT = 100;
+ProcessingEngine.SNAPSHOT_LIMIT = 100;
 
 /**
  * Default rendering plugin.
  */
-RunningEngine.defaultPlugin = new DownloadPlugin(
+ProcessingEngine.defaultPlugin = new DownloadPlugin(
 	'<p> MediaTag cannot find a plugin able to renderer your content </p>',
 	'Download');
 
-module.exports = RunningEngine;
+module.exports = ProcessingEngine;

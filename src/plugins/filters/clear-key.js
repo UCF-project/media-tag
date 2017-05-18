@@ -1,6 +1,6 @@
-const Filter =			require('../filter');
-const Identifier = 		require('../../enums/identifier');
-const RunningEngine =	require('../../engines/running-engine');
+const Filter =		require('../filter');
+const Identifier = 	require('../../enums/identifier');
+const MediaTag =	require('../../core/media-tag');
 
 class ClearKeyFilter extends Filter {
 	/**
@@ -23,7 +23,7 @@ class ClearKeyFilter extends Filter {
 		mediaObject.setAttribute('id', id);
 		mediaObject.setAttribute('key', key);
 		mediaObject.removeAttribute('data-clear-key');
-		RunningEngine.return(mediaObject);
+		MediaTag.processingEngine.return(mediaObject);
 	}
 }
 

@@ -1,11 +1,11 @@
 /* global define, document */
 
 define(require => {
-	const MediaTag 		= require('core/dynamic/media-tag');
-	const Configuration = require('configuration');
+	const MediaTag = require('presets/dynamic/media-tag-core');
+	const Configuration = require('core/configuration');
 	const Identifier = require('enums/identifier');
 	const Permission = require('enums/permission');
-	const MatchingEngineMap = require('maps/matching-engine');
+	const Type = require('enums/type');
 
 	/** STEP I
 	 * MediaTag is initially empty from any plugins.
@@ -30,17 +30,17 @@ define(require => {
 
 	const MediaObjectMatcher = require('plugins/matchers/sanitizers/media-object');
 
-	MediaTag.PluginStore.store(new ImageMatcher());
-	MediaTag.PluginStore.store(new AudioMatcher());
-	MediaTag.PluginStore.store(new VideoMatcher());
-	MediaTag.PluginStore.store(new PdfMatcher());
-	MediaTag.PluginStore.store(new DashMatcher());
-	MediaTag.PluginStore.store(new DownloadMatcher());
+	MediaTag.pluginStore.store(new ImageMatcher());
+	MediaTag.pluginStore.store(new AudioMatcher());
+	MediaTag.pluginStore.store(new VideoMatcher());
+	MediaTag.pluginStore.store(new PdfMatcher());
+	MediaTag.pluginStore.store(new DashMatcher());
+	MediaTag.pluginStore.store(new DownloadMatcher());
 
-	MediaTag.PluginStore.store(new CryptoMatcher());
-	MediaTag.PluginStore.store(new ClearKeyMatcher());
+	MediaTag.pluginStore.store(new CryptoMatcher());
+	MediaTag.pluginStore.store(new ClearKeyMatcher());
 
-	MediaTag.PluginStore.store(new MediaObjectMatcher());
+	MediaTag.pluginStore.store(new MediaObjectMatcher());
 
 	/** STEP II
 	 * We have plugins able to detect if an active part is needed by media
@@ -50,9 +50,19 @@ define(require => {
 	 * part. For that we need to register the matching engine map.
 	 */
 
-	MediaTag.setMap(MatchingEngineMap);
+	MediaTag.uriStore.store(Identifier.IMAGE, Type.RENDERER);
+	MediaTag.uriStore.store(Identifier.AUDIO, Type.RENDERER);
+	MediaTag.uriStore.store(Identifier.VIDEO, Type.RENDERER);
+	MediaTag.uriStore.store(Identifier.PDF, Type.RENDERER);
+	MediaTag.uriStore.store(Identifier.DASH, Type.RENDERER);
 
-	/** STEP III
+	MediaTag.uriStore.store(Identifier.CRYPTO, Type.FILTER);
+	MediaTag.uriStore.store(Identifier.CLEAR_KEY, Type.FILTER);
+	MediaTag.uriStore.store(Identifier.TEST, Type.FILTER);
+
+	MediaTag.uriStore.store(Identifier.MEDIA_OBJECT, Type.SANITIZER);
+
+	/** STEP III (Optional)
 	 * A configuration for MediaTag plugin active part loading.
 	 *
 	 * @type       {Configuration}
@@ -69,10 +79,7 @@ define(require => {
 	configuration.setPermission(Identifier.CLEAR_KEY, Permission.ALLOWED);
 	configuration.setPermission(Identifier.MEDIA_OBJECT, Permission.ALLOWED);
 
-	/**
-	 * Apply the configuation to MediaTag
-	 */
-	MediaTag.configure(configuration);
+	MediaTag.loadingEngine.configure(configuration);
 
 	/** STEP IV
 	 * We configure which algorithms are used by CryptoFilter
@@ -81,7 +88,7 @@ define(require => {
 
 	const Salsa20Poly1305Algorithm = require('../algorithms/salsa20poly1305');
 
-	CryptoFilter.FunctionStore.store('salsa20poly1305', Salsa20Poly1305Algorithm);
+	CryptoFilter.functionStore.store('salsa20poly1305', Salsa20Poly1305Algorithm);
 
 	/** STEP V
 	 * Can process on various nodes at same time.
@@ -97,12 +104,5 @@ define(require => {
 		document.querySelector('media-tag#failure-encrypted')
 	];
 
-	/**
-	 * Returns nothing, results are accessibles
-	 * from <media-tag> node with attribute mediaObject
-	 */
 	MediaTag(nodes);
-
-	const RunningEngine = require('engines/running-engine');
-	console.log(RunningEngine.snapshots);
 });

@@ -24,7 +24,7 @@ module.exports = function () {
 	return {
 		entry: {
 			'media-tag': [
-				'./src/presets/media-tag.js'
+				'./src/presets/static/media-tag.js'
 			],
 			test: [
 				'./test/media-tag.js'

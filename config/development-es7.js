@@ -8,7 +8,7 @@ const plugin = [
 	}),
 
 	new webpack.DefinePlugin({
-		'process.env.NODE_ENV': JSON.stringify('development-es6')
+		'process.env.NODE_ENV': JSON.stringify('development-es7')
 	})
 ];
 
@@ -16,7 +16,7 @@ module.exports = function () {
 	return {
 		entry: {
 			'media-tag': [
-				'./src/presets/media-tag.js'
+				'./src/presets/static/media-tag.js'
 			],
 			test: [
 				'./test/media-tag.js'

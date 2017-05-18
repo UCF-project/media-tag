@@ -1,75 +1,87 @@
+/**
+ * Class for store.
+ *
+ * @class      Store (name)
+ */
 class Store {
+	/**
+	 * Constructs the object.
+	 */
+	constructor() {
+		this.map = {};
+	}
 
-	static isStored(key) {
-		if (Store.get(key)) {
+	/**
+	 * Determines if stored.
+	 *
+	 * @param      {string}   key     The key
+	 * @return     {boolean}  True if stored, False otherwise.
+	 */
+	isStored(key) {
+		if (this.get(key)) {
 			return true;
 		}
 		return false;
 	}
 
-	static store(key, value) {
-		if (Store.isStored(key)) {
+	/**
+	 * Stores a couple key value inside the store.
+	 *
+	 * @param      {string}  key     The key
+	 * @param      {*}  value   The value
+	 */
+	store(key, value) {
+		if (this.isStored(key)) {
 			console.warn(`The key "${key}" is already registered, the content will be overwritten.`);
 		}
-		Store.map[key] = value;
+		this.map[key] = value;
 	}
 
-	static unstore(key) {
-		if (Store.isStored(key)) {
-			delete Store.map[key];
-		} else {
+	/**
+	 * Unstores a value by deleting the entry and returning its value.
+	 *
+	 * @param      {string}  key     The key
+	 */
+	unstore(key) {
+		if (this.isStored(key) === false) {
 			console.warn(`The key "${key}" not exists in this manager`);
+		} else {
+			const value = this.map[key];
+			delete this.map[key];
+			return value;
 		}
 	}
 
-	static get(key) {
-		return Store.map[key];
+	/**
+	 * Gets a spcific value from the key.
+	 *
+	 * @param      {<type>}  key     The key
+	 * @return     {<type>}  { description_of_the_return_value }
+	 */
+	get(key) {
+		return this.map[key];
 	}
 
-	static keys() {
-		return Object.keys(Store.map);
+	/**
+	 * Returns all stored keys.
+	 *
+	 * @return     {Array<string>}
+	 */
+	keys() {
+		return Object.keys(this.map);
 	}
 
-	static values() {
-		const keys = Store.keys();
+	/**
+	 * Returns all stored values.
+	 *
+	 * @return     {Array}
+	 */
+	values() {
+		const keys = this.keys();
 		return keys.map(key => {
-			return Store.get(key);
-		});
-	}
-
-	/* TODO Experimental */
-
-	static knows(object) {
-		const keys = Object.keys(Store.map);
-		const values = Object.keys(Store.map).map(key => {
-			return Store.map[key];
-		});
-		return keys.some(key => {
-			const obj = {};
-			obj[object] = null;
-			return key === Object.keys(obj)[0];
-		}) || values.some(key => {
-			return key === object;
-		});
-	}
-
-	/* TODO Experimental */
-
-	static like(object) {
-		const keys = Object.keys(Store.map);
-
-		return keys.filter(key => {
-			const obj = {};
-			obj[object] = null;
-			return key === Object.keys(obj)[0] || Store.map[key] === object;
-		}).map(key => {
-			const result = {};
-			result[key] = Store.map[key];
-			return result;
+			return this.get(key);
 		});
 	}
 }
-
-Store.map = {};
 
 module.exports = Store;

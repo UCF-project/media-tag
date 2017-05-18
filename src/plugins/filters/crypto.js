@@ -1,6 +1,6 @@
-const Filter =			require('../filter');
-const Identifier = 		require('../../enums/identifier');
-const FunctionStore = 	require('../../stores/function-store');
+const Filter =		require('../filter');
+const Identifier = 	require('../../enums/identifier');
+const Store = 		require('../../stores/store');
 
 class CryptoFilter extends Filter {
 	/**
@@ -30,13 +30,13 @@ class CryptoFilter extends Filter {
 		 */
 		mediaObject.setAttribute('data-crypto-key', stringKey);
 
-		if (CryptoFilter.FunctionStore.hasFunction(algorithmName)) {
-			const algorithm = CryptoFilter.FunctionStore.get(algorithmName);
+		if (CryptoFilter.functionStore.isStored(algorithmName)) {
+			const algorithm = CryptoFilter.functionStore.get(algorithmName);
 
 			/**
 			 * Runs any algorithm on media object.
-			 * The algorithm MUST ALWAYS pay back the media object to
-			 * the running engine when its job is done.
+			 * The algorithm HAVE TO pay back the media object to
+			 * the processing engine when its job is done.
 			 */
 			algorithm(mediaObject);
 		} else {
@@ -48,6 +48,6 @@ class CryptoFilter extends Filter {
 /**
  * Function store to register every needed algorithms as a named callback.
  */
-CryptoFilter.FunctionStore = FunctionStore;
+CryptoFilter.functionStore = CryptoFilter.functionStore || new Store();
 
 module.exports = CryptoFilter;
