@@ -1,53 +1,46 @@
 class Assert {
 	/**
-	 * { function_description }
+	 * Constructs the object.
 	 *
-	 * @param      {*}  condition  The condition
-	 * @return     {Assert}
+	 * @param      {*}  truth   The truth
 	 */
-	static that(condition) {
-		Assert.condition = condition;
-		return Assert;
+	constructor(truth) {
+		this.truth = truth;
 	}
 
 	/**
-	 * Verifies that assertion is true.
+	 * Instanciate an assertion on something considered as a truth.
 	 *
-	 * @param      {*}   result  The result
+	 * @param      {*}  truth   The truth
 	 * @return     {Assert}
 	 */
-	static is(result) {
-		if (Assert.condition === undefined) {
-			throw new Error('No condition to compare with this result');
-		} else {
-			const condition = Assert.condition;
-
-			Assert.condition = undefined;
-			if (condition === result) {
-				return Assert;
-			}
-			throw new Error('Assert fail');
-		}
+	static that(truth) {
+		return new Assert(truth);
 	}
 
 	/**
-	 * Verifies that assertion is false.
-	 *
-	 * @param      {*}   result  The result
-	 * @return     {Assert}
+	 * Asserts is something.
+	 * @param      {*}  predicate  The predicate
+	 * @return     {Object}
 	 */
-	static not(result) {
-		if (Assert.condition === undefined) {
-			throw new Error('No condition to compare with this result');
-		} else {
-			const condition = Assert.condition;
-
-			Assert.condition = undefined;
-			if (condition !== result) {
-				return Assert;
-			}
-			throw new Error('Assert fail');
+	is(predicate) {
+		if (this.truth === predicate) {
+			return this;
 		}
+		throw new Error(`Assertion fail on : ${this.truth} is ${predicate}`);
+	}
+
+	/**
+	 * Asserts is not something.
+	 *
+	 * @param      {*}  predicate  The predicate
+	 * @return     {Object}
+	 */
+	not(predicate) {
+		if (this.truth !== predicate) {
+			return this;
+		}
+		throw new Error(`Assertion fail on : ${this.truth} is not ${predicate}`);
 	}
 }
 

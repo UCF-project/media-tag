@@ -42,6 +42,12 @@ class ProcessingEngine {
 		this.run(mediaObject);
 	}
 
+	/**
+	 * Runs a processing engine step on mediaObject.
+	 *
+	 * @param      {MediaObject}  mediaObject  The media object
+	 * @return     {?MediaObject}
+	 */
 	run(mediaObject) {
 		const plugin = this.unstack(mediaObject);
 

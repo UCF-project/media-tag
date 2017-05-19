@@ -40,10 +40,12 @@ MediaTag.pluginStore.store(new MediaObjectSanitizer());
  * Import every algorithms for CryptoFilter.
  */
 const Salsa20Poly1305Algorithm = require('../../algorithms/salsa20poly1305');
+const CryptpadAlgorithm = require('../../algorithms/cryptpad');
 
 /**
  * Store every algorithms inside CryptoFilter.
  */
 CryptoFilter.functionStore.store('salsa20poly1305', Salsa20Poly1305Algorithm);
+CryptoFilter.functionStore.store('cryptpad', CryptpadAlgorithm);
 
 module.exports = MediaTag;
