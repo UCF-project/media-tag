@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>My Page with Media Tag</title>
+</head>
+<body>
+	<script type="text/javascript" src="/ext-lib/nacl-fast.min.js"></script>
+	<script type="text/javascript" src="/ext-lib/fetch.min.js"></script>
+	<script type="text/javascript" src="/ext-lib/pdf.js"></script>
+	<script type="text/javascript" src="/ext-lib/nacl-util.min.js"></script>
+
+	<h1>Image:</h1>
+	<media-tag
+		id="image"
+		src="/assets/images/encrypted/image.png-encrypted"
+		data-crypto-key="salsa20poly1305:TBo77200c0e/FdldQFcnQx4Y"
+		data-attr-width="600px"
+		data-attr-height="400px"
+		>text <p>aqqq</p><a>qqq</a></media-tag>
+
+	<!-- Include Media Tag library -->
+	<script type="text/javascript" src="/dist/media-tag.js"></script>
+	<script>
+		// The only way to use as library is with JavaScript.
+		// You will need to select a DOM element that will be the wrapper
+		// element, for example a div.
+		// Then create a new MediaTag Object passing that element as
+		// parameter.
+
+		document.addEventListener('decryption', event => {
+			console.log('catched event', event);
+		});
+
+		MediaTag(document.querySelector('media-tag#image'));
+	</script>
+</body>
+</html>

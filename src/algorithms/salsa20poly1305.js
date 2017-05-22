@@ -1,6 +1,7 @@
 /* global window, fetch, XMLHttpRequest, Blob, Event */
 const Errors = require('../core/errors');
 const MediaTag = require('../core/media-tag');
+const CryptoFilter = require('../plugins/filters/crypto');
 
 /**
  * Class for crypto.
@@ -144,6 +145,48 @@ class DataManager {
 	}
 }
 
+/**
+ * Applies metadata on media object only if CryptoFilter knows the media type.
+ * Without these metadata the processing engine does not find any renderer and apply the default one.
+ * It's a non render by information lack.
+ *
+ * -------------------------------------------------------------------------------------------
+ * //mediaObject.setAttribute('type', decrypted.metadata.type);
+ * //mediaObject.type = decrypted.metadata.type;
+ * ///console.log(mediaObject);
+ *
+ * original model :
+ *      <media-tag src="something" data-type="image/png" data-crypto-key="cryptpad:something">
+ *
+ * hypothetical model : (mime is hidden inside src data)
+ *      <media-tag src="something" data-crypto-key="cryptpad:something">
+ *
+ * Crypto extracts metadata from the decrypted source and applies it on the media object.
+ *
+ * @param      {MediaObject}  mediaObject  The media object
+ * @param      {Object}  metadata     The metadata
+ */
+function applyMetadata(mediaObject, metadata) {
+	if (CryptoFilter.isAllowedMediaType(metadata.type)) {
+		/**
+		 * @example
+		 * Inside 'src/plugins/renderers/image.js'
+		 *
+		 * ...
+		 * mediaObject.utilsSetAllDataAttributes(element); // Takes all [data-] from attributes and it's done inside plugin job parts.
+		 * ...
+		 */
+		mediaObject.setAttribute('data-type', metadata.type);
+
+		/**
+		 * Theses data are used in identification phasis and have to be set.
+		 */
+		mediaObject.type = metadata.type;
+		mediaObject.extension = metadata.extension;
+		mediaObject.mime = metadata.mime;
+	}
+}
+
 function algorithm(mediaObject) {
 	const src = mediaObject.getAttribute('src');
 	const strKey = mediaObject.getAttribute('data-crypto-key');
@@ -173,6 +216,14 @@ function algorithm(mediaObject) {
 			 */
 			mediaObject.setAttribute('src', url);
 			mediaObject.removeAttribute('data-crypto-key');
+
+			if (!mediaObject.hasAttribute('data-type')) { // TODO TEST AND REMOVE IT
+				applyMetadata(mediaObject, {
+					type: 'image',
+					extension: 'png',
+					mime: 'image/png'
+				});
+			}
 
 			/**
 			 * Filters must call chain to try if the

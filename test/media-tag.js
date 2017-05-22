@@ -3,6 +3,7 @@ import chai from 'chai';
 import mediaTag from '../src/presets/static/media-tag';
 import Identifier from '../src/enums/identifier';
 import Type from '../src/enums/type';
+import CryptoFilter from '../src/plugins/filters/crypto';
 import FakePluginUtils from './helpers/fake-plugin-utils';
 
 describe('Create different media tag contents: ', () => {
@@ -116,5 +117,65 @@ describe('Several plugins usage', () => {
 		const filters = mediaTag.pluginStore.getPlugins(Type.FILTER);
 		const filterTemplatedElements = FakePluginUtils.Templater.createMediaTagElements(filters);
 		mediaTag(filterTemplatedElements);
+	});
+});
+
+describe('CryptoFilter allowed types manipulations', () => {
+	it('can\'t has already allowed media types', () => {
+		const mediaTypes = CryptoFilter.getAllowedMediaTypes();
+
+		chai.assert.isTrue(mediaTypes.length === 0, 'CryptoFilter contains allowed media types');
+	});
+
+	it('can allow all media types', () => {
+		const mediaTypes = [
+			'image',
+			'audio',
+			'video',
+			'pdf',
+			'dash'
+		];
+
+		CryptoFilter.setAllowedMediaTypes(mediaTypes);
+		chai.assert.isTrue(CryptoFilter.getAllowedMediaTypes().length === mediaTypes.length, 'CryptoFilter not contains the same amount of allowed mediaTypes');
+	});
+
+	it('can remove all media types', () => {
+		const mediaTypes = [
+			'image',
+			'audio',
+			'video',
+			'pdf',
+			'dash'
+		];
+
+		CryptoFilter.removeAllAllowedMediaTypes(mediaTypes);
+		chai.assert.isTrue(CryptoFilter.getAllowedMediaTypes().length === 0, 'CryptoFilter always contains a media type');
+	});
+
+	it('can find an allowed media type', () => {
+		const mediaTypes = [
+			'image',
+			'audio',
+			'video',
+			'pdf',
+			'dash'
+		];
+
+		CryptoFilter.setAllowedMediaTypes(mediaTypes);
+		chai.assert.isTrue(CryptoFilter.isAllowedMediaType('dash'), 'CryptoFilter not contains "dash" media type');
+	});
+
+	it('can\'t find an allowed media type', () => {
+		const mediaTypes = [
+			'image',
+			'audio',
+			'video',
+			'pdf',
+			'dash'
+		];
+
+		CryptoFilter.setAllowedMediaTypes(mediaTypes);
+		chai.assert.isFalse(CryptoFilter.isAllowedMediaType('penguins'), 'CryptoFilter not contains "penguins" media type');
 	});
 });

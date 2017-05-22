@@ -1,6 +1,7 @@
 /* global document */
-const Renderer =		require('../renderer');
+const Renderer =	require('../renderer');
 const Identifier = 	require('../../enums/identifier');
+const MediaTag = 	require('../../core/media-tag');
 
 class ImageRenderer extends Renderer {
 	/**
@@ -21,6 +22,8 @@ class ImageRenderer extends Renderer {
 		element.setAttribute('src', mediaObject.getAttribute('src'));
 		mediaObject.utilsSetAllDataAttributes(element);
 		mediaObject.replaceContents([element]);
+
+		MediaTag.processingEngine.return(mediaObject);
 	}
 }
 

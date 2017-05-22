@@ -48,4 +48,30 @@ const CryptpadAlgorithm = require('../../algorithms/cryptpad');
 CryptoFilter.functionStore.store('salsa20poly1305', Salsa20Poly1305Algorithm);
 CryptoFilter.functionStore.store('cryptpad', CryptpadAlgorithm);
 
+/**
+ * WAY 1 : CRYPTO CAN DEFINE HIS OWN ALLOWED MEDIA TYPES (TYPE/MIME/...)
+ * IT FORBID PLUGIN USAGE BY INFORMATION LACK (NO METADATA ARE SET IF MEDIA TYPE IS NOT ALLOWED)
+ */
+CryptoFilter.setAllowedMediaTypes([
+	'image',
+	'audio',
+	'video',
+	'pdf',
+	'dash']);
+
+/**
+ * WAY 2 : DEFINE A CCONFIGURATION TO FORBID SOME PLUGINS
+ * IT FORBID PLUGIN USAGE INSIDE PROCESSING ENGINE
+ */
+
+const Configuration = require('../../core/configuration');
+const Permission = require('../../enums/permission');
+const Identifier = require('../../enums/identifier');
+
+const configuration = new Configuration();
+
+// configuration.setPermission(Identifier.IMAGE, Permission.FORBIDDEN);
+
+MediaTag.processingEngine.configure(configuration);
+
 module.exports = MediaTag;

@@ -2,6 +2,7 @@ const Assert = require('../utils/assert');
 const Type = require('../enums/type');
 const PluginUtils = require('../utils/plugin-utils');
 const DownloadPlugin = require('../plugins/renderers/download');
+const Permission = require('../enums/permission');
 
 /**
  * Class for processing engine.
@@ -28,6 +29,21 @@ class ProcessingEngine {
 		 * Snapshots of each media object's stack.
 		 */
 		this.snapshots = {};
+
+		/**
+		 * Stats of each plugin execution.
+		 */
+		this.stats = [];
+	}
+
+	/**
+	 * Configures the processing engine.
+	 *
+	 * @param      {Configuration}  configuration  The configuration
+	 */
+	configure(configuration) {
+		console.warn('configuration');
+		this.configuration = configuration;
 	}
 
 	/**
@@ -36,9 +52,7 @@ class ProcessingEngine {
 	 * @param      {MediaObject}  mediaObject  The media object
 	 */
 	start(mediaObject) {
-		this.fill(mediaObject);
-		this.snapshot(mediaObject);
-		this.check(mediaObject);
+		this.routine(mediaObject);
 		this.run(mediaObject);
 	}
 
@@ -49,16 +63,36 @@ class ProcessingEngine {
 	 * @return     {?MediaObject}
 	 */
 	run(mediaObject) {
-		const plugin = this.unstack(mediaObject);
+		const plugin = this.stackTop(mediaObject);
 
 		if (!plugin) {
-			return mediaObject; // Maybe emit an event instead ?
+			return mediaObject;
 		}
 
-		this.process(mediaObject);
-		if (plugin.type !== Type.SANITIZER) {
-			this.fill(mediaObject);
+		if (this.configuration) {
+			if (this.configuration.getPermission(plugin.identifier) === Permission.FORBIDDEN) {
+				const stat = this.stats[mediaObject.getId()];
+
+				if (!stat.skipped) {
+					stat.skipped = [];
+				}
+				stat.skipped.push(plugin.identifier);
+				this.return(mediaObject);
+			} else {
+				plugin.process(mediaObject);
+			}
+		} else {
+			plugin.process(mediaObject);
 		}
+	}
+
+	/**
+	 * Routine
+	 *
+	 * @param      {MediaObject}  mediaObject  The media object
+	 */
+	routine(mediaObject) {
+		this.fill(mediaObject);
 		this.snapshot(mediaObject);
 		this.check(mediaObject);
 	}
@@ -101,7 +135,6 @@ class ProcessingEngine {
 	 * @param      {MediaObject}  mediaObject  The media object
 	 */
 	fill(mediaObject) {
-		const stack = [];
 		const stackId = mediaObject.getId();
 		const matchers = this.pluginStore.getPlugins(Type.MATCHER);
 		const matchedMatchers = matchers.filter(matcher => {
@@ -119,27 +152,76 @@ class ProcessingEngine {
 
 		const pluginsByOccurrencies = PluginUtils.filterByOccurrencies(matchedPlugins);
 
-		pluginsByOccurrencies.once.forEach(plugin => {
-			if (!this.isStacked(mediaObject, plugin)) {
-				stack.push(plugin);
-			}
-		});
-
-		pluginsByOccurrencies.any.forEach(plugin => {
-			if (!this.isStacked(mediaObject, plugin)) {
-				stack.push(plugin);
-			}
-		});
-
-		pluginsByOccurrencies.every.forEach(plugin => {
-			stack.push(plugin);
-		});
+		const stack = this.substack(mediaObject, pluginsByOccurrencies);
 
 		if (this.stacks[stackId]) {
 			this.stacks[stackId].push(...stack);
 		} else {
 			this.stacks[stackId] = stack;
 		}
+	}
+
+	substack(mediaObject, pluginsByOccurrencies) {
+		const stack = [];
+
+		pluginsByOccurrencies.once.forEach(plugin => {
+			if (this.configuration) {
+				if (this.configuration.getPermission(plugin.identifier) === Permission.FORBIDDEN) {
+					this.skip(mediaObject, plugin);
+				} else if (!this.isStacked(mediaObject, plugin)) {
+					stack.push(plugin);
+				}
+			} else if (!this.isStacked(mediaObject, plugin)) {
+				stack.push(plugin);
+			}
+		});
+
+		pluginsByOccurrencies.any.forEach(plugin => {
+			if (this.configuration) {
+				if (this.configuration.getPermission(plugin.identifier) === Permission.FORBIDDEN) {
+					this.skip(mediaObject, plugin);
+				} else if (!this.isStacked(mediaObject, plugin)) {
+					stack.push(plugin);
+				}
+			} else if (!this.isStacked(mediaObject, plugin)) {
+				stack.push(plugin);
+			}
+		});
+
+		pluginsByOccurrencies.every.forEach(plugin => {
+			if (this.configuration) {
+				if (this.configuration.getPermission(plugin.identifier) === Permission.FORBIDDEN) {
+					this.skip(mediaObject, plugin);
+				} else {
+					stack.push(plugin);
+				}
+			} else {
+				stack.push(plugin);
+			}
+		});
+
+		return stack;
+	}
+
+	/**
+	 * Updates skipped plugins.
+	 *
+	 * @param      {MediaObject}  mediaObject  The media object
+	 * @param      {Plugin}  plugin       The plugin
+	 */
+	skip(mediaObject, plugin) {
+		let stat = this.stats[mediaObject.getId()];
+
+		if (stat) {
+			if (!stat.skipped) {
+				stat.skipped = [];
+			}
+		} else {
+			stat = {
+				skipped: []
+			};
+		}
+		stat.skipped.push(plugin.identifier);
 	}
 
 	/**
@@ -157,6 +239,21 @@ class ProcessingEngine {
 	}
 
 	/**
+	 * Gets stack top plugin.
+	 *
+	 * @param      {MediaObject}  mediaObject  The media object
+	 * @return     {?Plugin}
+	 */
+	stackTop(mediaObject) {
+		const stackId = mediaObject.getId();
+
+		if (this.stacks[stackId]) {
+			return this.stacks[stackId][this.stacks[stackId].length - 1];
+		}
+		return null;
+	}
+
+	/**
 	 * Checks the stack.
 	 *
 	 * @param      {MediaObject}  mediaObject  The media object
@@ -164,12 +261,12 @@ class ProcessingEngine {
 	check(mediaObject) {
 		const stackId = mediaObject.getId();
 
-		if (this.stacks[stackId].length >= this.STACK_LIMIT) {
+		if (this.stacks[stackId].length >= ProcessingEngine.STACK_LIMIT) {
 			console.error(this.snapshots[stackId]);
 			throw new Error('Plugin stack size exceed');
 		}
 
-		if (this.snapshots[stackId].length >= this.SNAPSHOT_LIMIT) {
+		if (this.snapshots[stackId].length >= ProcessingEngine.SNAPSHOT_LIMIT) {
 			console.error(this.snapshots[stackId]);
 			throw new Error('Plugin snapshots size exceed');
 		}
@@ -182,12 +279,13 @@ class ProcessingEngine {
 			}
 		});
 
-		if (rendererCount < 1) {
-			this.stacks[stackId].unshift(ProcessingEngine.defaultPlugin);
+		if (rendererCount > 1) {
+			console.error(this.snapshots[stackId]);
+			throw new Error('More of one renderer in the stack');
 		}
 
-		if (rendererCount > 1) {
-			throw new Error('More of one renderer in the stack');
+		if (this.stacks[stackId].length === 0 && !this.stats[stackId][Type.RENDERER]) {
+			this.stacks[stackId].unshift(ProcessingEngine.defaultPlugin);
 		}
 	}
 
@@ -198,6 +296,31 @@ class ProcessingEngine {
 	 * @param      {MediaObject}  mediaObject  The media object
 	 */
 	return(mediaObject) {
+		const stackId = mediaObject.getId();
+		const plugin = this.unstack(mediaObject);
+
+		if (!this.stats[stackId]) {
+			this.stats[stackId] = {};
+		}
+
+		if (this.stats[stackId][plugin.type]) {
+			this.stats[stackId][plugin.type] += 1;
+		} else {
+			this.stats[stackId][plugin.type] = 1;
+		}
+
+		console.log(
+			plugin.identifier,
+			this.snapshots[stackId][this.snapshots[stackId].length - 1],
+			this.stats[stackId]);
+
+		if (this.stacks[stackId].length === 0 && plugin.type === Type.RENDERER) {
+			this.run(mediaObject);
+		} else if (plugin.type !== Type.SANITIZER) {
+			this.fill(mediaObject);
+		}
+		this.snapshot(mediaObject);
+		this.check(mediaObject);
 		this.run(mediaObject);
 	}
 

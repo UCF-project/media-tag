@@ -15,7 +15,10 @@ class Parser {
 	 */
 	static extension(mediaObject) {
 		const dataType = mediaObject.getAttribute('data-type');
-		return dataType.split('/')[1];
+		if (dataType) {
+			return dataType.split('/')[1];
+		}
+		return undefined;
 	}
 
 	/**
@@ -26,7 +29,10 @@ class Parser {
 	 */
 	static type(mediaObject) {
 		const dataType = mediaObject.getAttribute('data-type');
-		return dataType.split('/')[0];
+		if (dataType) {
+			return dataType.split('/')[0];
+		}
+		return undefined;
 	}
 
 	/**

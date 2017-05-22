@@ -1,6 +1,8 @@
 /* global window, fetch, XMLHttpRequest, Blob, Event */
 const Errors = require('../core/errors');
 const MediaTag = require('../core/media-tag');
+const CryptoFilter = require('../plugins/filters/crypto');
+
 const PARANOIA = true;
 const plainChunkLength = 128 * 1024;
 const cypherChunkLength = 131088;
@@ -137,7 +139,7 @@ class Cryptopad {
         var metadataLength = Cryptopad.decodePrefix(prefix);
 
         var res = {
-            metadata: undefined,
+            metadata: undefined
         };
 
         var metaBox = new Uint8Array(u8.subarray(2, 2 + metadataLength));
@@ -253,6 +255,46 @@ class DataManager {
     }
 }
 
+/**
+ *
+ * @example
+ *
+ * //mediaObject.setAttribute('type', decrypted.metadata.type);
+ * //mediaObject.type = decrypted.metadata.type;
+ * ///console.log(mediaObject);
+ *
+ * original model :
+ *      <media-tag src="something" data-type="image/png" data-crypto-key="cryptpad:something">
+ *
+ * hypothetical model : (mime is hidden inside src data)
+ *      <media-tag src="something" data-crypto-key="cryptpad:something">
+ *
+ * Crypto extracts metadata from the decrypted source and applies it on the media object.
+ *
+ * @param      {MediaObject}  mediaObject  The media object
+ * @param      {Object}  metadata     The metadata
+ */
+function applyMetadata(mediaObject, metadata) {
+    if (CryptoFilter.isAllowedMediaType(metadata)) {
+        /**
+         * @example
+         * Inside 'src/plugins/renderers/image.js'
+         *
+         * ...
+         * mediaObject.utilsSetAllDataAttributes(element); // Takes all [data-] from attributes and it's done inside plugin job parts.
+         * ...
+         */
+        mediaObject.setAttribute('data-type', metadata.type);
+
+        /**
+         * Theses data are used in identification phasis and have to be set.
+         */
+        mediaObject.type = metadata.type;
+        mediaObject.extension = metadata.extension;
+        mediaObject.mime = metadata.mime;
+    }
+};
+
 function algorithm(mediaObject) {
     const src = mediaObject.getAttribute('src');
     const strKey = mediaObject.getAttribute('data-crypto-key');
@@ -291,9 +333,7 @@ function algorithm(mediaObject) {
                 mediaObject.setAttribute('src', url);
                 mediaObject.removeAttribute('data-crypto-key');
 
-                //mediaObject.setAttribute('type', decrypted.metadata.type);
-                //mediaObject.type = decrypted.metadata.type;
-                ///console.log(mediaObject);
+                applyMetadata(mediaObject, decrypted.metadata);
 
                 decryptionEvent.callback = function () {
                     /**

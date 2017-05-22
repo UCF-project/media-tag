@@ -50,4 +50,85 @@ class CryptoFilter extends Filter {
  */
 CryptoFilter.functionStore = CryptoFilter.functionStore || new Store();
 
+/**
+ * Allowed media types.
+ */
+CryptoFilter.mediaTypes = [];
+
+/**
+ * Sets the allowed media types.
+ *
+ * @param      {Array<string>}  mediaTypes  The media types
+ */
+CryptoFilter.setAllowedMediaTypes = mediaTypes => {
+	CryptoFilter.mediaTypes = mediaTypes;
+};
+
+/**
+ * Gets the allowed media types.
+ *
+ * @return     {Array<string>}  The allowed media types.
+ */
+CryptoFilter.getAllowedMediaTypes = () => {
+	return CryptoFilter.mediaTypes;
+};
+
+/**
+ * Adds an allowed media type.
+ *
+ * @param      {string}  mediaType  The media type
+ */
+CryptoFilter.addAllowedMediaType = mediaType => {
+	CryptoFilter.mediaTypes.push(mediaType);
+};
+
+/**
+ * Adds all allowed media types.
+ *
+ * @param      {Array<string>}  mediaTypes  The media types
+ */
+CryptoFilter.addAllAllowedMediaTypes = mediaTypes => {
+	// CryptoFilter.mediaTypes.push(...mediaTypes); // ES7 variant
+	mediaTypes.forEach(mediaType => {
+		CryptoFilter.addAllowedMediaType(mediaType);
+	});
+};
+
+/**
+ * Removes an allowed media type.
+ *
+ * @param      {string}  mediaType  The media type
+ */
+CryptoFilter.removeAllowedMediaType = mediaType => {
+	const index = CryptoFilter.mediaTypes.indexOf(mediaType);
+
+	if (index >= 0) {
+		CryptoFilter.mediaTypes.splice(index, 1);
+	}
+};
+
+/**
+ * Removes all allowed media type.
+ *
+ * @param      {Array<string>}  mediaTypes  The media types
+ */
+CryptoFilter.removeAllAllowedMediaTypes = mediaTypes => {
+	mediaTypes.forEach(mediaType => {
+		CryptoFilter.removeAllowedMediaType(mediaType);
+	});
+};
+
+/**
+ * Determines if allowed media type.
+ *
+ * @param      {string}   mediaType  The media type
+ * @return     {boolean}  True if allowed media type, False otherwise.
+ */
+CryptoFilter.isAllowedMediaType = mediaType => {
+	// return CryptoFilter.mediaTypes.includes(mediaType); // ES7 variant
+	return CryptoFilter.mediaTypes.some(type => {
+		return type === mediaType;
+	});
+};
+
 module.exports = CryptoFilter;
