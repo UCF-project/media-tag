@@ -19,6 +19,7 @@ class VideoRenderer extends Renderer {
 		const element = document.createElement('video');
 
 		element.setAttribute('src', mediaObject.getAttribute('src'));
+		element.setAttribute('controls', true);
 		mediaObject.utilsSetAllDataAttributes(element);
 		mediaObject.replaceContents([element]);
 	}

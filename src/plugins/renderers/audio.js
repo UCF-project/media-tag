@@ -19,6 +19,7 @@ class AudioRenderer extends Renderer {
 		const element = document.createElement('audio');
 
 		element.setAttribute('src', mediaObject.getAttribute('src'));
+		element.setAttribute('controls', true);
 		mediaObject.utilsSetAllDataAttributes(element);
 		mediaObject.replaceContents([element]);
 	}

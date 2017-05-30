@@ -275,7 +275,15 @@ class DataManager {
  * @param      {Object}  metadata     The metadata
  */
 function applyMetadata(mediaObject, metadata) {
-    if (CryptoFilter.isAllowedMediaType(metadata)) {
+    const info = metadata.type.split('/');
+    /**
+     * Normailse metadata to MediaTag model.
+     */
+    const mime = metadata.type;
+    const type = info[0];
+    const extension = info[1];
+
+    if (CryptoFilter.isAllowedMediaType(mime)) {
         /**
          * @example
          * Inside 'src/plugins/renderers/image.js'
@@ -285,13 +293,16 @@ function applyMetadata(mediaObject, metadata) {
          * ...
          */
         mediaObject.setAttribute('data-type', metadata.type);
+        mediaObject.setAttribute('data-attr-type', metadata.type);
 
         /**
          * Theses data are used in identification phasis and have to be set.
          */
-        mediaObject.type = metadata.type;
-        mediaObject.extension = metadata.extension;
-        mediaObject.mime = metadata.mime;
+        mediaObject.type = type;
+        mediaObject.extension = extension;
+        mediaObject.mime = mime;
+    } else {
+        console.log('Not allowed metadata, allowed ones are : ', console.log(CryptoFilter.getAllowedMediaTypes()));
     }
 };
 

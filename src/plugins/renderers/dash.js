@@ -30,6 +30,7 @@ class DashRenderer extends Renderer {
 				}
 			});
 		}
+		video.setAttribute('controls', true);
 		mediaObject.utilsSetAllDataAttributes(video);
 		mediaObject.replaceContents([video]);
 		player.load(mediaObject.getAttribute('src')).then(() => {});

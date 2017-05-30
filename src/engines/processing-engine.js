@@ -42,7 +42,6 @@ class ProcessingEngine {
 	 * @param      {Configuration}  configuration  The configuration
 	 */
 	configure(configuration) {
-		console.warn('configuration');
 		this.configuration = configuration;
 	}
 
@@ -309,10 +308,10 @@ class ProcessingEngine {
 			this.stats[stackId][plugin.type] = 1;
 		}
 
-		console.log(
-			plugin.identifier,
-			this.snapshots[stackId][this.snapshots[stackId].length - 1],
-			this.stats[stackId]);
+		// console.log(
+		// 	plugin.identifier,
+		// 	this.snapshots[stackId][this.snapshots[stackId].length - 1],
+		// 	this.stats[stackId]);
 
 		if (this.stacks[stackId].length === 0 && plugin.type === Type.RENDERER) {
 			this.run(mediaObject);

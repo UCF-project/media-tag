@@ -52,12 +52,32 @@ CryptoFilter.functionStore.store('cryptpad', CryptpadAlgorithm);
  * WAY 1 : CRYPTO CAN DEFINE HIS OWN ALLOWED MEDIA TYPES (TYPE/MIME/...)
  * IT FORBID PLUGIN USAGE BY INFORMATION LACK (NO METADATA ARE SET IF MEDIA TYPE IS NOT ALLOWED)
  */
-CryptoFilter.setAllowedMediaTypes([
-	'image',
-	'audio',
-	'video',
-	'pdf',
-	'dash']);
+
+MediaTag.CryptoFilter = CryptoFilter;
+
+/**
+ * Allowed mime types that have to be set for a rendering after a decryption.
+ *
+ * @type       {Array}
+ */
+const allowedMediaTypes = [
+	'image/png',
+	'image/jpeg',
+	'image/jpg',
+	'image/gif',
+	'audio/mp3',
+	'audio/ogg',
+	'audio/wav',
+	'audio/webm',
+	'video/mp4',
+	'video/ogg',
+	'video/webm',
+	'application/pdf',
+	'application/dash+xml',
+	'download'
+];
+
+MediaTag.CryptoFilter.setAllowedMediaTypes(allowedMediaTypes);
 
 /**
  * WAY 2 : DEFINE A CCONFIGURATION TO FORBID SOME PLUGINS
