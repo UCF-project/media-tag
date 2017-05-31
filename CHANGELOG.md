@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/) and
 [Keep a CHANGELOG](http://keepachangelog.com/).
 
+## v0.2.4
+- ProcessingEngine default plugin reference is accessible by ProcessingEngine instance and can be set with setDefaultPlugin() method.
+- All renderer now returns to MediaTag.processingEngine instance the mediaObject like filters and sanitizers.
+- Download plugin has been upgraded to recognize mediaObject.name property at download or data-attr-type when name is not present. The goal is to set the correct file extension according to mediaObject. By default any unrecognize file type is considerered as text by FileSaver API.
+
 ## v0.2.3
 
 ### Changed
