@@ -1,7 +1,7 @@
 const Assert = require('../utils/assert');
 const Type = require('../enums/type');
 const PluginUtils = require('../utils/plugin-utils');
-const DownloadPlugin = require('../plugins/renderers/download');
+// const DownloadPlugin = require('../plugins/renderers/download');
 const Permission = require('../enums/permission');
 
 /**
@@ -34,6 +34,11 @@ class ProcessingEngine {
 		 * Stats of each plugin execution.
 		 */
 		this.stats = [];
+
+		/**
+		 * Default rendering plugin.
+		 */
+		this.defaultPlugin = null;
 	}
 
 	/**
@@ -284,7 +289,10 @@ class ProcessingEngine {
 		}
 
 		if (this.stacks[stackId].length === 0 && !this.stats[stackId][Type.RENDERER]) {
-			this.stacks[stackId].unshift(ProcessingEngine.defaultPlugin);
+			if (!this.defaultPlugin) {
+				throw new Error('No default plugin assignated');
+			}
+			this.stacks[stackId].unshift(this.defaultPlugin);
 		}
 	}
 
@@ -358,6 +366,10 @@ class ProcessingEngine {
 		}
 		return false;
 	}
+
+	setDefaultPlugin(plugin) {
+		this.defaultPlugin = plugin;
+	}
 }
 
 /**
@@ -369,12 +381,5 @@ ProcessingEngine.STACK_LIMIT = 100;
  * Maximum snapshots count.
  */
 ProcessingEngine.SNAPSHOT_LIMIT = 100;
-
-/**
- * Default rendering plugin.
- */
-ProcessingEngine.defaultPlugin = new DownloadPlugin(
-	'<p> MediaTag cannot find a plugin able to renderer your content </p>',
-	'Download');
 
 module.exports = ProcessingEngine;

@@ -49,6 +49,16 @@ CryptoFilter.functionStore.store('salsa20poly1305', Salsa20Poly1305Algorithm);
 CryptoFilter.functionStore.store('cryptpad', CryptpadAlgorithm);
 
 /**
+ * Set default plugin for MediaTag.processingEngine
+ */
+
+const defaultPlugin = new DownloadPlugin(
+	'<p> MediaTag cannot find a plugin able to renderer your content </p>',
+	'Download');
+
+MediaTag.processingEngine.setDefaultPlugin(defaultPlugin);
+
+/**
  * WAY 1 : CRYPTO CAN DEFINE HIS OWN ALLOWED MEDIA TYPES (TYPE/MIME/...)
  * IT FORBID PLUGIN USAGE BY INFORMATION LACK (NO METADATA ARE SET IF MEDIA TYPE IS NOT ALLOWED)
  */

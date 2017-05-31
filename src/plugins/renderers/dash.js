@@ -1,6 +1,7 @@
 /* global document, shaka */
-const Renderer =		require('../renderer');
+const Renderer =	require('../renderer');
 const Identifier = 	require('../../enums/identifier');
+const MediaTag = 	require('../../core/media-tag');
 
 class DashRenderer extends Renderer {
 	/**
@@ -34,6 +35,8 @@ class DashRenderer extends Renderer {
 		mediaObject.utilsSetAllDataAttributes(video);
 		mediaObject.replaceContents([video]);
 		player.load(mediaObject.getAttribute('src')).then(() => {});
+
+		MediaTag.processingEngine.return(mediaObject);
 	}
 }
 

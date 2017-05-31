@@ -1,6 +1,7 @@
 /* global document */
-const Renderer =		require('../renderer');
+const Renderer =	require('../renderer');
 const Identifier = 	require('../../enums/identifier');
+const MediaTag = 	require('../../core/media-tag');
 
 class VideoRenderer extends Renderer {
 	/**
@@ -22,6 +23,8 @@ class VideoRenderer extends Renderer {
 		element.setAttribute('controls', true);
 		mediaObject.utilsSetAllDataAttributes(element);
 		mediaObject.replaceContents([element]);
+
+		MediaTag.processingEngine.return(mediaObject);
 	}
 }
 

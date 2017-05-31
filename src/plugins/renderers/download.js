@@ -1,6 +1,7 @@
-/* global document, XMLHttpRequest, saveAs */
+/* global document, XMLHttpRequest, saveAs, File */
 const Renderer =	require('../renderer');
 const Identifier = 	require('../../enums/identifier');
+const MediaTag = 	require('../../core/media-tag');
 
 class DownloadRenderer extends Renderer {
 	/**
@@ -33,7 +34,16 @@ class DownloadRenderer extends Renderer {
 			xhr.onload = () => {
 				const blob = xhr.response;
 				if (blob) {
-					saveAs(blob);
+					if (mediaObject.name) {
+						saveAs(blob, mediaObject.name);
+					} else if (mediaObject.getAttribute('data-attr-type')) {
+						const mime = mediaObject.getAttribute('data-attr-type');
+						const ar = mime.split('/');
+						const file = new File([blob], `download.${ar[1] || 'txt'}`, {type: mime});
+						saveAs(file);
+					} else {
+						saveAs(blob);
+					}
 				}
 			};
 			xhr.send();
@@ -43,6 +53,8 @@ class DownloadRenderer extends Renderer {
 
 		mediaObject.utilsSetAllDataAttributes(container);
 		mediaObject.replaceContents([container]);
+
+		MediaTag.processingEngine.return(mediaObject);
 	}
 }
 

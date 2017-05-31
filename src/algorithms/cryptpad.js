@@ -293,7 +293,6 @@ function applyMetadata(mediaObject, metadata) {
          * ...
          */
         mediaObject.setAttribute('data-type', metadata.type);
-        mediaObject.setAttribute('data-attr-type', metadata.type);
 
         /**
          * Theses data are used in identification phasis and have to be set.
@@ -302,8 +301,14 @@ function applyMetadata(mediaObject, metadata) {
         mediaObject.extension = extension;
         mediaObject.mime = mime;
     } else {
-        console.log('Not allowed metadata, allowed ones are : ', console.log(CryptoFilter.getAllowedMediaTypes()));
+        console.log('Not allowed metadata, allowed ones are : ', CryptoFilter.getAllowedMediaTypes());
     }
+
+    /**
+     * Data to improve file format recognition at downloading.
+     */
+    mediaObject.name = metadata.name;
+    mediaObject.setAttribute('data-attr-type', metadata.type);
 };
 
 function algorithm(mediaObject) {

@@ -1,6 +1,7 @@
 /* global document, PDFJS */
-const Renderer =		require('../renderer');
+const Renderer =	require('../renderer');
 const Identifier = 	require('../../enums/identifier');
+const MediaTag = 	require('../../core/media-tag');
 
 class PdfRenderer extends Renderer {
 	/**
@@ -99,6 +100,8 @@ class PdfRenderer extends Renderer {
 					render(page);
 				});
 			};
+
+			MediaTag.processingEngine.return(mediaObject);
 		}, reason => {
 			// PDF loading error
 			console.error(reason);
