@@ -318,18 +318,24 @@ function algorithm(mediaObject) {
     const xhr = new XMLHttpRequest();
     xhr.open('GET', src, true);
     xhr.responseType = 'arraybuffer';
-    xhr.onload = () => {
+
+    var fail = function (err) {
+        const decryptionErrorEvent = new Event('decryptionError');
+        decryptionErrorEvent.message = typeof(err) === 'string'? err: err.message;
+        window.document.dispatchEvent(decryptionErrorEvent);
+    };
+
+    xhr.onload = function () {
+        if (/^4/.test('' + this.status)) {
+            return fail("XHR_ERROR", '' + this.status);
+        }
+
         const arrayBuffer = xhr.response;
         if (arrayBuffer) {
             const u8 = new Uint8Array(arrayBuffer);
 
             Cryptopad.decrypt(u8, cryptoKey, function (err, decrypted) {
-                if (err) {
-                    const decryptionErrorEvent = new Event('decryptionError');
-                    decryptionErrorEvent.message = err.message;
-                    window.document.dispatchEvent(decryptionErrorEvent);
-                    return;
-                }
+                if (err) { return fail(err); }
 
                 const binStr = decrypted.content;
                 const url = DataManager.getBlobUrl(binStr, mediaObject.getMimeType());
