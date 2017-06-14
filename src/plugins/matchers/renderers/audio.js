@@ -17,7 +17,7 @@ class AudioMatcher extends Matcher {
 	 */
 	process(mediaObject) {
 		const regexExtensions = new RegExp('^mp3|ogg|webm|wav|mpeg$');
-		const regexMimes = new RegExp('^audio/(mp3|ogg|webm|wav)$');
+		const regexMimes = new RegExp('^audio/(mp3|ogg|webm|wav|mpeg)$');
 
 		return	mediaObject.hasAttribute('src') &&
 				mediaObject.getType() === 'audio' &&
