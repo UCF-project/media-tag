@@ -345,6 +345,7 @@ function algorithm(mediaObject) {
                 });
 
                 decryptionEvent.metadata = decrypted.metadata;
+                CryptoFilter.addAllowedMediaType('audio/mpeg');
 
                 /**
                  * Modifications applied on mediaObject.
@@ -354,6 +355,13 @@ function algorithm(mediaObject) {
                  */
                 mediaObject.setAttribute('src', url);
                 mediaObject.removeAttribute('data-crypto-key');
+
+                if (/audio\/(mp3|ogg|wav|webm|mpeg)/.test(decrypted.metadata.type)) {
+                    // audio types should do the right thing.
+                } else if (!/image\/(png|jpeg|jpg|gif)/.test(decrypted.metadata.type)) {
+                    // if it's not an image, present a download link
+                    decrypted.metadata.type = 'download';
+                }
 
                 applyMetadata(mediaObject, decrypted.metadata);
 
