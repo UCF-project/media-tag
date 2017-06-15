@@ -62,9 +62,7 @@ class Cryptopad {
     }
 
     static joinChunks (chunks) {
-        return new Uint8Array(chunks.reduce(function (A, B) {
-            return Cryptopad.slice(A).concat(Cryptopad.slice(B));
-        }, []));
+        return new Blob(chunks);
     }
 
     /**
