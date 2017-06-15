@@ -356,13 +356,22 @@ function algorithm(mediaObject) {
                 mediaObject.setAttribute('src', url);
                 mediaObject.removeAttribute('data-crypto-key');
 
+                console.log(decrypted.metadata);
+
                 if (/audio\/(mp3|ogg|wav|webm|mpeg)/.test(decrypted.metadata.type)) {
                     // audio types should do the right thing.
+                } else if (/application\/pdf/.test(decrypted.metadata.type)) {
+                    // let it be
+
+                } else if (/video\//.test(decrypted.metadata.type)) {
+                    // let it be
+
                 } else if (!/image\/(png|jpeg|jpg|gif)/.test(decrypted.metadata.type)) {
                     // if it's not an image, present a download link
                     decrypted.metadata.type = 'download';
                 }
 
+                console.log(decrypted.metadata);
                 applyMetadata(mediaObject, decrypted.metadata);
 
                 decryptionEvent.callback = function () {
