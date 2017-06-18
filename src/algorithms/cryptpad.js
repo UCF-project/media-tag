@@ -62,9 +62,7 @@ class Cryptopad {
     }
 
     static joinChunks (chunks) {
-        return new Uint8Array(chunks.reduce(function (A, B) {
-            return Cryptopad.slice(A).concat(Cryptopad.slice(B));
-        }, []));
+        return new Blob(chunks);
     }
 
     /**
@@ -153,20 +151,22 @@ class Cryptopad {
         if (!res.metadata) { return done('NO_METADATA'); }
 
         var takeChunk = function (cb) {
-            const start = i * cypherChunkLength + 2 + metadataLength;
-            const end = start + cypherChunkLength;
-            i++;
-            const box = new Uint8Array(u8.subarray(start, end));
+            setTimeout(function () {
+                const start = i * cypherChunkLength + 2 + metadataLength;
+                const end = start + cypherChunkLength;
+                i++;
+                const box = new Uint8Array(u8.subarray(start, end));
 
-            // decrypt the chunk
-            const plaintext = Nacl.secretbox.open(box, nonce, key);
-            Cryptopad.increment(nonce);
+                // decrypt the chunk
+                const plaintext = Nacl.secretbox.open(box, nonce, key);
+                Cryptopad.increment(nonce);
 
-            if (!plaintext) { return void cb('DECRYPTION_FAILURE'); }
+                if (!plaintext) { return void cb('DECRYPTION_FAILURE'); }
 
-            progress(Math.min(end, u8.length));
+                progress(Math.min(end, u8.length));
 
-            cb(void 0, plaintext);
+                cb(void 0, plaintext);
+            });
         };
 
         var chunks = [];
