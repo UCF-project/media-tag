@@ -16,8 +16,8 @@ class PdfMatcher extends Matcher {
 	 * @param      {MediaObject}  mediaObject  The media object
 	 */
 	process(mediaObject) {
-		const regexExtensions = new RegExp('^pdf$');
-		const regexMimes = new RegExp('^application/pdf$');
+		const regexExtensions = /^pdf$/;
+		const regexMimes = /^application[/]pdf$/;
 
 		return	mediaObject.hasAttribute('src') &&
 				mediaObject.getType() === 'application' &&

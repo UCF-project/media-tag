@@ -1,6 +1,8 @@
 // const debugFactory = require('debug');
 
 // const debug = debugFactory('MT:MediaObject');
+const AttributesObject = require('./attributes-object');
+const Parser = require('./parser');
 
 /**
  * Media Object is created for each media-tag and contains the
@@ -26,10 +28,21 @@ class MediaObject {
 		 */
 		this.id = MediaObject.uid();
 
+		this.element = rootElement;
+
+		this.state = 'idle';
+
 		/**
 		 * @type {Object} attributesObject Object with attributes that will specify the contents.
 		 */
-		this.attributesObject = MediaObject.attributesObject(rootElement);
+		this.attributesObject = new AttributesObject(rootElement);
+
+		const properties = Parser.parse(this.attributesObject);
+		for (const property of Object.keys(properties)) {
+			this[property] = properties[property];
+		}
+
+		// console.log(this);
 
 		/**
 		 * @type {HTMLElement} rootElement HTMLElement DOM Node that acts as
@@ -42,7 +55,8 @@ class MediaObject {
 			hasChildNodes: rootElement.hasChildNodes.bind(rootElement),
 			removeChild: rootElement.removeChild.bind(rootElement),
 			getLastChild: () => rootElement.lastChild,
-			appendChild: rootElement.appendChild.bind(rootElement)
+			appendChild: rootElement.appendChild.bind(rootElement),
+			children: () => rootElement.children
 		};
 	}
 
@@ -167,6 +181,15 @@ class MediaObject {
 	 */
 	getSource() {
 		return this.src;
+	}
+
+	/**
+	 * Gets the sources.
+	 *
+	 * @return     {Array<Object>}  The sources.
+	 */
+	getSources() {
+		return this.sources;
 	}
 
 	/**

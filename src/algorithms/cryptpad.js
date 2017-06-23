@@ -337,14 +337,17 @@ function algorithm(mediaObject) {
             Cryptopad.decrypt(u8, cryptoKey, function (err, decrypted) {
                 if (err) { return fail(err); }
 
+                // Metadata must be set before the blob construction.
+                const decryptionEvent = new Event('decryption');
+                decryptionEvent.metadata = decrypted.metadata;
+                applyMetadata(mediaObject, decrypted.metadata);
+
                 const binStr = decrypted.content;
                 const url = DataManager.getBlobUrl(binStr, mediaObject.getMimeType());
-                const decryptionEvent = new Event('decryption');
+
                 decryptionEvent.blob = new Blob([binStr], {
                     type: mediaObject.getMimeType()
                 });
-
-                decryptionEvent.metadata = decrypted.metadata;
 
                 /**
                  * Modifications applied on mediaObject.
@@ -354,8 +357,6 @@ function algorithm(mediaObject) {
                  */
                 mediaObject.setAttribute('src', url);
                 mediaObject.removeAttribute('data-crypto-key');
-
-                applyMetadata(mediaObject, decrypted.metadata);
 
                 decryptionEvent.callback = function () {
                     /**

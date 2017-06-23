@@ -16,8 +16,8 @@ class ImageMatcher extends Matcher {
 	 * @param      {MediaObject}  mediaObject  The media object
 	 */
 	process(mediaObject) {
-		const regexExtensions = new RegExp('^png|jpg|jpeg|gif$');
-		const regexMimes = new RegExp('^image/(png|svg+xml|jpeg|gif)$');
+		const regexExtensions = /^png|jpg|jpeg|gif|svg[+]xml$/;
+		const regexMimes = /^image[/](png|jpeg|gif|svg[+]xml)$/;
 
 		return	mediaObject.hasAttribute('src') &&
 				mediaObject.getType() === 'image' &&

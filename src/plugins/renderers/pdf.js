@@ -1,7 +1,12 @@
-/* global document, PDFJS */
+/* global document, XMLHttpRequest */
 const Renderer =	require('../renderer');
 const Identifier = 	require('../../enums/identifier');
-const MediaTag = 	require('../../core/media-tag');
+const MediaTag = 	require('../../core/media-tag-api');
+
+const Mode = {
+	PDFJS: 'pdfjs',
+	DEFAULT: 'default'
+};
 
 class PdfRenderer extends Renderer {
 	/**
@@ -17,96 +22,65 @@ class PdfRenderer extends Renderer {
 	 * @param      {MediaObject}  mediaObject  The media object
 	 */
 	process(mediaObject) {
-		// Get the pdf url
 		const url = mediaObject.getAttribute('src');
+		const iframe = document.createElement('iframe');
 
-		// Create canvas element
-		const canvas = document.createElement('canvas');
+		/**
+		 * Default dimention for the iframe if nothing is specified.
+		 */
+		if (!mediaObject.getAttribute('data-attr-width')) {
+			iframe.setAttribute('width', '100%');
+		}
+		if (!mediaObject.getAttribute('data-attr-height')) {
+			iframe.setAttribute('height', document.body.scrollHeight);
+		}
 
-		mediaObject.utilsSetAllDataAttributes(canvas);
+		/**
+		 * When no viewer is set, the pdf is rendered by the browser.
+		 */
+		if (!PdfRenderer.viewer) {
+			PdfRenderer.mode = Mode.DEFAULT;
+		}
 
-		// Update mediaObject contents with the created element
-		mediaObject.replaceContents([canvas]);
+		switch (PdfRenderer.mode) {
+			case Mode.PDFJS: {
+				const viewerUrl = `${PdfRenderer.viewer}?file=${url}`;
+				const xhr = new XMLHttpRequest();
 
-		// Disable workers for now
-		// TODO: verify what workers do and how to integrate it
-		PDFJS.disableWorker = true;
-
-		// Asynchronous download of PDF
-		const loadingTask = PDFJS.getDocument(url);
-		loadingTask.promise.then(pdf => {
-			// Fetch the first page
-			let pageNumber = 1;
-
-			function render(page) {
-				const scale = 1;
-				const viewport = page.getViewport(scale);
-
-				// Prepare canvas using PDF page dimensions
-				const context = canvas.getContext('2d');
-				canvas.height = viewport.height;
-				canvas.width = viewport.width;
-
-				// Render PDF page into canvas context
-				const renderContext = {
-					canvasContext: context,
-					viewport
+				xhr.onload = () => {
+					if (xhr.status < 400) {
+						iframe.src = viewerUrl;
+					} else {
+						iframe.src = `${url}`;
+					}
 				};
-				const renderTask = page.render(renderContext);
-				renderTask.then(() => {
-				});
+				xhr.open('HEAD', viewerUrl, true);
+				xhr.send();
+				break;
 			}
-
-			/**
-			 * Update the pageNumber after each call.
-			 * Based on click events.
-			 *
-			 * @param      {MouseEvent}  mouseEvent  The mouse event
-			 */
-			function update(mouseEvent) {
-				if (!mouseEvent) {
-					console.log('no event');
-				}
-				if (mouseEvent.buttons === 0) { 		// Left click
-					if (pageNumber === pdf.numPages) {
-						pageNumber = 1;
-					} else {
-						pageNumber++;
-					}
-				} else if (mouseEvent.buttons === 4) { 	// Left click + Wheel click
-					if (pageNumber === 1) {
-						pageNumber = pdf.numPages;
-					} else {
-						pageNumber--;
-					}
-				}
+			default: {
+				iframe.src = `${url}`;
 			}
+		}
 
-			/**
-			 * First render.
-			 */
-			pdf.getPage(pageNumber).then(page => {
-				render(page);
-			});
+		mediaObject.utilsSetAllDataAttributes(iframe);
+		mediaObject.replaceContents([iframe]);
 
-			/**
-			 * Renders on click event.
-			 *
-			 * @param      {MouseEvent}  event   The event
-			 */
-			canvas.onclick = event => {
-				update(event);
-				pdf.getPage(pageNumber).then(page => {
-					render(page);
-				});
-			};
-
+		iframe.onload = () => {
 			MediaTag.processingEngine.return(mediaObject);
-		}, reason => {
-			// PDF loading error
-			console.error(reason);
-		});
+		};
 	}
+
 }
+
+/**
+ * Viewer for pdfjs render.
+ */
+PdfRenderer.viewer = null;
+
+/**
+ * Render mode.
+ */
+PdfRenderer.mode = Mode.PDFJS;
 
 module.exports = PdfRenderer;

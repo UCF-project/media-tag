@@ -16,8 +16,8 @@ class DashMatcher extends Matcher {
 	 * @param      {MediaObject}  mediaObject  The media object
 	 */
 	process(mediaObject) {
-		const regexExtensions = new RegExp('^dash[+]xml$');
-		const regexMimes = new RegExp('^application/dash[+]xml$');
+		const regexExtensions = /^dash[+]xml$/;
+		const regexMimes = /^application[/]dash[+]xml$/;
 
 		return	mediaObject.hasAttribute('src') &&
 				mediaObject.getType() === 'application' &&
