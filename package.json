@@ -1,6 +1,6 @@
 {
   "name": "media-tag",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "main": "src/media-tag.js",
   "repository": "git@git.rnd.alterway.fr:UCF/media_tag_v2.git",
   "author": "UCF Project <ucf-project@alterway.fr>",
