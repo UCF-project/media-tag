@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/) and
 [Keep a CHANGELOG](http://keepachangelog.com/).
 
+## v0.2.5
+### Changed :
+- Pdfjs plufing update with pdfjs viewer as new way to render, if pdfjs viewer repertory is not found the browser default render is used instead.
+
+### Added :
+- MediaTag as object. (v0.1 allows dynamic media type changing according to monitor status like network availability or bandwidth. So, we have to use several media type inside a same media-tag and an only media object becomes insufficient to fulfill the adaptative media changing)
+- Some actions have been defined to test media visibility at some event but have no monitors yet. 
+
 ## v0.2.4
 - ProcessingEngine default plugin reference is accessible by ProcessingEngine instance and can be set with setDefaultPlugin() method.
 - All renderer now returns to MediaTag.processingEngine instance the mediaObject like filters and sanitizers.

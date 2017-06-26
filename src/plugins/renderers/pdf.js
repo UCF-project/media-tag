@@ -51,11 +51,14 @@ class PdfRenderer extends Renderer {
 					if (xhr.status < 400) {
 						iframe.src = viewerUrl;
 					} else {
+						console.warn(`The pdfjs viewer has not been found ...
+							The browser viewer will be used by default`);
 						iframe.src = `${url}`;
 					}
 				};
 				xhr.open('HEAD', viewerUrl, true);
 				xhr.send();
+
 				break;
 			}
 			default: {
