@@ -73,7 +73,6 @@ class PdfRenderer extends Renderer {
 			MediaTag.processingEngine.return(mediaObject);
 		};
 	}
-
 }
 
 /**

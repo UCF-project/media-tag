@@ -1,7 +1,7 @@
 /* global document, XMLHttpRequest, saveAs, File */
 const Renderer =	require('../renderer');
 const Identifier = 	require('../../enums/identifier');
-const MediaTag = 	require('../../core/media-tag-api');
+// const MediaTag = 	require('../../core/media-tag-api');
 
 class DownloadRenderer extends Renderer {
 	/**
@@ -54,7 +54,8 @@ class DownloadRenderer extends Renderer {
 		mediaObject.utilsSetAllDataAttributes(container);
 		mediaObject.replaceContents([container]);
 
-		MediaTag.processingEngine.return(mediaObject);
+		// MediaTag.processingEngine.return(mediaObject);
+		mediaObject.return();
 	}
 }
 

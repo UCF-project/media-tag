@@ -1,7 +1,7 @@
 const Permission = {
-	ALLOWED: 0,
-	REQUIRED: 1,
-	FORBIDDEN: 2
+	ALLOWED: 'allowed',
+	REQUIRED: 'required',
+	FORBIDDEN: 'forbidden'
 };
 
 module.exports = Permission;

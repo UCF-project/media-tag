@@ -94,7 +94,7 @@ class LoadingEngine {
 		const result = relations;
 
 		if (this.configuration) {
-			const data = this.configuration.getData();
+			const data = this.configuration.getPermissions(); // this.configuration.getData();
 
 			Object.keys(data).forEach(identifier => {
 				switch (data[identifier]) {

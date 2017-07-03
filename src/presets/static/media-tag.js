@@ -94,11 +94,11 @@ MediaTag.CryptoFilter.setAllowedMediaTypes(allowedMediaTypes);
  * IT FORBID PLUGIN USAGE INSIDE PROCESSING ENGINE
  */
 
-const Configuration = require('../../core/configuration');
+// const Configuration = require('../../core/configuration');
 const Permission = require('../../enums/permission');
 const Identifier = require('../../enums/identifier');
 
-const configuration = new Configuration();
+// const configuration = new Configuration({});
 
 // configuration.setPermission(Identifier.IMAGE, Permission.FORBIDDEN);
 
@@ -108,6 +108,6 @@ const configuration = new Configuration();
 MediaTag.PdfPlugin = PdfPlugin;
 MediaTag.PdfPlugin.viewer = '/pdfjs/web/viewer.html';
 
-MediaTag.processingEngine.configure(configuration);
+// MediaTag.processingEngine.configure(configuration);
 
 module.exports = MediaTag;

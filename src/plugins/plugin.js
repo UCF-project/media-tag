@@ -36,6 +36,24 @@ class Plugin {
 		throw new Error('Plugin has no type');
 	}
 
+	/**
+	 * Gets the occurrence.
+	 *
+	 * @return     {string}  The occurrence.
+	 */
+	getOccurrence() {
+		if (this.occurrence) {
+			return this.occurrence;
+		}
+		throw new Error('Plugin has no occurrence');
+	}
+
+	/**
+	 * Starts the process on the media object.
+	 *
+	 * @param      {MediaObject}  mediaObject  The media object
+	 * @return     {*}
+	 */
 	start(mediaObject) {
 		return this.process(mediaObject);
 	}

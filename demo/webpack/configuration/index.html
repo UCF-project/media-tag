@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>My Page with Media Tag</title>
+	<script type="text/javascript" src="/ext-lib/shaka-player.compiled.js"></script>
+	<script type="text/javascript" src="/ext-lib/nacl-fast.min.js"></script>
+	<script type="text/javascript" src="/ext-lib/nacl-util.min.js"></script>
+	<script type="text/javascript" src="/ext-lib/FileSaver.min.js"></script>
+	<script type="text/javascript" src="/dist/media-tag.js"></script>
+<!-- 	<script type="text/javascript">
+		/* global document, MediaTag */
+		document.addEventListener('DOMContentLoaded', () => {
+			const mediaTagElements = Array.from(document.getElementsByTagName('media-tag'));
+			MediaTag(mediaTagElements);
+		});
+	</script> -->
+	<style>
+		* {
+			margin: 0px;
+			padding: 0px;
+			font-family: 'Ubuntu light';
+		}
+
+		.title {
+			position: relative;
+			text-align: center;
+			vertical-align: middle;
+			background: lightgrey;
+			padding-top: 60px;
+			padding-bottom: 60px;
+		}
+
+		.subtitle {
+			padding-top: 30px;
+			padding-bottom: 30px;
+		}
+
+		.standard {
+			background: #66ff66;
+			text-align: center;
+		}
+
+		.advanced {
+			background: #bbbb44;
+			text-align: center;
+		}
+	</style>
+</head>
+<body>
+	<div class="title">
+		<h1>MediaTag core with only <a href="configuration.js">configuration</a></h1>
+	</div>
+
+	<h2 class="subtitle standard">Standard plugins</h2>
+	<div class="standard">
+		<h3 class="subtitle">Image</h3>
+		<media-tag
+			configuration="configuration.js"
+			src="/assets/images/image.svg"
+	        data-type="image/svg+xml"
+	        data-attr-width="80%"
+	        data-attr-height="100%"
+	        data-attr-style="background: white"
+        ></media-tag>
+
+        <h3 class="subtitle">Audio</h3>
+	    <media-tag
+	    	configuration="configuration.js"
+			src="/assets/audios/alterway.mp3"
+	        data-type="audio/mp3"
+	        data-attr-width="80%"
+	        data-attr-height="100%"
+	        controls
+	    ></media-tag>
+
+	    <h3 class="subtitle">Video</h3>
+		<media-tag
+			configuration="configuration.js"
+			src="/assets/videos/bbb.mp4"
+	        data-type="video/mp4"
+	        data-attr-width="80%"
+	        data-attr-height="100%"	        
+	        controls
+	    ></media-tag>
+
+	    <h3 class="subtitle">Dash</h3>
+		<media-tag
+			configuration="configuration.js"
+			src="/assets/videos/bbb_dash.mpd"
+	        data-type="application/dash+xml"
+	        data-attr-width="80%"
+	        data-attr-height="100%"
+	        controls
+	    ></media-tag>
+
+	    <h3 class="subtitle">Pdf</h3>
+		<media-tag
+			configuration="configuration.js"
+			src="/assets/documents/kasukasu-manuel-utilisateur.pdf"
+	        data-type="application/pdf"
+	        data-attr-width="80%"
+	    ></media-tag>
+	</div>
+
+	<h2 class="subtitle advanced">Advanced plugins</h2>
+	<div class="advanced">
+		<h3 class="subtitle">Encrypted image</h3>
+		<media-tag
+			configuration="configuration.js"
+			data-type="image/png"
+			src="/assets/images/encrypted/image.png-encrypted"
+			data-crypto-key="salsa20poly1305:TBo77200c0e/FdldQFcnQx4Y"
+	        data-attr-width="80%"
+	        data-attr-height="100%"
+		></media-tag>
+
+
+		<h3 class="subtitle">Encrypted audio</h3>
+		<media-tag
+			configuration="configuration.js"
+			data-type="audio/mp3"
+			src="/assets/audios/encrypted/audio-encrypted"
+			data-crypto-key="salsa20poly1305:WKPuoxzA+s66qS5y8NDxoDSs"
+			data-attr-controls=true
+			data-attr-width="80%"
+	        data-attr-height="100%"
+		></media-tag>
+
+		<h3 class="subtitle">Encrypted video</h3>
+		<media-tag
+			configuration="configuration.js"
+			data-type="video/mp4"
+			src="/assets/videos/encrypted/video-encrypted"
+			data-crypto-key="salsa20poly1305:gxGQi0zzmj/w8GrV+/xGgaMI"
+			data-attr-width="600px"
+			data-attr-height="400px"
+			data-attr-controls=true
+			data-attr-width="80%"
+	        data-attr-height="100%"
+		></media-tag>
+
+		<h3 class="subtitle">Encrypted pdf</h3>
+		<media-tag
+			configuration="configuration.js"
+			data-type="application/pdf"
+			src="/assets/documents/encrypted/file.pdf-encrypted"
+			data-crypto-key="salsa20poly1305:UR5bLSwuyBak41oJrN2dRq1a"
+			data-attr-style="border: 1px solid black"
+			data-attr-width="80%"
+			data-attr-height="960px"
+		></media-tag>
+
+		<h3 class="subtitle">Encrypted download</h3>
+		<media-tag
+			configuration="configuration.js"
+			data-type="nothing"
+			src="/assets/videos/encrypted/video-encrypted"
+			data-crypto-key="salsa20poly1305:gxGQi0zzmj/w8GrV+/xGgaMI"
+			data-attr-type="video/mp4"
+	        data-attr-width="80%"
+	        data-attr-height="100%"
+		></media-tag>
+	</div>
+</body>
+</html>

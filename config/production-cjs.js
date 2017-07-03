@@ -31,12 +31,9 @@ const plugin = [
 module.exports = function () {
 	return {
 		entry: {
-			'media-tag': [
-				'./src/presets/static/media-tag.js'
-			],
-			test: [
-				'./test/media-tag.js'
-			]
+			'media-tag': './src/presets/media-tag.js',
+			'media-tag-core': './src/core/media-tag-api.js',
+			test: './test/media-tag.js'
 		},
 
 		output: {

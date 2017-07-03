@@ -14,7 +14,7 @@ const plugin = [
 	new webpack.optimize.UglifyJsPlugin({
 		sourceMap: false,
 		beautify: false,
-		mangle: true,	
+		mangle: true,
 		compress: true,
 		comments: false // /[a-zA-Z]+[ ]*[0-9]*[ ]*/
 	})
@@ -22,13 +22,11 @@ const plugin = [
 
 module.exports = function () {
 	return {
+
 		entry: {
-			'media-tag': [
-				'./src/presets/static/media-tag.js'
-			],
-			test: [
-				'./test/media-tag.js'
-			]
+			'media-tag': './src/presets/media-tag.js',
+			'media-tag-core': './src/core/media-tag-api.js',
+			test: './test/media-tag.js'
 		},
 
 		output: {
