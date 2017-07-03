@@ -18,6 +18,8 @@ describe('Create different media tag contents: ', () => {
 		// Create contents based on the attributes
 		mediaTag(mediaTagContainer);
 
+		console.log(mediaTagContainer);
+
 		// Create the expected element
 		const expectedResult = document.createElement('img');
 		expectedResult.setAttribute('src', 'image-without-extension');
@@ -167,7 +169,7 @@ describe('CryptoFilter allowed types manipulations', () => {
 		chai.assert.isTrue(CryptoFilter.isAllowedMediaType('dash'), 'CryptoFilter not contains "dash" media type');
 	});
 
-	it('can\'t find an allowed media type', () => {
+	it('can\'t find a not allowed media type', () => {
 		const mediaTypes = [
 			'image',
 			'audio',
