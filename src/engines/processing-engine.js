@@ -308,6 +308,10 @@ class ProcessingEngine {
 		const stackId = mediaObject.getId();
 		const plugin = this.unstack(mediaObject);
 
+		if (!plugin) {
+			return;
+		}
+
 		try {
 			if (!this.stats[stackId]) {
 				this.stats[stackId] = {};
