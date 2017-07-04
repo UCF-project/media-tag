@@ -1,20 +1,20 @@
-/* global MediaTag, document, saveAs, XMLHttpRequest, shaka, File, Event */
+/* global document, saveAs, XMLHttpRequest, shaka, File, Event */
 
 (function () {
 	const event = new Event('Configuration');
 
 	event.configuration = {
 		processingEngine: {
-			defaultPlugin: 'download'
+			defaultPlugin: 'failure'
 		},
 		permissions: {
-			image: 'forbidden',
-			audio: 'forbidden',
-			video: 'forbidden',
-			dash: 'forbidden',
-			pdf: 'forbidden',
-			crypto: 'forbidden',
-			clearKey: 'forbidden'
+			// image: 'forbidden',
+			// audio: 'forbidden',
+			// video: 'forbidden',
+			// dash: 'forbidden',
+			// pdf: 'forbidden',
+			// crypto: 'forbidden',
+			// clearKey: 'forbidden'
 		},
 		plugins: {
 			image: {
@@ -217,7 +217,7 @@
 					}
 				}
 			},
-			download: {
+			failure: {
 				matcher: {
 					process: (self, mediaObject) => {
 						return 	mediaObject.hasAttribute('src') &&

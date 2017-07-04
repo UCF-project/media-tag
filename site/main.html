@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Media Tag</title>
+	<script type="text/javascript" src="./assets/js/page-loader.js"></script>
+	<link rel="stylesheet" href="./assets/css/main.css"/>
+
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tweetnacl/1.0.0/nacl-fast.min.js"></script>
+	<script type="text/javascript" src="https://unpkg.co/tweetnacl-util@0.15.0/nacl-util.min.js"></script>
+	<script type="text/javascript" src="/assets/js/dist/media-tag.js"></script>
+</head>
+<body>
+	<media-tag 
+		id="encryptedFile"
+		src="http://localhost:3000/blob/80/802c5645ea66b6b0c1a24745c7a9a5911e46140eb26891b3"
+		data-crypto-key="cryptpad:IHGmq8/O5D+cWy3cYnZvRUJrRKyVIhCxOY+GlDiMmnk=">
+	</media-tag>
+	<header></header>
+	<nav>
+		<div class="vignette-container"></div>
+		<ul>
+			<li class="section" onclick="">
+				<div>Home</div>
+			</li>
+			<li class="section" onclick="clickHandler">
+				<div>Engines</div>
+				<ul class="menu">
+					<li class="section" onclick="loadPage(event, './pages/processing.html')">Processing</li>
+					<li class="section" onclick="loadPage(event, './pages/loading.html')">Loading</li>
+					<li class="section" onclick="loadPage(event, './pages/matching.html')">Matching</li>
+				</ul>
+			</li>
+			<li class="section" onclick="loadPage(event, './pages/plugins.html')">
+				<div>Plugins</div>
+				<ul class="menu">
+					<li class="section" onclick="console.log('matchers'); return true;">
+						<div >Matchers</div>
+						<ul class="menu">
+							<li class="section">Image</li>
+							<li class="section">Audio</li>
+							<li class="section">...</li>
+						</ul>
+					</li>
+					<li class="section">
+						<div>Renderers</div>
+						<ul class="menu">
+							<li class="section" onclick="loadPage(event, './pages/image.html')">Image</li>
+							<li class="section">Audio</li>
+							<li class="section">...</li>
+						</ul>
+					</li>
+					<li class="section">
+						<div>Filters</div>
+						<ul class="menu">
+							<li class="section">Image</li>
+							<li class="section">Audio</li>
+							<li class="section">...</li>
+						</ul>
+					</li>
+					<li class="section">
+						<div>Sanitizers</div>
+						<ul class="menu">
+							<li class="section">Image</li>
+							<li class="section">Audio</li>
+							<li class="section">...</li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</nav>
+	<iframe id="viewer"></iframe>
+</body>
+</html>
