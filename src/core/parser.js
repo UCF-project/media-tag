@@ -8,13 +8,13 @@
 class Parser {
 
 	/**
-	 * Returns the mediaObject extension.
+	 * Returns the AttributeObject extension.
 	 *
-	 * @param      {Object}  mediaObject  The media object
+	 * @param      {Object}  AttributeObject  The media object
 	 * @return     {String}  The extension
 	 */
-	static extension(mediaObject) {
-		const dataType = mediaObject.getAttribute('data-type');
+	static extension(AttributeObject) {
+		const dataType = AttributeObject.getAttribute('data-type');
 		if (dataType) {
 			return dataType.split('/')[1];
 		}
@@ -22,13 +22,13 @@ class Parser {
 	}
 
 	/**
-	 * Returns the mediaObject type.
+	 * Returns the AttributeObject type.
 	 *
-	 * @param      {Object}  mediaObject  The media object
+	 * @param      {Object}  AttributeObject  The media object
 	 * @return     {String}  The type
 	 */
-	static type(mediaObject) {
-		const dataType = mediaObject.getAttribute('data-type');
+	static type(AttributeObject) {
+		const dataType = AttributeObject.getAttribute('data-type');
 		if (dataType) {
 			return dataType.split('/')[0];
 		}
@@ -36,23 +36,23 @@ class Parser {
 	}
 
 	/**
-	 * Returns the mediaObject mime.
+	 * Returns the AttributeObject mime.
 	 *
-	 * @param      {Object}  mediaObject  The media object
+	 * @param      {Object}  AttributeObject  The media object
 	 * @return     {String}  The mime
 	 */
-	static mime(mediaObject) {
-		return mediaObject.getAttribute('data-type');
+	static mime(AttributeObject) {
+		return AttributeObject.getAttribute('data-type');
 	}
 
 	/**
-	 * Returns the mediaObject protocol.
+	 * Returns the AttributeObject protocol.
 	 *
-	 * @param      {Object}  mediaObject  The media object
+	 * @param      {Object}  AttributeObject  The media object
 	 * @return     {String}  The protocol
 	 */
-	static protocol(mediaObject) {
-		const array = mediaObject.getAttribute('src').split('://');
+	static protocol(AttributeObject) {
+		const array = AttributeObject.getAttribute('src').split('://');
 		if (array.length > 1) {
 			return array[0];
 		}
@@ -60,13 +60,13 @@ class Parser {
 	}
 
 	/**
-	 * Returns the mediaObject hostname.
+	 * Returns the AttributeObject hostname.
 	 *
-	 * @param      {Object}  mediaObject  The media object
+	 * @param      {Object}  AttributeObject  The media object
 	 * @return     {String}  The hostname
 	 */
-	static hostname(mediaObject) {
-		const array = mediaObject.getAttribute('src').split('://');
+	static hostname(AttributeObject) {
+		const array = AttributeObject.getAttribute('src').split('://');
 		if (array.length > 1) {
 			return array[1].split('/')[0];
 		}
@@ -74,13 +74,13 @@ class Parser {
 	}
 
 	/**
-	 * Returns the mediaObject source.
+	 * Returns the AttributeObject source.
 	 *
-	 * @param      {Object}  mediaObject  The media object
+	 * @param      {Object}  AttributeObject  The media object
 	 * @return     {String}  The source
 	 */
-	static source(mediaObject) {
-		const source = mediaObject.getAttribute('src');
+	static source(AttributeObject) {
+		const source = AttributeObject.getAttribute('src');
 
 		return source;
 	}
@@ -88,27 +88,60 @@ class Parser {
 	/**
 	 * Finds schemes in the source.
 	 *
-	 * @param      {Object}  mediaObject  The media object
+	 * @param      {Object}  AttributeObject  The media object
 	 * @return     {Array<string>}  All schemes found in the source.
 	 */
-	static schemes(mediaObject) {
-		return /\w+:/.exec(mediaObject.getAttribute('src'));
+	static schemes(AttributeObject) {
+		return /\w+:/.exec(AttributeObject.getAttribute('src'));
 	}
 
 	/**
-	 * Returns a properties set extracted from the mediaObject.
+	 * Returns json parsed object from AttributeObject sources.
 	 *
-	 * @param      {Object}  mediaObject  The media object
-	 * @return     {Object}  { description_of_the_return_value }
+	 * @param      {Object}  AttributeObject  The media object
+	 * @return     {?Array<Object>}
 	 */
-	static parse(mediaObject) {
+	static sources(AttributeObject) {
+		const sources =
+			AttributeObject.getAttribute('sources') || AttributeObject.getAttribute('srcs');
+
+		if (sources) {
+			return JSON.parse(sources);
+		}
+		return null;
+	}
+
+	/**
+	 * Returns json parsed object from AttributeObject actions.
+	 *
+	 * @param      {Object}  AttributeObject  The media object
+	 * @return     {?Array<Object>}
+	 */
+	static actions(AttributeObject) {
+		const actions = AttributeObject.getAttribute('actions');
+
+		if (actions) {
+			return JSON.parse(actions);
+		}
+		return null;
+	}
+
+	/**
+	 * Returns a properties set extracted from the AttributeObject.
+	 *
+	 * @param      {Object}  AttributeObject  The media object
+	 * @return     {Object}
+	 */
+	static parse(AttributeObject) {
 		return {
-			protocol: Parser.protocol(mediaObject),
-			hostname: Parser.hostname(mediaObject),
-			src: Parser.source(mediaObject),
-			type: Parser.type(mediaObject),
-			extension: Parser.extension(mediaObject),
-			mime: Parser.mime(mediaObject)
+			protocol: Parser.protocol(AttributeObject),
+			hostname: Parser.hostname(AttributeObject),
+			src: Parser.source(AttributeObject),
+			type: Parser.type(AttributeObject),
+			extension: Parser.extension(AttributeObject),
+			mime: Parser.mime(AttributeObject),
+			sources: Parser.sources(AttributeObject),
+			actions: Parser.actions(AttributeObject)
 		};
 	}
 }

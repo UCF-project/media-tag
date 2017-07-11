@@ -56,6 +56,7 @@ class ProcessingEngine {
 	 * @param      {MediaObject}  mediaObject  The media object
 	 */
 	start(mediaObject) {
+		mediaObject.state = 'processing';
 		this.routine(mediaObject);
 		this.run(mediaObject);
 	}
@@ -70,6 +71,7 @@ class ProcessingEngine {
 		const plugin = this.stackTop(mediaObject);
 
 		if (!plugin) {
+			mediaObject.state = 'processed';
 			return mediaObject;
 		}
 
@@ -306,14 +308,22 @@ class ProcessingEngine {
 		const stackId = mediaObject.getId();
 		const plugin = this.unstack(mediaObject);
 
-		if (!this.stats[stackId]) {
-			this.stats[stackId] = {};
+		if (!plugin) {
+			return;
 		}
 
-		if (this.stats[stackId][plugin.type]) {
-			this.stats[stackId][plugin.type] += 1;
-		} else {
-			this.stats[stackId][plugin.type] = 1;
+		try {
+			if (!this.stats[stackId]) {
+				this.stats[stackId] = {};
+			}
+
+			if (this.stats[stackId][plugin.type]) {
+				this.stats[stackId][plugin.type] += 1;
+			} else {
+				this.stats[stackId][plugin.type] = 1;
+			}
+		} catch (err) {
+			console.error(err, this.snapshots[stackId]);
 		}
 
 		// console.log(

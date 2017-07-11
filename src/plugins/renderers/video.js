@@ -1,7 +1,7 @@
 /* global document */
 const Renderer =	require('../renderer');
 const Identifier = 	require('../../enums/identifier');
-const MediaTag = 	require('../../core/media-tag');
+const MediaTag = 	require('../../core/media-tag-api');
 
 class VideoRenderer extends Renderer {
 	/**

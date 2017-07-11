@@ -16,8 +16,8 @@ class VideoMatcher extends Matcher {
 	 * @param      {MediaObject}  mediaObject  The media object
 	 */
 	process(mediaObject) {
-		const regexExtensions = new RegExp('^mp4|ogg|webm$');
-		const regexMimes = new RegExp('^video/(mp4|ogg|webm)$');
+		const regexExtensions = /^mp4|ogg|webm$/;
+		const regexMimes = /^video[/](mp4|ogg|webm)$/;
 
 		return	mediaObject.hasAttribute('src') &&
 				mediaObject.getType() === 'video' &&

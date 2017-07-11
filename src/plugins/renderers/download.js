@@ -1,7 +1,7 @@
 /* global document, XMLHttpRequest, saveAs, File */
 const Renderer =	require('../renderer');
 const Identifier = 	require('../../enums/identifier');
-const MediaTag = 	require('../../core/media-tag');
+const MediaTag = 	require('../../core/media-tag-api');
 
 class DownloadRenderer extends Renderer {
 	/**

@@ -102,6 +102,12 @@ const configuration = new Configuration();
 
 // configuration.setPermission(Identifier.IMAGE, Permission.FORBIDDEN);
 
+/**
+ * To configure viewer path.
+ */
+MediaTag.PdfPlugin = PdfPlugin;
+MediaTag.PdfPlugin.viewer = '/pdfjs/web/viewer.html';
+
 MediaTag.processingEngine.configure(configuration);
 
 module.exports = MediaTag;

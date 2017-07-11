@@ -8,7 +8,7 @@ const CryptoMatcher = 		require('../plugins/matchers/filters/crypto');
 const ClearKeyMatcher = 	require('../plugins/matchers/filters/clear-key');
 const MediaObjectMatcher =	require('../plugins/matchers/sanitizers/media-object');
 
-const MediaTag = 			require('../core/media-tag');
+const MediaTag = 			require('../core/media-tag-api');
 
 /**
  * Store every matchers to detect when an job part plugin should be loaded

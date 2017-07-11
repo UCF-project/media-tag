@@ -1,6 +1,6 @@
 /* global window, fetch, XMLHttpRequest, Blob, Event */
 const Errors = require('../core/errors');
-const MediaTag = require('../core/media-tag');
+const MediaTag = require('../core/media-tag-api');
 const CryptoFilter = require('../plugins/filters/crypto');
 
 const PARANOIA = true;
@@ -81,7 +81,7 @@ class Cryptopad {
      * @return     {String}  The random key string.
      */
     static getRandomKeyStr() {
-        const Nacl = Cryptopad.Nacl;
+        const Nacl = window.nacl;
         const rdm = Nacl.randomBytes(18);
         return Nacl.util.encodeBase64(rdm);
     }
@@ -93,7 +93,7 @@ class Cryptopad {
      * @return     {Uint8Array}  The key = require(string.
      */
     static getKeyFromStr(str) {
-        return Cryptopad.Nacl.util.decodeBase64(str);
+        return window.nacl.util.decodeBase64(str);
     }
 
     /**
@@ -105,8 +105,8 @@ class Cryptopad {
      */
     static encrypt(u8, key) {
         const array = u8;
-        const nonce = Cryptopad.Nacl.randomBytes(24);
-        const packed = Cryptopad.Nacl.secretbox(array, nonce, key);
+        const nonce = window.nacl.randomBytes(24);
+        const packed = window.nacl.secretbox(array, nonce, key);
         if (packed) {
             return new Uint8Array(Cryptopad.slice(nonce).concat(Cryptopad.slice(packed)));
         }
@@ -121,7 +121,7 @@ class Cryptopad {
      * @return     object YOLO
      */
     static decrypt (u8, key, done) {
-        const Nacl = Cryptopad.Nacl;
+        const Nacl = window.nacl;
 
         const progress = function (offset) {
             const ev = new Event('decryptionProgress');
@@ -192,10 +192,6 @@ class Cryptopad {
         again();
     };
 }
-/**
- * Binds the extern nacl lib to Crypto.
- */
-Cryptopad.Nacl = window.nacl;
 
 /**
  * Class for data manager.
@@ -251,7 +247,7 @@ class DataManager {
      * @return     {string}  The data url.
      */
     static getDataUrl(data, mtype) {
-        return 'data:' + mtype + ';base64,' + Cryptopad.Nacl.util.encodeBase64(data);
+        return 'data:' + mtype + ';base64,' + window.nacl.util.encodeBase64(data);
     }
 }
 
@@ -316,6 +312,66 @@ function algorithm(mediaObject) {
     const strKey = mediaObject.getAttribute('data-crypto-key');
     const cryptoKey = Cryptopad.getKeyFromStr(strKey);
     const xhr = new XMLHttpRequest();
+
+    var uid = [src, strKey].join('');
+
+    var followUp = function (decrypted) {
+        // Metadata must be set before the blob construction.
+        const decryptionEvent = new Event('decryption');
+        decryptionEvent.metadata = decrypted.metadata;
+        applyMetadata(mediaObject, decrypted.metadata);
+
+        const binStr = decrypted.content;
+        const url = DataManager.getBlobUrl(binStr, mediaObject.getMimeType());
+
+        decryptionEvent.blob = new Blob([binStr], {
+            type: mediaObject.getMimeType()
+        });
+
+        decryptionEvent.metadata = decrypted.metadata;
+        //CryptoFilter.addAllowedMediaType('audio/mpeg');
+
+        /**
+         * Modifications applied on mediaObject.
+         * After these modifications the typeCheck
+         * method must return false otherwise the
+         * filter may infinite loop.
+         */
+        mediaObject.setAttribute('src', url);
+        mediaObject.removeAttribute('data-crypto-key');
+
+        //console.log(decrypted.metadata);
+        if (/audio\/(mp3|ogg|wav|webm|mpeg)/.test(decrypted.metadata.type)) {
+            // audio types should do the right thing.
+        } else if (/application\/pdf/.test(decrypted.metadata.type)) {
+            // let it be
+        } else if (/video\//.test(decrypted.metadata.type)) {
+            // let it be
+        } else if (!/image\/(png|jpeg|jpg|gif)/.test(decrypted.metadata.type)) {
+            // if it's not an image, present a download link
+            decrypted.metadata.type = 'download';
+        }
+
+        //console.log(decrypted.metadata);
+        applyMetadata(mediaObject, decrypted.metadata);
+
+        decryptionEvent.callback = function (f) {
+            /**
+             * Filters must call chain to try if the
+             * current mediaObject matches other filters.
+             */
+            MediaTag.processingEngine.return(mediaObject);
+            if (typeof(f) === 'function') { f(mediaObject); }
+        };
+
+        window.document.dispatchEvent(decryptionEvent);
+    };
+
+    var Cache = MediaTag.__Cryptpad_Cache = MediaTag.__Cryptpad_Cache || {};
+    if (Cache[uid]) {
+        return followUp(Cache[uid]);
+    }
+
     xhr.open('GET', src, true);
     xhr.responseType = 'arraybuffer';
 
@@ -336,53 +392,8 @@ function algorithm(mediaObject) {
 
             Cryptopad.decrypt(u8, cryptoKey, function (err, decrypted) {
                 if (err) { return fail(err); }
-
-                const binStr = decrypted.content;
-                const url = DataManager.getBlobUrl(binStr, mediaObject.getMimeType());
-                const decryptionEvent = new Event('decryption');
-                decryptionEvent.blob = new Blob([binStr], {
-                    type: mediaObject.getMimeType()
-                });
-
-                decryptionEvent.metadata = decrypted.metadata;
-                CryptoFilter.addAllowedMediaType('audio/mpeg');
-
-                /**
-                 * Modifications applied on mediaObject.
-                 * After these modifications the typeCheck
-                 * method must return false otherwise the
-                 * filter may infinite loop.
-                 */
-                mediaObject.setAttribute('src', url);
-                mediaObject.removeAttribute('data-crypto-key');
-
-                console.log(decrypted.metadata);
-
-                if (/audio\/(mp3|ogg|wav|webm|mpeg)/.test(decrypted.metadata.type)) {
-                    // audio types should do the right thing.
-                } else if (/application\/pdf/.test(decrypted.metadata.type)) {
-                    // let it be
-
-                } else if (/video\//.test(decrypted.metadata.type)) {
-                    // let it be
-
-                } else if (!/image\/(png|jpeg|jpg|gif)/.test(decrypted.metadata.type)) {
-                    // if it's not an image, present a download link
-                    decrypted.metadata.type = 'download';
-                }
-
-                console.log(decrypted.metadata);
-                applyMetadata(mediaObject, decrypted.metadata);
-
-                decryptionEvent.callback = function () {
-                    /**
-                     * Filters must call chain to try if the
-                     * current mediaObject matches other filters.
-                     */
-                    MediaTag.processingEngine.return(mediaObject);
-                };
-
-                window.document.dispatchEvent(decryptionEvent);
+                Cache[uid] = decrypted;
+                followUp(decrypted);
             });
         }
     };

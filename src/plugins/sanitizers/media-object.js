@@ -1,6 +1,6 @@
 const Sanitizer =	require('../sanitizer');
 const Identifier = 	require('../../enums/identifier');
-const MediaTag = 	require('../../core/media-tag');
+const MediaTag = 	require('../../core/media-tag-api');
 
 class MediaObjectSanitizer extends Sanitizer {
 	/**

@@ -1,6 +1,6 @@
 /* global window, fetch, XMLHttpRequest, Blob, Event */
 const Errors = require('../core/errors');
-const MediaTag = require('../core/media-tag');
+const MediaTag = require('../core/media-tag-api');
 const CryptoFilter = require('../plugins/filters/crypto');
 
 /**

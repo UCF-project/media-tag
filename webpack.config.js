@@ -10,7 +10,7 @@ function config(env) {
 		case 'development-es5':
 			return require('./config/development-es5.js');
 		default:
-			throw new Error('Unknown environnement : %s', env);
+			throw new Error(`Unknown environnement : ${env}`);
 	}
 }
 
