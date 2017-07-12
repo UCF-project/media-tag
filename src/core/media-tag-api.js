@@ -18,6 +18,13 @@ function MediaTagAPI(elements) {
 		elements = [elements];
 	}
 
+	/**
+	 * Removes undefined elements.
+	 */
+	elements = elements.filter(element => {
+		return element;
+	});
+
 	MediaTagAPI.loadConfigurations(elements).then(() => {
 		return MediaTagAPI.start(elements);
 	}).then(() => {
@@ -115,10 +122,7 @@ MediaTagAPI.configure = configuration => {
  */
 MediaTagAPI.loadConfigurations = elements => {
 	const configurationLoaders = elements.filter(element => {
-		if (element) {
-			return element.hasAttribute('configuration');
-		}
-		return false;
+		return element.hasAttribute('configuration');
 	}).map(element => {
 		return element.getAttribute('configuration');
 	}).reduce((urls, url) => {
