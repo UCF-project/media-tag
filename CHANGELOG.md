@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/) and
 [Keep a CHANGELOG](http://keepachangelog.com/).
 
+## v0.2.6:
+Changed : 
+- Processing engine fixes to counter multiple onload into imbricated iframes.
+
+Add :
+- Media-Tag as script tag, it observes the DOM and processes only new or idle media-tag elements. 
+So it can be run in a static environment or handle dynamic <media-tag> insertions.
+- Media-Tag configuration, it allows to define or redefine each plugins as you want.
+- Loaders for configuration, external dependencies and crypto algorithms.
+
 ## v0.2.5
 ### Changed :
 - Pdfjs plufing update with pdfjs viewer as new way to render, if pdfjs viewer repertory is not found the browser default render is used instead.
