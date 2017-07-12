@@ -9,6 +9,8 @@ function config(env) {
 			return require('./config/development-es7.js');
 		case 'development-es5':
 			return require('./config/development-es5.js');
+		case 'development-umd':
+			return require('./config/development-umd.js');
 		default:
 			throw new Error(`Unknown environnement : ${env}`);
 	}

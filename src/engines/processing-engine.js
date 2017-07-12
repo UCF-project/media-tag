@@ -140,8 +140,7 @@ class ProcessingEngine {
 		const plugin = this.stacks.top(key);
 
 		if (!plugin) {
-			mediaObject.state = 'processed';
-			return mediaObject;
+			return this.end(mediaObject);
 		}
 
 		if (this.configuration) {
@@ -306,6 +305,10 @@ class ProcessingEngine {
 		const key = mediaObject.getId();
 		const plugin = this.stacks.unstack(key);
 
+		if (!plugin) {
+			return this.end(mediaObject);
+		}
+
 		try {
 			if (!this.stats.get(key)) {
 				this.stats.store(key, {});
@@ -334,6 +337,11 @@ class ProcessingEngine {
 		this.snapshot(mediaObject);
 		this.check(mediaObject);
 		this.run(mediaObject);
+	}
+
+	end(mediaObject) {
+		mediaObject.status = 'processed';
+		return mediaObject;
 	}
 
 	setDefaultPlugin(plugin) {
