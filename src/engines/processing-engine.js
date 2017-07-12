@@ -309,10 +309,6 @@ class ProcessingEngine {
 			return this.end(mediaObject);
 		}
 
-		if (!plugin) {
-			return;
-		}
-
 		try {
 			if (!this.stats.get(key)) {
 				this.stats.store(key, {});
