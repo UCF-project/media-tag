@@ -115,7 +115,10 @@ MediaTagAPI.configure = configuration => {
  */
 MediaTagAPI.loadConfigurations = elements => {
 	const configurationLoaders = elements.filter(element => {
-		return element.hasAttribute('configuration');
+		if (element) {
+			return element.hasAttribute('configuration');
+		}
+		return false;
 	}).map(element => {
 		return element.getAttribute('configuration');
 	}).reduce((urls, url) => {
