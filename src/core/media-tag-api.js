@@ -18,42 +18,44 @@ function MediaTagAPI(elements) {
 		elements = [elements];
 	}
 
-	const activeEngine = MediaTagAPI.loadingEngine || MediaTagAPI.processingEngine;
-	const urls = MediaTagAPI.findConfigurationUrls(elements);
-	const loads = MediaTagAPI.loadConfigurations(urls);
-
-	loads.forEach(load => {
-		load.then(configuration => {
-			MediaTagAPI.configure(configuration);
-			MediaTagAPI.update(configuration);
-		});
-	});
-
-	Promise.all(loads).then(() => {
-		return Promise.all(elements.map(element => {
-			return new Promise(resolve => {
-				if (element.hasAttribute('src') || element.hasAttribute('sources')) {
-					if (!element.mediaObject) {
-						const mediaTag = new MediaTag(element, MediaTagAPI.processingEngine);
-						const mediaObjects = mediaTag.mediaObjects;
-
-						mediaObjects.forEach(mediaObject => {
-							element.mediaObject = mediaObject;
-							mediaObject.loader = MediaTagAPI.loader;
-							resolve(activeEngine.start(mediaObject));
-						});
-					} else if (element.mediaObject.state === 'idle') {
-						resolve(activeEngine.start(element.mediaObject));
-					}
-				} else {
-					resolve(console.warn(`Element skipped because has no sources`, element));
-				}
-			});
-		}));
-	}).then(() => {/* No operation */}).catch(err => {
-		console.error(err);
+	MediaTagAPI.loadConfigurations(elements).then(() => {
+		return MediaTagAPI.start(elements);
+	}).then(() => {
+		console.log('Media-Tag finishes its jobs');
 	});
 }
+
+/**
+ * Starts Media-Tag processing on identified elements.
+ *
+ * @param      {Array<Element>}  elements  The elements
+ * @return     {Promise}
+ */
+MediaTagAPI.start = elements => {
+	const activeEngine = MediaTagAPI.loadingEngine || MediaTagAPI.processingEngine;
+
+	return Promise.all(elements.map(element => {
+		return new Promise(resolve => {
+			if (element.hasAttribute('src') ||
+				element.hasAttribute('sources')) {
+				if (!element.mediaObject) {
+					const mediaTag = new MediaTag(element, MediaTagAPI.processingEngine);
+					const mediaObjects = mediaTag.mediaObjects;
+
+					mediaObjects.forEach(mediaObject => {
+						element.mediaObject = mediaObject;
+						mediaObject.loader = MediaTagAPI.loader;
+						resolve(activeEngine.start(mediaObject));
+					});
+				} else if (element.mediaObject.state === 'idle') {
+					resolve(activeEngine.start(element.mediaObject));
+				}
+			} else {
+				resolve(console.warn(`Element skipped because has no sources`, element));
+			}
+		});
+	}));
+};
 
 /**
  * Updates the media tag with the configuration.
@@ -106,33 +108,42 @@ MediaTagAPI.configure = configuration => {
 };
 
 /**
- * Finds configurations urls inside media-tag elements.
+ * Loads configurations.
  *
- * @param      {Array<NodeElement>}  elements  The elements
- * @return     {Array<string>}
+ * @param      {<type>}  elements  The elements
+ * @return     {<type>}  { description_of_the_return_value }
  */
-MediaTagAPI.findConfigurationUrls = elements => {
-	return elements.filter(element => {
+MediaTagAPI.loadConfigurations = elements => {
+	const configurationLoaders = elements.filter(element => {
 		return element.hasAttribute('configuration');
 	}).map(element => {
 		return element.getAttribute('configuration');
-	}).reduce((array, current) => {
-		if (!array.includes(current)) {
-			array.push(current);
+	}).reduce((urls, url) => {
+		if (!urls.includes(url)) {
+			urls.push(url);
 		}
-		return array;
-	}, []);
-};
-
-/**
- * Loads configurations.
- *
- * @param      {Array<string>}  urls    The urls
- * @return     {Array<Promise>}
- */
-MediaTagAPI.loadConfigurations = urls => {
-	return urls.map(url => {
+		return urls;
+	}, []).map(url => {
 		return MediaTagAPI.loader.configuration(url);
+	});
+
+	return Promise.all(configurationLoaders).then(configurations => {
+		const dependencyUrls = [];
+
+		configurations.forEach(configuration => {
+			MediaTagAPI.update(configuration);
+			MediaTagAPI.configure(configuration);
+			if (configuration.dependencies) {
+				configuration.dependencies.forEach(url => {
+					if (!dependencyUrls.includes(url)) {
+						dependencyUrls.push(url);
+					}
+				});
+			}
+		});
+		return Promise.all(dependencyUrls.map(url => {
+			return MediaTagAPI.loader.script(url);
+		}));
 	});
 };
 

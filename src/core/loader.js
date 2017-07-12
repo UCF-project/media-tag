@@ -11,6 +11,11 @@ class Loader {
 		 * To store to manage loaded url like a kind of cache.
 		 */
 		this.store = new Store();
+
+		/**
+		 * To store promises and bring back a unique url to avoid multiple same loading.
+		 */
+		this.promiseStore = new Store();
 	}
 
 	isStored(url) {
@@ -24,25 +29,18 @@ class Loader {
 	 * @return     {Promise}
 	 */
 	script(url) {
-		if (!this.store.isStored(url)) {
-			return new Promise((resolve, reject) => {
+		if (!this.promiseStore.isStored(url)) {
+			this.promiseStore.store(url, new Promise((resolve, reject) => {
 				const script = document.createElement('script');
 
-				script.src = url;
 				script.type = 'text/javascript';
-				script.onload = () => {
-					this.store.store(url, 'script');
-					resolve(this.store.get(url));
-				};
-				script.onerror = err => {
-					reject(err);
-				};
+				script.src = url;
+				script.onload = resolve;
+				script.onerror = script.abort = reject;
 				document.head.appendChild(script);
-			});
+			}));
 		}
-		return new Promise(resolve => {
-			resolve(this.store.get(url));
-		});
+		return this.promiseStore.get(url);
 	}
 
 	/**
@@ -82,8 +80,8 @@ class Loader {
 	}
 
 	algorithm(url) {
-		if (!this.store.isStored(url)) {
-			return new Promise((resolve, reject) => {
+		if (!this.promiseStore.isStored(url)) {
+			this.promiseStore.store(url, new Promise((resolve, reject) => {
 				const script = document.createElement('script');
 
 				script.src = url;
@@ -98,11 +96,9 @@ class Loader {
 					reject(err);
 				};
 				document.head.appendChild(script);
-			});
+			}));
 		}
-		return new Promise(resolve => {
-			resolve(this.store.get(url));
-		});
+		return this.promiseStore.get(url);
 	}
 }
 

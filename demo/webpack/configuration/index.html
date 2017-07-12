@@ -2,18 +2,11 @@
 <html>
 <head>
 	<title>My Page with Media Tag</title>
-	<script type="text/javascript" src="/ext-lib/shaka-player.compiled.js"></script>
-	<script type="text/javascript" src="/ext-lib/nacl-fast.min.js"></script>
+	<!-- <script type="text/javascript" src="/ext-lib/shaka-player.compiled.js"></script> -->
+<!-- 	<script type="text/javascript" src="/ext-lib/nacl-fast.min.js"></script>
 	<script type="text/javascript" src="/ext-lib/nacl-util.min.js"></script>
-	<script type="text/javascript" src="/ext-lib/FileSaver.min.js"></script>
+	<script type="text/javascript" src="/ext-lib/FileSaver.min.js"></script> -->
 	<script type="text/javascript" src="/dist/media-tag.js"></script>
-<!-- 	<script type="text/javascript">
-		/* global document, MediaTag */
-		document.addEventListener('DOMContentLoaded', () => {
-			const mediaTagElements = Array.from(document.getElementsByTagName('media-tag'));
-			MediaTag(mediaTagElements);
-		});
-	</script> -->
 	<style>
 		* {
 			margin: 0px;
@@ -65,7 +58,7 @@
 
         <h3 class="subtitle">Audio</h3>
 	    <media-tag
-	    	configuration="configuration.js"
+	    	
 			src="/assets/audios/alterway.mp3"
 	        data-type="audio/mp3"
 	        data-attr-width="80%"
@@ -75,7 +68,7 @@
 
 	    <h3 class="subtitle">Video</h3>
 		<media-tag
-			configuration="configuration.js"
+			
 			src="/assets/videos/bbb.mp4"
 	        data-type="video/mp4"
 	        data-attr-width="80%"
@@ -85,7 +78,6 @@
 
 	    <h3 class="subtitle">Dash</h3>
 		<media-tag
-			configuration="configuration.js"
 			src="/assets/videos/bbb_dash.mpd"
 	        data-type="application/dash+xml"
 	        data-attr-width="80%"
@@ -95,7 +87,6 @@
 
 	    <h3 class="subtitle">Pdf</h3>
 		<media-tag
-			configuration="configuration.js"
 			src="/assets/documents/kasukasu-manuel-utilisateur.pdf"
 	        data-type="application/pdf"
 	        data-attr-width="80%"
@@ -106,7 +97,6 @@
 	<div class="advanced">
 		<h3 class="subtitle">Encrypted image</h3>
 		<media-tag
-			configuration="configuration.js"
 			data-type="image/png"
 			src="/assets/images/encrypted/image.png-encrypted"
 			data-crypto-key="salsa20poly1305:TBo77200c0e/FdldQFcnQx4Y"
@@ -117,7 +107,6 @@
 
 		<h3 class="subtitle">Encrypted audio</h3>
 		<media-tag
-			configuration="configuration.js"
 			data-type="audio/mp3"
 			src="/assets/audios/encrypted/audio-encrypted"
 			data-crypto-key="salsa20poly1305:WKPuoxzA+s66qS5y8NDxoDSs"
@@ -128,7 +117,6 @@
 
 		<h3 class="subtitle">Encrypted video</h3>
 		<media-tag
-			configuration="configuration.js"
 			data-type="video/mp4"
 			src="/assets/videos/encrypted/video-encrypted"
 			data-crypto-key="salsa20poly1305:gxGQi0zzmj/w8GrV+/xGgaMI"
@@ -141,7 +129,6 @@
 
 		<h3 class="subtitle">Encrypted pdf</h3>
 		<media-tag
-			configuration="configuration.js"
 			data-type="application/pdf"
 			src="/assets/documents/encrypted/file.pdf-encrypted"
 			data-crypto-key="salsa20poly1305:UR5bLSwuyBak41oJrN2dRq1a"
@@ -152,7 +139,6 @@
 
 		<h3 class="subtitle">Encrypted download</h3>
 		<media-tag
-			configuration="configuration.js"
 			data-type="nothing"
 			src="/assets/videos/encrypted/video-encrypted"
 			data-crypto-key="salsa20poly1305:gxGQi0zzmj/w8GrV+/xGgaMI"

@@ -4,71 +4,139 @@
 	<title>Media Tag</title>
 	<script type="text/javascript" src="./assets/js/page-loader.js"></script>
 	<link rel="stylesheet" href="./assets/css/main.css"/>
+	<link rel="stylesheet" href="./assets/css/page.css"/>
 
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tweetnacl/1.0.0/nacl-fast.min.js"></script>
 	<script type="text/javascript" src="https://unpkg.co/tweetnacl-util@0.15.0/nacl-util.min.js"></script>
 	<script type="text/javascript" src="/assets/js/dist/media-tag.js"></script>
 </head>
 <body>
-	<media-tag 
-		id="encryptedFile"
-		src="http://localhost:3000/blob/80/802c5645ea66b6b0c1a24745c7a9a5911e46140eb26891b3"
-		data-crypto-key="cryptpad:IHGmq8/O5D+cWy3cYnZvRUJrRKyVIhCxOY+GlDiMmnk=">
-	</media-tag>
-	<header></header>
-	<nav>
-		<div class="vignette-container"></div>
+	<div class="fit">
+		<nav class="menu column">
+			<div class="fit-width centered justified tb-padded">
+				<img 
+					class="fit-width centered justified tb-padded"
+					type="image/png"
+					src="/assets/images/media-tag-logo-text.png"
+				>
+			</div>
+			<div
+				class="fit-width centered justified show tb-padded"
+				onclick="loadPage(event, './pages/home.html')">
+				<b>Home</b>
+			</div>
+			<div class="fit-width centered justified show tb-padded">
+				<b>Usage</b>
+			</div>
+			<div 
+				class="fit-width centered justified show tb-padded"
+				onclick="loadPage(event, './pages/plugins.html')">
+				<b>Plugins</b>
+			</div>
+			<div 
+				class="fit-width centered justified show tb-padded"
+				onclick="loadPage(event, './pages/plugins/image.html')">
+				<em>Image</em>
+			</div>
+			<div 
+				class="fit-width centered justified show tb-padded"
+				onclick="loadPage(event, './pages/plugins/audio.html')">
+				<em>Audio</em>
+			</div>
+			<div 
+				class="fit-width centered justified show tb-padded"
+				onclick="loadPage(event, './pages/plugins/video.html')">
+				<em>Video</em>
+			</div>
+			<div 
+				class="fit-width centered justified show tb-padded"
+				onclick="loadPage(event, './pages/plugins/dash.html')">
+				<em>Dash</em>
+			</div>
+			<div class="fit-width centered justified show tb-padded">
+				<em>Pdf</em>
+			</div>
+			<div class="fit-width centered justified show tb-padded">
+				<b>Engines</b>
+			</div>
+			<div class="fit-width centered justified show tb-padded">
+				<em>Processing</em>
+			</div>
+			<div class="fit-width centered justified show tb-padded">
+				<em>Loading</em>
+			</div>
+			<div class="fit-width centered justified show tb-padded">
+				<em>Matching</em>
+			</div>
+			<div class="fit-width centered justified show tb-padded">
+				<b>Development</b>
+			</div>
+			<div class="fit-width centered justified show tb-padded">
+				<b>Configuration</b>
+			</div>
+			<div class="fit-width centered justified show tb-padded bottom">
+				<b>About us</b>
+			</div>
+		</nav>
+		<div class="fit">
+			<iframe
+				id="viewer"
+				class="fit borderless" 
+				src="./pages/home.html"></iframe>
+		</div>
+	</div>
+		<!-- <div class="vignette-container">
+			<img src="/assets/images/media-tag-logo-text.png">
+		</div>
 		<ul>
-			<li class="section" onclick="">
-				<div>Home</div>
-			</li>
-			<li class="section" onclick="clickHandler">
-				<div>Engines</div>
+			<li class="section link" onclick="loadPage(event, './pages/home.html')"><b>Home</b></li>
+			<li class="section link" onclick="clickHandler">
+				<div><b>Engines</b></div>
 				<ul class="menu">
-					<li class="section" onclick="loadPage(event, './pages/processing.html')">Processing</li>
-					<li class="section" onclick="loadPage(event, './pages/loading.html')">Loading</li>
-					<li class="section" onclick="loadPage(event, './pages/matching.html')">Matching</li>
+					<li class="section link" onclick="loadPage(event, './pages/processing.html')">Processing</li>
+					<li class="section link" onclick="loadPage(event, './pages/loading.html')">Loading</li>
+					<li class="section link" onclick="loadPage(event, './pages/matching.html')">Matching</li>
 				</ul>
 			</li>
-			<li class="section" onclick="loadPage(event, './pages/plugins.html')">
-				<div>Plugins</div>
+			<li class="section link" onclick="loadPage(event, './pages/plugins.html')">
+				<div><b>Plugins</b></div>
 				<ul class="menu">
-					<li class="section" onclick="console.log('matchers'); return true;">
-						<div >Matchers</div>
+					<li class="section link" onclick="console.log('matchers'); return true;">
+						<div><em><b>Matchers</b></em></div>
 						<ul class="menu">
-							<li class="section">Image</li>
-							<li class="section">Audio</li>
-							<li class="section">...</li>
+							<li class="section link">Image</li>
+							<li class="section link">Audio</li>
+							<li class="section link">...</li>
 						</ul>
 					</li>
-					<li class="section">
-						<div>Renderers</div>
+					<li class="section link">
+						<div><em><b>Renderers</b></em></div>
 						<ul class="menu">
-							<li class="section" onclick="loadPage(event, './pages/image.html')">Image</li>
-							<li class="section">Audio</li>
-							<li class="section">...</li>
+							<li class="section link" onclick="loadPage(event, './pages/image.html')">Image</li>
+							<li class="section link">Audio</li>
+							<li class="section link">...</li>
 						</ul>
 					</li>
-					<li class="section">
-						<div>Filters</div>
+					<li class="section link">
+						<div><em><b>Filters</b></em></div>
 						<ul class="menu">
-							<li class="section">Image</li>
-							<li class="section">Audio</li>
-							<li class="section">...</li>
+							<li class="section link">Image</li>
+							<li class="section link">Audio</li>
+							<li class="section link">...</li>
 						</ul>
 					</li>
-					<li class="section">
-						<div>Sanitizers</div>
+					<li class="section link">
+						<div><em><b>Sanitizers</b></em></div>
 						<ul class="menu">
-							<li class="section">Image</li>
-							<li class="section">Audio</li>
-							<li class="section">...</li>
+							<li class="section link">Image</li>
+							<li class="section link">Audio</li>
+							<li class="section link">...</li>
 						</ul>
 					</li>
 				</ul>
 			</li>
-		</ul>
+		</ul> -->
 	</nav>
-	<iframe id="viewer"></iframe>
+	<!-- <iframe id="viewer" src='./pages/home.html'></iframe> -->
 </body>
 </html>

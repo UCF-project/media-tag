@@ -1,6 +1,7 @@
 * {
 	margin: 0;
 	padding: 0;
+	background: rgba(255, 255, 255, 0);
 }
 
 html, body {
@@ -9,11 +10,30 @@ html, body {
 	font-family: ubuntu, arial;
 }
 
-nav {
+.fit-width {
+	display: flex;
+	width: 100%;
+}
+
+.menu {
+	display: flex;
+	width: 12.5%;
+	height: 100%;
+}
+
+.borderless {
+	border: none;
+}
+
+.bottom {
+	align-self: flex-end;
+}
+
+/*nav {
 	display: inline-block;
 	width: 10%;
 	height: 100%;
-	background: rgba(0, 0, 0 , 0.1);
+	background: rgba(128, 255, 128, 1);
 }
 
 iframe {
@@ -30,10 +50,14 @@ ul {
 
 .vignette-container {
 	width: 100%;
-	height: 10%;
-	background: rgba(0, 0, 0 , 0.1);
+	height: 20%;
 	text-align: center;
 	vertical-align: middle;
+}
+
+.vignette-container > * {
+	width: 100%;
+	height: 100%;
 }
 
 .section {
@@ -41,7 +65,6 @@ ul {
 	padding-top: 20px;
 	padding-bottom: 20px;
 	vertical-align: middle;
-	background: rgba(0, 0, 0 , 0.1);
 }
 
 .section > .menu {
@@ -54,5 +77,8 @@ ul {
 	padding-bottom: 20px;
 	text-align: center;
 	vertical-align: middle;
-	background: rgba(0, 0, 0 , 0.1);
 }
+
+.link:hover {
+	background: rgba(255, 255, 0, 0.5);
+}*/

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Media Tag - Image</title>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tweetnacl/1.0.0/nacl-fast.min.js"></script>
+	<script type="text/javascript" src="https://unpkg.co/tweetnacl-util@0.15.0/nacl-util.min.js"></script>
+	<script type="text/javascript" src="/assets/js/dist/media-tag.js"></script>
+	<link rel="stylesheet" type="text/css" href="/assets/css/page.css">
+</head>
+<body>
+	<div class="fit">
+		<div class="split column">
+			<h1 class="header slice-third centered justified">Image plugin</h1>
+			<div class="fit centered column scrollable">
+				<div class="left column tb-padded">
+
+					<h3 class="tb-padded fit-width justified centered">That can it do</h3>
+			 		
+			 		<p class="lr-padded">
+						It is used to render several type of images.<br><br>
+					</p>
+					<div class="lr-padded">
+						Media-Tag by default can regonizes these types:
+						<ul class="lr-padded tb-padded">
+							<li>image/png</li>
+							<li>image/jpg</li>
+							<li>image/jpeg</li>
+							<li>image/gif</li>
+							<li>image/svg+xml</li>
+						</ul>
+					</div>
+					<p class="lr-padded">
+						And it can be used like this.
+					</p>
+				</div>
+				<div class="left column tb-padded">
+
+					<h3 class="tb-padded fit-width justified centered">HTML</h3>
+
+<xmp class="lr-padded show">
+<media-tag
+	# Some classes for the container
+	class="slice centered justified"
+
+	# Some classes for the render	
+	data-attr-class="fit-height"
+
+	# Content source to process with Media-Tag
+	src="/assets/images/media-tag-logo-text.png"
+	
+	# Data-type used to recognize the content type
+	data-type="image/png"
+</media-tag>
+</xmp>
+				</div>
+			</div>
+		</div>
+		<div class="split column">
+			<h1 class="header slice-third centered justified">View</h1>
+			<div class="fit centered justified">
+				<media-tag
+					class="slice centered justified"
+					data-attr-class="fit-height"
+					src="/assets/images/media-tag-logo-text.png"
+					data-type="image/png">
+				</media-tag>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
