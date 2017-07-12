@@ -329,7 +329,7 @@ function algorithm(mediaObject) {
         });
 
         decryptionEvent.metadata = decrypted.metadata;
-        //CryptoFilter.addAllowedMediaType('audio/mpeg');
+        CryptoFilter.addAllowedMediaType('audio/mpeg');
 
         /**
          * Modifications applied on mediaObject.
