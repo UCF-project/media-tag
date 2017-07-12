@@ -19,10 +19,8 @@ class DownloadRenderer extends Renderer {
 	 * @param      {MediaObject}  mediaObject  The media object
 	 */
 	process(mediaObject) {
-		const container = document.createElement('div');
 		const button = document.createElement('button');
 
-		container.innerHTML = this.message;
 		button.innerHTML = this.buttonMessage;
 
 		button.onclick = () => {
@@ -49,10 +47,8 @@ class DownloadRenderer extends Renderer {
 			xhr.send();
 		};
 
-		container.appendChild(button);
-
-		mediaObject.utilsSetAllDataAttributes(container);
-		mediaObject.replaceContents([container]);
+		mediaObject.utilsSetAllDataAttributes(button);
+		mediaObject.replaceContents([button]);
 
 		// MediaTag.processingEngine.return(mediaObject);
 		mediaObject.return();
