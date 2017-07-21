@@ -25,8 +25,20 @@
 				onclick="loadPage(event, './pages/home.html')">
 				<b>Home</b>
 			</div>
-			<div class="fit-width centered justified show tb-padded">
+			<div
+				class="fit-width centered justified show tb-padded"
+				onclick="loadPage(event, './pages/installation.html')">
+				<b>Installation</b>
+			</div>
+			<div 
+				class="fit-width centered justified show tb-padded"
+				onclick="loadPage(event, './pages/configuration.html')">
 				<b>Usage</b>
+			</div>
+			<div 
+				class="fit-width centered justified show tb-padded"
+				onclick="loadPage(event, './pages/configuration.html')">
+				<b>Configuration</b>
 			</div>
 			<div 
 				class="fit-width centered justified show tb-padded"
@@ -53,29 +65,28 @@
 				onclick="loadPage(event, './pages/plugins/dash.html')">
 				<em>Dash</em>
 			</div>
-			<div class="fit-width centered justified show tb-padded">
+			<div
+				class="fit-width centered justified show tb-padded"
+				onclick="loadPage(event, './pages/plugins/pdf.html')">
 				<em>Pdf</em>
 			</div>
 			<div class="fit-width centered justified show tb-padded">
 				<b>Engines</b>
 			</div>
-			<div class="fit-width centered justified show tb-padded">
+			<div 
+				class="fit-width centered justified show tb-padded"
+				onclick="loadPage(event, './pages/engines/processing.html')">
 				<em>Processing</em>
 			</div>
-			<div class="fit-width centered justified show tb-padded">
+			<div
+				class="fit-width centered justified show tb-padded"
+				onclick="loadPage(event, './pages/engines/loading.html')">
 				<em>Loading</em>
 			</div>
-			<div class="fit-width centered justified show tb-padded">
+			<div
+				class="fit-width centered justified show tb-padded"
+				onclick="loadPage(event, './pages/engines/matching.html')">
 				<em>Matching</em>
-			</div>
-			<div class="fit-width centered justified show tb-padded">
-				<b>Development</b>
-			</div>
-			<div class="fit-width centered justified show tb-padded">
-				<b>Configuration</b>
-			</div>
-			<div class="fit-width centered justified show tb-padded bottom">
-				<b>About us</b>
 			</div>
 		</nav>
 		<div class="fit">
@@ -85,58 +96,5 @@
 				src="./pages/home.html"></iframe>
 		</div>
 	</div>
-		<!-- <div class="vignette-container">
-			<img src="/assets/images/media-tag-logo-text.png">
-		</div>
-		<ul>
-			<li class="section link" onclick="loadPage(event, './pages/home.html')"><b>Home</b></li>
-			<li class="section link" onclick="clickHandler">
-				<div><b>Engines</b></div>
-				<ul class="menu">
-					<li class="section link" onclick="loadPage(event, './pages/processing.html')">Processing</li>
-					<li class="section link" onclick="loadPage(event, './pages/loading.html')">Loading</li>
-					<li class="section link" onclick="loadPage(event, './pages/matching.html')">Matching</li>
-				</ul>
-			</li>
-			<li class="section link" onclick="loadPage(event, './pages/plugins.html')">
-				<div><b>Plugins</b></div>
-				<ul class="menu">
-					<li class="section link" onclick="console.log('matchers'); return true;">
-						<div><em><b>Matchers</b></em></div>
-						<ul class="menu">
-							<li class="section link">Image</li>
-							<li class="section link">Audio</li>
-							<li class="section link">...</li>
-						</ul>
-					</li>
-					<li class="section link">
-						<div><em><b>Renderers</b></em></div>
-						<ul class="menu">
-							<li class="section link" onclick="loadPage(event, './pages/image.html')">Image</li>
-							<li class="section link">Audio</li>
-							<li class="section link">...</li>
-						</ul>
-					</li>
-					<li class="section link">
-						<div><em><b>Filters</b></em></div>
-						<ul class="menu">
-							<li class="section link">Image</li>
-							<li class="section link">Audio</li>
-							<li class="section link">...</li>
-						</ul>
-					</li>
-					<li class="section link">
-						<div><em><b>Sanitizers</b></em></div>
-						<ul class="menu">
-							<li class="section link">Image</li>
-							<li class="section link">Audio</li>
-							<li class="section link">...</li>
-						</ul>
-					</li>
-				</ul>
-			</li>
-		</ul> -->
-	</nav>
-	<!-- <iframe id="viewer" src='./pages/home.html'></iframe> -->
 </body>
 </html>

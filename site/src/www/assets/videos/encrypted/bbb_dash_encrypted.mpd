@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MPD profiles="urn:mpeg:dash:profile:isoff-on-demand:2011" type="static" minBufferTime="PT7S" mediaPresentationDuration="PT9M56S" xmlns="urn:mpeg:dash:schema:mpd:2011" xmlns:cenc="urn:mpeg:cenc:2013">
+  <ProgramInformation moreInformationURL="www.castLabs.com"/>
+  <Period id="0" start="PT0S" duration="PT9M56S">
+    <AdaptationSet id="1" segmentAlignment="true" subsegmentAlignment="true" subsegmentStartsWithSAP="1" startWithSAP="1" bitstreamSwitching="true" mimeType="video/mp4" par="4:3" width="320" height="240" frameRate="24000/1000" sar="1:1">
+      <ContentProtection cenc:default_KID="0ebf4315-2d2d-e264-31e2-71a9872fbc0a" schemeIdUri="urn:mpeg:dash:mp4protection:2011" value="cenc"/>
+      <Role schemeIdUri="urn:mpeg:dash:role:2011" value="main"/>
+      <Representation codecs="avc1.42c00d" id="bbb_encrypted.mp4" bandwidth="44300">
+        <BaseURL>bbb_encrypted.mp4</BaseURL>
+        <SegmentBase timescale="96" indexRangeExact="true" indexRange="807-1318">
+          <Initialization range="0-806"/>
+        </SegmentBase>
+      </Representation>
+    </AdaptationSet>
+  </Period>
+</MPD>

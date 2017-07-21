@@ -45,18 +45,14 @@ MediaTagAPI.start = elements => {
 		return new Promise(resolve => {
 			if (element.hasAttribute('src') ||
 				element.hasAttribute('sources')) {
-				if (!element.mediaObject) {
-					const mediaTag = new MediaTag(element, MediaTagAPI.processingEngine);
-					const mediaObjects = mediaTag.mediaObjects;
+				const mediaTag = new MediaTag(element, MediaTagAPI.processingEngine);
+				const mediaObjects = mediaTag.mediaObjects;
 
-					mediaObjects.forEach(mediaObject => {
-						element.mediaObject = mediaObject;
-						mediaObject.loader = MediaTagAPI.loader;
-						resolve(activeEngine.start(mediaObject));
-					});
-				} else if (element.mediaObject.state === 'idle') {
-					resolve(activeEngine.start(element.mediaObject));
-				}
+				mediaObjects.forEach(mediaObject => {
+					element.mediaObject = mediaObject;
+					mediaObject.loader = MediaTagAPI.loader;
+					resolve(activeEngine.start(mediaObject));
+				});
 			} else {
 				resolve(console.warn(`Element skipped because has no sources`, element));
 			}

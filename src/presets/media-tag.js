@@ -27,7 +27,17 @@ document.addEventListener('DOMContentLoaded', () => {
 				});
 			}
 			if (mutation.target.nodeName === 'MEDIA-TAG') {
-				mediaTagElements.push(mutation.target);
+				/**
+				 * Avoid mutation due to MediaTag end process ...
+				 */
+				if (mutation.type !== 'childList') {
+					/**
+					 * We don't store two times a same mutated element.
+					 */
+					if (!mediaTagElements.includes(mutation.target)) {
+						mediaTagElements.push(mutation.target);
+					}
+				}
 			}
 		});
 
@@ -59,13 +69,16 @@ document.addEventListener('DOMContentLoaded', () => {
 	 * @return     {Array}   { description_of_the_return_value }
 	 */
 	function find(element, tag) {
-		const nodes = [];
+		let nodes = [];
 
+		if (!element.children) {
+			return nodes;
+		}
 		for (const child of element.children) {
 			if (child.nodeName === tag) {
 				nodes.push(child);
 			}
-			nodes.concat(find(child, tag));
+			nodes = nodes.concat(find(child, tag));
 		}
 		return nodes;
 	}
