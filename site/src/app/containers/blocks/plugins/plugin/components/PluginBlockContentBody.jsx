@@ -17,7 +17,7 @@ class PluginBlockContentBody extends React.Component {
 	 */
 	render() {
 		return (
-			<div className={'fit v-aligned h-aligned'}>
+			<div className={'flex fit v-aligned h-aligned'}>
 				{this.props.body}
 			</div>
 		);

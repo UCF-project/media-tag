@@ -20,7 +20,7 @@ class PluginBlockContent extends React.Component {
 	 */
 	render() {
 		return (
-			<div className={'flex split column h-aligned'}>
+			<div className={'flex split column h-aligned padded show'}>
 				<PluginBlockContentTitle title={this.props.title} />
 				<PluginBlockContentBody body={this.props.body} />
 			</div>
