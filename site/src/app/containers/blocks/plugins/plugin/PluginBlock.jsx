@@ -34,31 +34,4 @@ class PluginBlock extends React.Component {
 	}
 }
 
-/**
-
-<div className={'flex fit'}>
-				<div className={'flex split column h-aligned'}>
-					<h3>html</h3>
-					<p>
-						alzkalkz zkalz amlkzmla zamzmalmzmlkamlz amjz<br />
-						alzkalkz zkalz amlkzmla zamzmalmzmlkamlz amjz<br />
-						lz amlkzmla zamzmalmzmlkamlz amjz<br />
-						alzkalkz zkalz amlkzmla zamzmalmzmlkamlz amjz<br />
-					</p>
-				</div>
-				<div className={'flex split column h-aligned'}>
-					<h3>View</h3>
-					<div className={'flex page fit column h-aligned v-aligned'}>
-						<MediaTag
-							class="flex fit-height v-aligned h-aligned"
-							data-attr-class="fit"
-							src="/assets/images/media-tag-logo-text.png"
-							data-type="image/png">
-						</MediaTag>
-					</div>
-				</div>
-			</div>
-
- */
-
 export default PluginBlock;

@@ -88,6 +88,19 @@ html, body {
 	padding-right: 2.5%;
 }
 
+.left-padded {
+	padding-left: 2.5%;
+}
+
+
+.top-padded {
+	padding-top: 2.5%;
+}
+
+.bottom-padded {
+	padding-bottom: 2.5%;
+}
+
 .padded {
 	padding-right: 2.5%;
 	padding-left: 2.5%;
@@ -111,4 +124,17 @@ html, body {
 
 .background-white {
 	background: white;
-} 
+}
+
+.prompt {
+	padding: 1%;
+	color: white;
+	background: rgb(60, 60, 60);
+}
+
+.code {
+	padding: 5px;
+	color: white;
+	background: rgb(60, 60, 60);
+	border-radius: 15px;
+}
