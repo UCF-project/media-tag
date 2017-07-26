@@ -17,7 +17,9 @@ module.exports = function () {
 		entry: {
 			'media-tag': './src/presets/media-tag.js',
 			'media-tag-core': './src/core/media-tag-api.js',
-			test: './test/media-tag.js'
+			'media-tag-react': './src/presets/media-tag-react.js',
+			test: './test/media-tag.js',
+			app: './src/react/app.js'
 		},
 
 		output: {
@@ -29,6 +31,27 @@ module.exports = function () {
 		devServer: {
 			contentBase: path.join(__dirname, '../demo'),
 			compress: true
+		},
+
+		module: {
+			rules: [
+				{
+					test: /\.css?$/,
+					use: [
+						'style-loader',
+						'css-loader'
+					]
+				},
+				{
+					test: /\.(js|jsx)$/,
+					exclude: /(node_modules|assets)/,
+					loader: 'babel-loader',
+					query: {
+						presets: ['react', 'stage-0'],
+						cacheDirectory: true
+					}
+				}
+			]
 		},
 
 		plugins: plugin

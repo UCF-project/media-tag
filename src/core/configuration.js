@@ -66,6 +66,9 @@ class Configuration {
 	 * @return     {Array<Plugin>}  The plugins.
 	 */
 	getPlugins() {
+		if (!this.plugins) {
+			return [];
+		}
 		return Object.keys(this.plugins).map(identifier => {
 			// console.log('IDENTIFIER', identifier);
 			return Object.keys(this.plugins[identifier]).map(type => {

@@ -14,7 +14,7 @@ const Loader = require('./loader');
  * @param      {Array<Element>|Element}  elements  The elements
  */
 function MediaTagAPI(elements) {
-	if (!(elements instanceof Array)) {
+	if (!Array.isArray(elements)) {
 		elements = [elements];
 	}
 

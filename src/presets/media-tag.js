@@ -24,6 +24,10 @@ document.addEventListener('DOMContentLoaded', () => {
 				mutation.addedNodes.forEach(node => {
 					const elements = find(node, 'MEDIA-TAG').filter(hasIdleMediaObjects);
 					mediaTagElements.push(...elements);
+
+					if (node.nodeName === 'MEDIA-TAG') {
+						mediaTagElements.push(node);
+					}
 				});
 			}
 			if (mutation.target.nodeName === 'MEDIA-TAG') {
