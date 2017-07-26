@@ -18,14 +18,6 @@ class MediaTag extends React.Component {
 		this.state = {
 			component: null
 		}
-
-		// document.addEventListener('processed', event => {
-		// 	if (this.refs.mediaTag.mediaObject.getId() === event.mediaObject.getId()) {
-		// 		if (!this.state.component) {
-		// 			this.attachComponent(event.component);
-		// 		}
-		// 	}
-		// });
 	}
 	
 	/**

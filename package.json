@@ -7,7 +7,8 @@
   "license": "Apache-2.0",
   "scripts": {
     "test": "xo && nyc _mocha ./test/media-tag.js",
-    "build": "webpack && r.js -convert src/ temp/ && babel temp/ -d dist/amd-es5/ && rm -r temp/",
+    "build": "webpack",
+    "build:amd": "r.js -convert src/ temp/ && babel temp/ -d dist/amd-es5/ --presets=react,es2015,stage-0 && rm -r temp/",
     "build:docs": "esdoc",
     "build:amd-es5": "r.js -convert src/ temp/ && babel temp/ -d dist/amd-es5/ && rm -r temp/",
     "build:amd-es6": "r.js -convert src/ dist/amd-es6/",

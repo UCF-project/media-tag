@@ -1,4 +1,4 @@
-const MediaTag = require('../../core/media-tag');
+const MediaTag = require('../../core/media-tag-api');
 const LoadingEngine = require('../../engines/loading-engine');
 
 /**

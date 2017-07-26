@@ -1,5 +1,5 @@
 /* global document */
-const MediaTag = require('../../src/presets/static/media-tag');
+const MediaTag = require('../../src/presets/media-tag');
 const Matcher = require('../../src/plugins/matcher');
 const Filter = require('../../src/plugins/filter');
 const Sanitizer = require('../../src/plugins/sanitizer');

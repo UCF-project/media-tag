@@ -1,5 +1,5 @@
 /* global document, MutationObserver */
-const mediaTagAPI = require('./media-tag.plugins');
+const mediaTagAPI = require('./media-tag.react.plugins');
 
 document.addEventListener('DOMContentLoaded', () => {
 	const observer = new MutationObserver(handleMutations);

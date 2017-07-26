@@ -3,5 +3,6 @@
 node_modules/
 npm-debug.log
 dist/
+temp/
 *.swp
 ./site/node_modules/

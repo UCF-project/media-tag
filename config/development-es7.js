@@ -16,8 +16,8 @@ module.exports = function () {
 	return {
 		entry: {
 			'media-tag': './src/presets/media-tag.js',
-			'media-tag-core': './src/core/media-tag-api.js',
-			'media-tag-react': './src/presets/media-tag-react.js',
+			'media-tag-react': './src/presets/media-tag.react.js',
+			'media-tag-api': './src/core/media-tag-api.js',
 			test: './test/media-tag.js',
 			app: './src/react/app.js'
 		},

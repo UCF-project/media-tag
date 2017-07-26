@@ -1,16 +1,16 @@
 /* global document, describe, it */
 import chai from 'chai';
-import mediaTag from '../src/presets/static/media-tag';
+import mediaTag from '../src/presets/media-tag';
 import Identifier from '../src/enums/identifier';
 import Type from '../src/enums/type';
-import CryptoFilter from '../src/plugins/filters/crypto';
+import CryptoFilter from '../src/plugins/crypto/filter';
 import FakePluginUtils from './helpers/fake-plugin-utils';
 
 describe('Create different media tag contents: ', () => {
 	it('can create a media-tag containing an image', () => {
 		// Create container for media tag
 		const mediaTagContainer = document.createElement('media-tag');
-		mediaTagContainer.setAttribute('src', 'image-without-extension');
+		mediaTagContainer.setAttribute('src', '/assets/images/image-without-extension');
 		mediaTagContainer.setAttribute('data-type', 'image/png');
 		mediaTagContainer.setAttribute('data-attr-width', '300px');
 		mediaTagContainer.setAttribute('data-attr-height', '200px');
@@ -22,7 +22,7 @@ describe('Create different media tag contents: ', () => {
 
 		// Create the expected element
 		const expectedResult = document.createElement('img');
-		expectedResult.setAttribute('src', 'image-without-extension');
+		expectedResult.setAttribute('src', '/assets/images/image-without-extension');
 		expectedResult.setAttribute('width', '300px');
 		expectedResult.setAttribute('height', '200px');
 
@@ -35,7 +35,7 @@ describe('Create different media tag contents: ', () => {
 	it('can create a media-tag containing an audio', () => {
 		// Create container for media tag
 		const mediaTagContainer = document.createElement('media-tag');
-		mediaTagContainer.setAttribute('src', 'alterway.mp3');
+		mediaTagContainer.setAttribute('src', '/assets/audios/alterway.mp3');
 		mediaTagContainer.setAttribute('data-type', 'audio/mp3');
 		mediaTagContainer.setAttribute('data-attr-controls', 'controls');
 
@@ -44,7 +44,7 @@ describe('Create different media tag contents: ', () => {
 
 		// Create the expected element
 		const expectedResult = document.createElement('audio');
-		expectedResult.setAttribute('src', 'alterway.mp3');
+		expectedResult.setAttribute('src', '/assets/audios/alterway.mp3');
 		expectedResult.setAttribute('controls', 'controls');
 
 		// Compare expected contents
@@ -56,7 +56,7 @@ describe('Create different media tag contents: ', () => {
 	it('can create a media-tag containing a video', () => {
 		// Create container for media tag
 		const mediaTagContainer = document.createElement('media-tag');
-		mediaTagContainer.setAttribute('src', 'cube.mp4');
+		mediaTagContainer.setAttribute('src', '/assets/videos/bbb.mp4');
 		mediaTagContainer.setAttribute('data-type', 'video/mp4');
 		mediaTagContainer.setAttribute('data-attr-width', '300px');
 		mediaTagContainer.setAttribute('data-attr-height', '200px');
@@ -66,7 +66,7 @@ describe('Create different media tag contents: ', () => {
 
 		// Create the expected element
 		const expectedResult = document.createElement('video');
-		expectedResult.setAttribute('src', 'cube.mp4');
+		expectedResult.setAttribute('src', '/assets/videos/bbb.mp4');
 		expectedResult.setAttribute('width', '300px');
 		expectedResult.setAttribute('height', '200px');
 		expectedResult.setAttribute('controls', true);
