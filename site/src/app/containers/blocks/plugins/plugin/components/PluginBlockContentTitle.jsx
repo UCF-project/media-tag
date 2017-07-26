@@ -17,7 +17,7 @@ class PluginBlockContentTitle extends React.Component {
 	 */
 	render() {
 		return (
-			<h3 className={''}>
+			<h3 className={'flex top-padded bottom-padded v-aligned h-aligned fit-width'}>
 				{this.props.title}
 			</h3>
 		);

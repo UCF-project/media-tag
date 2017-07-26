@@ -22,7 +22,7 @@ class PluginBlock extends React.Component {
 	 */
 	render() {
 		return (
-			<div className={'flex fit'}>
+			<div className={'flex fit background-white'}>
 				<PluginBlockContent
 					title={this.props.htmlTitle}
 					body={this.props.htmlBody} />

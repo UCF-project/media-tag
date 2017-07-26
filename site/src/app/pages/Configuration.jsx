@@ -1,8 +1,7 @@
 import React from 'react';
 import Page from '../containers/Page.jsx';
 
-export default () => {
-  return (
+export default (
     <Page class='flex fit-width page column background-grey scrollable'>
       <div>
         <h1>Configuration</h1>
@@ -208,4 +207,3 @@ event.configuration = {
       </div>
     </Page>
   );
-}
