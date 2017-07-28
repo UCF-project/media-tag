@@ -15,11 +15,11 @@ export default (
             Currently this plugin renders these audios types : <br />
           </p>
           <ul>
-            <li>audio/?</li>
-            <li>audio/?</li>
-            <li>audio/?</li>
-            <li>audio/?</li>
-            <li>audio/?</li>
+            <li>audio/mp3</li>
+            <li>audio/ogg</li>
+            <li>audio/webm</li>
+            <li>audio/wav</li>
+            <li>audio/mpeg</li>
           </ul>
           <h4>Usage</h4>
           <p>

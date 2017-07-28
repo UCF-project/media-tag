@@ -6,7 +6,7 @@ export default (
 		<div>
 			<h1>Installation</h1>
 			<p>
-				We recommend the usage of <a href="#">yarn</a> as package manager but the library remains compatible with npm.
+				We recommend the usage of <a href="https://yarnpkg.com">yarn</a> as package manager but the library remains compatible with npm.
 			</p>
 			<h3>Setup</h3>
 			<h4>Environnement</h4>
@@ -14,25 +14,29 @@ export default (
 				You need to define a environnement variable to set a target build, the variable <code className={'code'}>NODE_ENV</code>.
 			</p>
 			
-			<table className={'background-white fit-width'}>
-				<th>Environnement</th>
-				<th>Caracteristics</th>
-				<tr>
-					<td>development-es7</td>
-					<td>ES6, CommonJS, no Source map</td>
-				</tr>
-				<tr>
-					<td>development-es5</td>
-					<td>ES5, CommonJS, no Source map</td>
-				</tr>
-				<tr>
-					<td>production-cjs</td>
-					<td>ES6, CommonJS, Source map, Minified</td>
-				</tr>
-				<tr>
-					<td>production-umd</td>
-					<td>ES5, UMD, no Source map</td>
-				</tr>
+			<table className={'background-white fit-width table'}>
+				<tbody>
+					<tr>
+						<th>Environnement</th>
+						<th>Caracteristics</th>
+					</tr>
+					<tr>
+						<td>development-es7</td>
+						<td>ES6, CommonJS, no Source map</td>
+					</tr>
+					<tr>
+						<td>development-es5</td>
+						<td>ES5, CommonJS, no Source map</td>
+					</tr>
+					<tr>
+						<td>production-cjs</td>
+						<td>ES6, CommonJS, Source map, Minified</td>
+					</tr>
+					<tr>
+						<td>production-umd</td>
+						<td>ES5, UMD, no Source map</td>
+					</tr>
+				</tbody>
 			</table>
 			<pre className={'prompt'}>
 {`export NODE_ENV=development-es7

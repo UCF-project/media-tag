@@ -38,7 +38,7 @@ export default (
           viewTitle={'View'}
           viewBody={(
             <MediaTag
-              class="flex fit v-aligned h-aligned bottom-padded"
+              class="flex fit v-aligned h-aligned pdf"
               data-attr-class="flex fit"
               src="/assets/documents/kasukasu-manuel-utilisateur.pdf"
               data-type="application/pdf">

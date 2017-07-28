@@ -1,24 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>My Page with Media Tag</title>
+<title>Media-Tag - Image plugin</title>
+<script type="text/javascript" src="/dist/media-tag.js"></script>
 </head>
 <body>
-	<media-tag
-		src="/assets/images/image.svg"
-        data-type="image/svg+xml"
-        data-attr-width="300px"
-        data-attr-height="200px"
-        ></media-tag>
-	<!-- Include Media Tag library -->
-	<script type="text/javascript" src="/dist/media-tag.js"></script>
-	<script>
-		// The only way to use as library is with JavaScript.
-		// You will need to select a DOM element that will be the wrapper
-		// element, for example a div.
-		// Then create a new MediaTag Object passing that element as
-		// parameter.
-		var mediaTagObj = MediaTag(document.querySelector('media-tag'));
-	</script>
+<media-tag
+  src="/assets/images/image.svg"
+  data-type="image/svg+xml"
+  data-attr-width="300px"
+  data-attr-height="200px"></media-tag>
 </body>
 </html>

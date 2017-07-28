@@ -10,35 +10,33 @@ export default (
 
             <h3 className="tb-padded">Introduction</h3>
             <p>
-              Media-Tag allows users to configure it.
-              A configuration is passed by a configuration file which is used by the library to modify its nominal operations.
-              It permits create or modify plugins, add permissions on it, define a default behavior ...
+              Media-Tag allows users to configure it.<br />
+              A configuration is passed by a configuration file which is used by the library to modify its nominal operations.<br />
+              It permits create or modify plugins, add permissions on it, define a default behavior ... <br />
             </p>
 
             <h3 className="tb-padded">Structure</h3>
             <p>
-              You need to create a configuration file like "configuration.js".<br /><br />
+              You need to create a configuration file like "configuration.js".<br />
+            </p>
+            <em>example:</em>
+            <pre className={'code-block'}>
+{`  (function () {
+      const event = new Event('Configuration');
 
-              <em>example:</em>
-              <pre className={'no-adding no-margin'}>
-{`
-  (function () {
-    const event = new Event('Configuration');
+      event.configuration = {
+        # Needed configuration
+      };
 
-    event.configuration = {
-      # Needed configuration
-  };
-
-  document.dispatchEvent(event);
-  })();
+      document.dispatchEvent(event);
+    })();
 `}
-              </pre>
-              <br />
-              <p>
-                A configuration need to be enclosed inside a event.configuration key to permits library a dynamical loading.<br />
-                The library handle dynamical modifications of the DOM and introduce a new <code>&ltmedia-tag&gt</code> starts a new processing which concerns only unprocessed tags.<br />
-                So introduce a new configuration at run time updates the last one by overwritting.<br />
-              </p>
+            </pre>
+            <br />
+            <p>
+              A configuration need to be enclosed inside a event.configuration key to permits library a dynamical loading.<br />
+              The library handle dynamical modifications of the DOM and introduce a new <code><media-tag /></code> starts a new processing which concerns only unprocessed tags.<br />
+              So introduce a new configuration at run time updates the last one by overwritting.<br />
             </p>
 
             <h3 className="tb-padded">Dependencies</h3>
@@ -49,16 +47,15 @@ export default (
               The configuration allows to define directly all needed dependencies into one field.<br /><br />
             </p>
             <em>example :</em><br /><br />
-            <pre className={'no-adding no-margin'}>
-{`
-  event.configuration = {
-    dependencies: [
-      'https://cdnjs.cloudflare.com/ajax/libs/shaka-player/2.1.3/shaka-player.compiled.js',
-      'https://cdnjs.cloudflare.com/ajax/libs/tweetnacl/1.0.0/nacl.min.js',
-      'https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.3/FileSaver.min.js',
-      '/ext-lib/nacl-util.min.js'
-    ]
-  };
+            <pre className={'code-block'}>
+{`  event.configuration = {
+      dependencies: [
+        'https://cdnjs.cloudflare.com/ajax/libs/shaka-player/2.1.3/shaka-player.compiled.js',
+        'https://cdnjs.cloudflare.com/ajax/libs/tweetnacl/1.0.0/nacl.min.js',
+        'https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.3/FileSaver.min.js',
+        '/ext-lib/nacl-util.min.js'
+      ]
+    };
 `}
             </pre>
             <br />
@@ -79,13 +76,12 @@ export default (
 
             <em>example:</em><br /><br />
 
-            <pre>
-{`
-  permission: {
-    image: 'forbidden',
-    audio: 'forbidden',
-    video: 'forbidden'
-  }
+            <pre className={'code-block'}>
+{`  permission: {
+      image: 'forbidden',
+      audio: 'forbidden',
+      video: 'forbidden'
+    }
 `}
             </pre>
           
@@ -94,11 +90,10 @@ export default (
               You can configure the default processing engine behavior.
             </p>
             <em>example:</em>
-            <pre>
-{`
-  processing-engine: {
-    defaultPlugin: 'failure'  # The plugin identified as 'failure' will be used as default rendering one.
-  }
+            <pre className={'code-block'}>
+{`  processing-engine: {
+      defaultPlugin: 'failure'  # The plugin identified as 'failure' will be used as default rendering one.
+    }
 `}
             </pre>
             <p>
@@ -111,95 +106,94 @@ export default (
               Pdf plugin is in this case and can have the pdfjs viewer as main rendering method. <br />
               This example illustrate how define and configure the pdf plugin : <br />
             </p>
-            <pre>
-{`
-event.configuration = {
-  /*
-   * Defines several plugins here
-   */
-  plugins: {
+            <pre className={'code-block'}>
+{`  event.configuration = {
     /*
-     * A plugin group identified by 'pdf' is declared 
+     * Defines several plugins here
      */
-    pdf: {
+    plugins: {
       /*
-       * A matcher plugin is defined
+       * A plugin group identified by 'pdf' is declared 
        */
-      matcher: {
-        types: [
-          'application'
-        ],
-        subtypes: [
-          'pdf'
-        ],
-        process: (self, mediaObject) => {
-          const hasType = self.types.includes(mediaObject.getType());
-          const hasSubtype = self.subtypes.includes(mediaObject.getExtension());
+      pdf: {
+        /*
+         * A matcher plugin is defined
+         */
+        matcher: {
+          types: [
+            'application'
+          ],
+          subtypes: [
+            'pdf'
+          ],
+          process: (self, mediaObject) => {
+            const hasType = self.types.includes(mediaObject.getType());
+            const hasSubtype = self.subtypes.includes(mediaObject.getExtension());
 
-          return hasType && hasSubtype;
-        }
-      },
-      /*
-       * A renderer plugin is defined
-       */
-      renderer: {
-        viewer: '/pdfjs/web/viewer.html',
-        mode: 'pdfjs',
-        process: (self, mediaObject) => {
-          const url = mediaObject.getAttribute('src');
-          const iframe = document.createElement('iframe');
-
-          /**
-           * Default dimention for the iframe if nothing is specified.
-           */
-          if (!mediaObject.getAttribute('data-attr-width')) {
-            iframe.setAttribute('width', '100%');
+            return hasType && hasSubtype;
           }
-          if (!mediaObject.getAttribute('data-attr-height')) {
-            iframe.setAttribute('height', document.body.scrollHeight);
-          }
+        },
+        /*
+         * A renderer plugin is defined
+         */
+        renderer: {
+          viewer: '/pdfjs/web/viewer.html',
+          mode: 'pdfjs',
+          process: (self, mediaObject) => {
+            const url = mediaObject.getAttribute('src');
+            const iframe = document.createElement('iframe');
 
-          /**
-           * When no viewer is set, the pdf is rendered by the browser.
-           */
-          if (!self.viewer) {
-            self.mode = 'default';
-          }
-
-          switch (self.mode) {
-            case 'pdfjs': {
-              const viewerUrl = 'self.viewer' + '?file=' + url;
-              const xhr = new XMLHttpRequest();
-
-              xhr.onload = () => {
-                if (xhr.status < 400) {
-                  iframe.src = viewerUrl;
-                } else {
-                  console.warn('The pdfjs viewer has not been found ... The browser viewer will be used by default');
-                  iframe.src = url;
-                }
-              };
-              xhr.open('HEAD', viewerUrl, true);
-              xhr.send();
-
-              break;
+            /**
+             * Default dimention for the iframe if nothing is specified.
+             */
+            if (!mediaObject.getAttribute('data-attr-width')) {
+              iframe.setAttribute('width', '100%');
             }
-            default: {
-              iframe.src = url;
+            if (!mediaObject.getAttribute('data-attr-height')) {
+              iframe.setAttribute('height', document.body.scrollHeight);
             }
+
+            /**
+             * When no viewer is set, the pdf is rendered by the browser.
+             */
+            if (!self.viewer) {
+              self.mode = 'default';
+            }
+
+            switch (self.mode) {
+              case 'pdfjs': {
+                const viewerUrl = 'self.viewer' + '?file=' + url;
+                const xhr = new XMLHttpRequest();
+
+                xhr.onload = () => {
+                  if (xhr.status < 400) {
+                    iframe.src = viewerUrl;
+                  } else {
+                    console.warn('The pdfjs viewer has not been found ... The browser viewer will be used by default');
+                    iframe.src = url;
+                  }
+                };
+                xhr.open('HEAD', viewerUrl, true);
+                xhr.send();
+
+                break;
+              }
+              default: {
+                iframe.src = url;
+              }
+            }
+
+            mediaObject.utilsSetAllDataAttributes(iframe);
+            mediaObject.replaceContents([iframe]);
+
+            iframe.onload = () => {
+              mediaObject.return();
+            };
           }
-
-          mediaObject.utilsSetAllDataAttributes(iframe);
-          mediaObject.replaceContents([iframe]);
-
-          iframe.onload = () => {
-            mediaObject.return();
-          };
         }
       }
     }
   }
-}
 `}
             </pre>
           </div>

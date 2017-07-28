@@ -15,11 +15,9 @@ export default (
             Currently this plugin renders these videos types : <br />
           </p>
           <ul>
-            <li>video/?</li>
-            <li>video/?</li>
-            <li>video/?</li>
-            <li>video/?</li>
-            <li>video/?</li>
+            <li>video/mp4</li>
+            <li>video/ogg</li>
+            <li>video/webm</li>
           </ul>
           <h4>Usage</h4>
           <p>

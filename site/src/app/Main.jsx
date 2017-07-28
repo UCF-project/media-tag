@@ -7,6 +7,8 @@ import Home from './pages/Home.jsx';
 import Installation from './pages/Installation.jsx';
 import Configuration from './pages/Configuration.jsx';
 import Plugins from './pages/Plugins.jsx';
+import Extension from './pages/Extension.jsx';
+import Reacts from './pages/React.jsx';
 import Image from './pages/Image.jsx';
 import Audio from './pages/Audio.jsx';
 import Video from './pages/Video.jsx';
@@ -58,56 +60,63 @@ class Main extends React.Component {
 							<ListItem onClick={() => {this.load(Home)}}>
 								<ListItemContent icon='home'>Home</ListItemContent>
 							</ListItem>
-							<ListItem>
-			                  Setup
-			                </ListItem>
 							<ListItem onClick={() => {this.load(Installation)}}>
 								<ListItemContent icon='assignment'>Installation</ListItemContent>
 							</ListItem>
 							<ListItem onClick={() => {this.load(Configuration)}}>
 								<ListItemContent icon='settings'>Configuration</ListItemContent>
 							</ListItem>
+							<ListItem onClick={() => {this.load(Extension)}}>
+								<ListItemContent icon='build'>Extension</ListItemContent>
+							</ListItem>
+							<ListItem onClick={() => {this.load(Reacts)}}>
+								<ListItemContent icon='build'>React</ListItemContent>
+							</ListItem>
 							<ListItem onClick={() => {this.load(Plugins)}}>
 								<ListItemContent icon='star'>Plugins</ListItemContent>
 							</ListItem>
-							<List>
-                <ListItem>
-                  Renderers
-                </ListItem>
-                <ListItem onClick={() => {this.load(Image)}}>
-                  <ListItemContent icon='image'>Image</ListItemContent>
-                </ListItem>
-                <ListItem onClick={() => {this.load(Audio)}}>
-                  <ListItemContent icon='music_note'>Audio</ListItemContent>
-                </ListItem>
-                <ListItem onClick={() => {this.load(Video)}}>
-                  <ListItemContent icon='movie'>Video</ListItemContent>
-                </ListItem>
-                <ListItem onClick={() => {this.load(Pdf)}}>
-                  <ListItemContent icon='description'>Pdf</ListItemContent>
-                </ListItem>
-                <ListItem onClick={() => {this.load(Dash)}}>
-                  <ListItemContent icon='video_label'>Dash</ListItemContent>
-                </ListItem>
-                <ListItem onClick={() => {this.load(Download)}}>
-                  <ListItemContent icon='file_download'>Download</ListItemContent>
-                </ListItem>
-                <ListItem>
-                  Filters
-                </ListItem>
-                <ListItem onClick={() => {this.load(Crypto)}}>
-                  <ListItemContent icon='build'>Crypto</ListItemContent>
-                </ListItem>
-                <ListItem onClick={() => {this.load(ClearKey)}}>
-                  <ListItemContent icon='build'>ClearKey</ListItemContent>
-                </ListItem>
-                <ListItem>
-                  Sanitizers
-                </ListItem>
-                <ListItem onClick={() => {this.load(Sanitizer)}}>
-                  <ListItemContent icon='healing'>Sanitizer</ListItemContent>
-                </ListItem>
-              </List>
+
+			                <ListItem>
+			                  Renderers
+			                </ListItem>
+
+			                <ListItem onClick={() => {this.load(Image)}}>
+			                  <ListItemContent icon='image'>Image</ListItemContent>
+			                </ListItem>
+			                <ListItem onClick={() => {this.load(Audio)}}>
+			                  <ListItemContent icon='music_note'>Audio</ListItemContent>
+			                </ListItem>
+			                <ListItem onClick={() => {this.load(Video)}}>
+			                  <ListItemContent icon='movie'>Video</ListItemContent>
+			                </ListItem>
+			                <ListItem onClick={() => {this.load(Pdf)}}>
+			                  <ListItemContent icon='description'>Pdf</ListItemContent>
+			                </ListItem>
+			                <ListItem onClick={() => {this.load(Dash)}}>
+			                  <ListItemContent icon='video_label'>Dash</ListItemContent>
+			                </ListItem>
+			                <ListItem onClick={() => {this.load(Download)}}>
+			                  <ListItemContent icon='file_download'>Download</ListItemContent>
+			                </ListItem>
+
+			                <ListItem>
+			                  Filters
+			                </ListItem>
+
+			                <ListItem onClick={() => {this.load(Crypto)}}>
+			                  <ListItemContent icon='build'>Crypto</ListItemContent>
+			                </ListItem>
+			                <ListItem onClick={() => {this.load(ClearKey)}}>
+			                  <ListItemContent icon='build'>ClearKey</ListItemContent>
+			                </ListItem>
+
+			                <ListItem>
+			                  Sanitizers
+			                </ListItem>
+
+			                <ListItem onClick={() => {this.load(Sanitizer)}}>
+			                  <ListItemContent icon='healing'>Sanitizer</ListItemContent>
+			                </ListItem>
 						</List>
 					</Menu>
 					{this.state.page}

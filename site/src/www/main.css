@@ -9,6 +9,20 @@ html, body {
   display: flex;
 }
 
+.table {
+	border-collapse: collapse;
+}
+
+.table th, td {
+	border: solid black 1px;
+	padding: 1%;
+}
+
+.table th {
+	background: rgb(172, 172, 255);
+	color: rgb(255, 255, 255);
+}
+
 .no-padding {
 	padding: 0;
 }
@@ -24,6 +38,7 @@ html, body {
 
 .nav {
 	width: 15%;
+	min-width: 256px;
 }
 
 .page-container {
@@ -119,6 +134,7 @@ html, body {
 }
 
 .page {
+	min-width: 800px;
 	padding: 2.5%;
 }
 
@@ -137,8 +153,8 @@ html, body {
 	padding-bottom: 3px;
 	padding-left: 5px;
 	padding-right: 5px;
-	color: rgb(60, 60, 60);
-	background: rgb(240, 240, 240);
+	color: rgb(255, 255, 255);
+	background: rgb(255, 128, 128);
 	border-radius: 15px;
 }
 
@@ -149,5 +165,8 @@ html, body {
 	padding-right: 10px;
 	color: rgb(60, 60, 60);
 	background: rgb(245, 245, 245);
-	
+}
+
+.pdf {
+	height: 95%;
 }
