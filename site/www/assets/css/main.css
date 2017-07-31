@@ -1,0 +1,172 @@
+html, body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 13px;
+  line-height: 20px;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.table {
+	border-collapse: collapse;
+}
+
+.table th, td {
+	border: solid black 1px;
+	padding: 1%;
+}
+
+.table th {
+	background: rgb(172, 172, 255);
+	color: rgb(255, 255, 255);
+}
+
+.no-padding {
+	padding: 0;
+}
+
+.no-margin {
+	margin: 0;
+}
+
+#app {
+	width: 100%;
+	height: 100%;
+}
+
+.nav {
+	width: 15%;
+	min-width: 256px;
+}
+
+.page-container {
+	display: flex;
+	width: 90%;
+	padding-top: 2.5%;
+	padding-bottom: 2.5%;
+	align-items: center;
+	align-content: center;
+	justify-content: center;
+}
+
+.v-aligned {
+	justify-content: center;	
+}
+
+.h-aligned {
+	align-items: center;
+	align-content: center;
+}
+
+.paper {
+	padding: 2.5%;
+	margin: 2.5%;
+}
+
+.column {
+	flex-direction: column;
+}
+
+.flex {
+	display: flex;
+}
+
+.fit {
+	width: 100%;
+	height: 100%;
+}
+
+.fit-width {
+	width: 100%;
+}
+
+.fit-height {
+	height: 100%;
+}
+
+.split {
+	height: inherit;
+	width: 50%;
+}
+
+.background-grey {
+	background: rgb(240, 240, 240);
+}
+
+.show:hover {
+	background: rgba(255, 255, 0, 0.25);
+}
+
+.right-padded {
+	padding-right: 2.5%;
+}
+
+.left-padded {
+	padding-left: 2.5%;
+}
+
+
+.top-padded {
+	padding-top: 2.5%;
+}
+
+.bottom-padded {
+	padding-bottom: 2.5%;
+}
+
+.padded {
+	padding-right: 2.5%;
+	padding-left: 2.5%;
+}
+
+.scrollable {
+	overflow-y: scroll;
+}
+
+.plugins-menu {
+	width: 15%;
+}
+
+.plugins-displayer {
+	width: 85%;
+}
+
+.page {
+	min-width: 800px;
+	padding: 2.5%;
+}
+
+.background-white {
+	background: white;
+}
+
+.prompt {
+	padding: 1%;
+	color: white;
+	background: rgb(60, 60, 60);
+}
+
+.code {
+	padding-top: 3px;
+	padding-bottom: 3px;
+	padding-left: 5px;
+	padding-right: 5px;
+	color: rgb(255, 255, 255);
+	background: rgb(255, 128, 128);
+	border-radius: 15px;
+}
+
+.code-block {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 10px;
+	padding-right: 10px;
+	color: rgb(60, 60, 60);
+	background: rgb(245, 245, 245);
+}
+
+.pdf {
+	height: 95%;
+}

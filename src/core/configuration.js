@@ -70,9 +70,7 @@ class Configuration {
 			return [];
 		}
 		return Object.keys(this.plugins).map(identifier => {
-			// console.log('IDENTIFIER', identifier);
 			return Object.keys(this.plugins[identifier]).map(type => {
-				// console.log('TYPE', type);
 				let plugin;
 
 				switch (type) {
@@ -95,9 +93,7 @@ class Configuration {
 						plugin = new Plugin(identifier, type);
 						break;
 				}
-				// console.log('PLUGIN', plugin);
 				Object.keys(this.plugins[identifier][type]).forEach(attribute => {
-					// console.log('ATTRIBUTE', attribute);
 					const value = this.plugins[identifier][type][attribute];
 					plugin[attribute] = (typeof value === 'function' && attribute === 'process') ?
 						((plugin, process) => mediaObject => {

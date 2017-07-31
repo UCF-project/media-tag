@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>My Page with Media Tag</title>
+</head>
+<body>
+	<media-tag
+		src="/assets/audios/alterway.mp3"
+        data-type="audio/mp3"
+        data-attr-controls=true
+        ></media-tag>
+	<!-- Include Media Tag library -->
+	<script type="text/javascript" src="/dist/media-tag.js"></script>
+	<script>
+		// The only way to use as library is with JavaScript.
+		// You will need to select a DOM element that will be the wrapper
+		// element, for example a div.
+		// Then create a new MediaTag Object passing that element as
+		// parameter.
+		var mediaTagObj = MediaTag(document.querySelector('media-tag'));
+
+		console.log(MediaTag.pluginStore.getPlugins('matcher'));
+	</script>
+</body>
+</html>

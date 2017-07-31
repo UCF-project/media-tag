@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>My Page with Media Tag</title>
+</head>
+<body>
+	<script type="text/javascript" src="/ext-lib/nacl-fast.min.js"></script>
+	<script type="text/javascript" src="/ext-lib/fetch.min.js"></script>
+	<script type="text/javascript" src="/ext-lib/pdf.js"></script>
+	<script type="text/javascript" src="/ext-lib/nacl-util.min.js"></script>
+	<script type="text/javascript" src="/ext-lib/FileSaver.min.js"></script>
+
+	<h1>Image:</h1>
+	<media-tag
+		id="image"
+		data-type="image/png"
+		src="/assets/images/encrypted/image.png-encrypted"
+		data-crypto-key="salsa20poly1305:TBo77200c0e/FdldQFcnQx4Y"
+		data-attr-width="600px"
+		data-attr-height="400px"
+		>text <p>aqqq</p><a>qqq</a></media-tag>
+
+	<h1>Audio:</h1>
+	<media-tag
+		id="audio"
+		data-type="audio/mp3"
+		src="/assets/audios/encrypted/audio-encrypted"
+		data-crypto-key="salsa20poly1305:WKPuoxzA+s66qS5y8NDxoDSs"
+		data-attr-controls=true
+		></media-tag>
+
+	<h1>Video:</h1>
+	<media-tag
+		id="video"
+		data-type="video/mp4"
+		src="/assets/videos/encrypted/video-encrypted"
+		data-crypto-key="salsa20poly1305:gxGQi0zzmj/w8GrV+/xGgaMI"
+		data-attr-width="600px"
+		data-attr-height="400px"
+		data-attr-controls=true
+		></media-tag>
+
+	<h1>Pdf:</h1>
+	<media-tag
+		id="pdf"
+		data-type="application/pdf"
+		src="/assets/documents/encrypted/file.pdf-encrypted"
+		data-crypto-key="salsa20poly1305:UR5bLSwuyBak41oJrN2dRq1a"
+		data-attr-style="border: 1px solid black"
+		></media-tag>
+
+	<h1>Download:</h1>
+	<media-tag
+		id="download"
+		data-type="nothing"
+		src="/assets/videos/encrypted/video-encrypted"
+		data-crypto-key="salsa20poly1305:gxGQi0zzmj/w8GrV+/xGgaMI"
+		data-attr-type="video/mp4"
+		data-attr-width="600px"
+		data-attr-height="400px"
+		data-attr-controls=true
+		></media-tag>
+
+	<!-- Include Media Tag library -->
+	<script type="text/javascript" src="/dist/media-tag.js"></script>
+	<script>
+		// The only way to use as library is with JavaScript.
+		// You will need to select a DOM element that will be the wrapper
+		// element, for example a div.
+		// Then create a new MediaTag Object passing that element as
+		// parameter.
+
+		document.addEventListener('decryption', event => {
+			console.log('catched event', event);
+		});
+
+		var mediaTagObjImage = MediaTag(document.querySelector('media-tag#image'));
+		var mediaTagObjVideo = MediaTag(document.querySelector('media-tag#video'));
+		var mediaTagObjAudio = MediaTag(document.querySelector('media-tag#audio'));
+		var mediaTagObjPdf = MediaTag(document.querySelector('media-tag#pdf'));
+		var mediaTagObjDownload = MediaTag(document.querySelector('media-tag#download'));
+	</script>
+</body>
+</html>

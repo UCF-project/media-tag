@@ -36,7 +36,8 @@ class Loader {
 				script.type = 'text/javascript';
 				script.src = url;
 				script.onload = resolve;
-				script.onerror = script.abort = reject;
+				script.onerror = reject;
+				script.abort = reject;
 				document.head.appendChild(script);
 			}));
 		}

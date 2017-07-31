@@ -44,20 +44,10 @@ const MediaObjectSanitizer = require('../plugins/media-object/sanitizer');
 const MediaTag = require('./media-tag.matchers');
 
 /**
- * Register every job/active part plugins.
+ * Configuration of the pdfjs viewer as main render for pdf plugin.
  */
-
-MediaTag.pluginStore.store(new ImagePlugin());
-MediaTag.pluginStore.store(new AudioPlugin());
-MediaTag.pluginStore.store(new VideoPlugin());
-MediaTag.pluginStore.store(new PdfPlugin());
-MediaTag.pluginStore.store(new DashPlugin());
-MediaTag.pluginStore.store(new DownloadPlugin());
-
-MediaTag.pluginStore.store(new CryptoFilter());
-MediaTag.pluginStore.store(new ClearKeyFilter());
-
-MediaTag.pluginStore.store(new MediaObjectSanitizer());
+MediaTag.PdfPlugin = PdfPlugin;
+MediaTag.PdfPlugin.viewer = '/pdfjs/web/viewer.html';
 
 /**
  * Store every algorithms inside CryptoFilter.
@@ -117,9 +107,19 @@ MediaTag.CryptoFilter.setAllowedMediaTypes([
 // MediaTag.processingEngine.configure(configuration);
 
 /**
- * Configuration of the pdfjs viewer as main render for pdf plugin.
+ * Register every job/active part plugins.
  */
-MediaTag.PdfPlugin = PdfPlugin;
-MediaTag.PdfPlugin.viewer = '/pdfjs/web/viewer.html';
+
+MediaTag.pluginStore.store(new ImagePlugin());
+MediaTag.pluginStore.store(new AudioPlugin());
+MediaTag.pluginStore.store(new VideoPlugin());
+MediaTag.pluginStore.store(new PdfPlugin());
+MediaTag.pluginStore.store(new DashPlugin());
+MediaTag.pluginStore.store(new DownloadPlugin());
+
+MediaTag.pluginStore.store(new CryptoFilter());
+MediaTag.pluginStore.store(new ClearKeyFilter());
+
+MediaTag.pluginStore.store(new MediaObjectSanitizer());
 
 module.exports = MediaTag;

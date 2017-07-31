@@ -25,9 +25,9 @@ class PluginStore extends Store {
 	 * @override
 	 */
 	store(plugin) {
-		// if (this.isStored([plugin.identifier, plugin.type])) {
-		// 	console.warn(`The key "${[plugin.identifier, plugin.type]}" is already registered, the content will be overwritten.`);
-		// }
+		/**
+		 * Warning : A registered plugin can be replaced by another one.
+		 */
 		super.store([plugin.identifier, plugin.type], plugin);
 	}
 

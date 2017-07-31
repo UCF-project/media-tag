@@ -24,7 +24,7 @@ class Crypto {
 	 * @return     {String}  The random key string.
 	 */
 	static getRandomKeyStr() {
-		const Nacl = Crypto.Nacl;
+		const Nacl = window.nacl;
 		const rdm = Nacl.randomBytes(18);
 		return Nacl.util.encodeBase64(rdm);
 	}
@@ -36,7 +36,7 @@ class Crypto {
 	 * @return     {Uint8Array}  The key = require(string.
 	 */
 	static getKeyFromStr(str) {
-		const Nacl = Crypto.Nacl;
+		const Nacl = window.nacl;
 		const hash = Nacl.hash(Nacl.util.decodeBase64(str));
 		return hash.subarray(32, 64);
 	}
@@ -50,8 +50,8 @@ class Crypto {
 	 */
 	static encrypt(u8, key) {
 		const array = u8;
-		const nonce = Crypto.Nacl.randomBytes(24);
-		const packed = Crypto.Nacl.secretbox(array, nonce, key);
+		const nonce = window.nacl.randomBytes(24);
+		const packed = window.nacl.secretbox(array, nonce, key);
 		if (packed) {
 			return new Uint8Array(Crypto.slice(nonce).concat(Crypto.slice(packed)));
 		}
@@ -70,7 +70,7 @@ class Crypto {
 			throw new Error();
 		}
 		const slice = Crypto.slice;
-		const Nacl = Crypto.Nacl;
+		const Nacl = window.nacl;
 		const nonce = new Uint8Array(slice(u8).slice(0, 24));
 		const packed = new Uint8Array(slice(u8).slice(24));
 		const unpacked = Nacl.secretbox.open(packed, nonce, key);
@@ -80,11 +80,6 @@ class Crypto {
 		throw new Error('Decrypted file in undefined');
 	}
 }
-
-/**
- * Binds the extern nacl lib to Crypto.
- */
-Crypto.Nacl = window.nacl;
 
 /**
  * Class for data manager.
@@ -140,7 +135,7 @@ class DataManager {
 	 * @return     {string}  The data url.
 	 */
 	static getDataUrl(data, mtype) {
-		return 'data:' + mtype + ';base64,' + Crypto.Nacl.util.encodeBase64(data);
+		return 'data:' + mtype + ';base64,' + window.nacl.util.encodeBase64(data);
 	}
 }
 

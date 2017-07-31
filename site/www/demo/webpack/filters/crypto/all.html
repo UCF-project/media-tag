@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>My Page with Media Tag</title>
+	<script type="text/javascript" src="/assets/dist/media-tag.js"></script>
+</head>
+<body>
+	<h1>Image:</h1>
+	<media-tag
+		id="image"
+		configuration="configuration.js"
+		data-type="image/png"
+		src="/assets/data/images/encrypted/image.png-encrypted"
+		data-crypto-key="salsa20poly1305:TBo77200c0e/FdldQFcnQx4Y"
+		data-attr-width="600px"
+		data-attr-height="400px"
+		></media-tag>
+
+	<h1>Audio:</h1>
+	<media-tag
+		id="audio"
+		data-type="audio/mp3"
+		src="/assets/data/audios/encrypted/audio-encrypted"
+		data-crypto-key="salsa20poly1305:WKPuoxzA+s66qS5y8NDxoDSs"
+		data-attr-controls=true
+		></media-tag>
+
+	<h1>Video:</h1>
+	<media-tag
+		id="video"
+		data-type="video/mp4"
+		src="/assets/data/videos/encrypted/video-encrypted"
+		data-crypto-key="salsa20poly1305:gxGQi0zzmj/w8GrV+/xGgaMI"
+		data-attr-width="600px"
+		data-attr-height="400px"
+		data-attr-controls=true
+		></media-tag>
+
+	<h1>Pdf:</h1>
+	<media-tag
+		id="pdf"
+		data-type="application/pdf"
+		src="/assets/data/documents/encrypted/file.pdf-encrypted"
+		data-crypto-key="salsa20poly1305:UR5bLSwuyBak41oJrN2dRq1a"
+		data-attr-style="border: 1px solid black"
+		></media-tag>
+
+	<h1>Download:</h1>
+	<media-tag
+		id="download"
+		data-type="nothing"
+		src="/assets/data/videos/encrypted/video-encrypted"
+		data-crypto-key="salsa20poly1305:gxGQi0zzmj/w8GrV+/xGgaMI"
+		data-attr-type="video/mp4"
+		data-attr-width="600px"
+		data-attr-height="400px"
+		data-attr-controls=true
+		></media-tag>
+</body>
+</html>

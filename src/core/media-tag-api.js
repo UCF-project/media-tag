@@ -25,10 +25,8 @@ function MediaTagAPI(elements) {
 		return element;
 	});
 
-	MediaTagAPI.loadConfigurations(elements).then(() => {
+	return MediaTagAPI.loadConfigurations(elements).then(() => {
 		return MediaTagAPI.start(elements);
-	}).then(() => {
-		console.log('Media-Tag finishes its jobs');
 	});
 }
 

@@ -16,20 +16,18 @@ describe('Create different media tag contents: ', () => {
 		mediaTagContainer.setAttribute('data-attr-height', '200px');
 
 		// Create contents based on the attributes
-		mediaTag(mediaTagContainer);
+		mediaTag(mediaTagContainer).then(() => {
+			// Create the expected element
+			const expectedResult = document.createElement('img');
+			expectedResult.setAttribute('src', '/assets/images/image-without-extension');
+			expectedResult.setAttribute('width', '300px');
+			expectedResult.setAttribute('height', '200px');
 
-		console.log(mediaTagContainer);
-
-		// Create the expected element
-		const expectedResult = document.createElement('img');
-		expectedResult.setAttribute('src', '/assets/images/image-without-extension');
-		expectedResult.setAttribute('width', '300px');
-		expectedResult.setAttribute('height', '200px');
-
-		// Compare expected contents
-		// Like this we avoid problems when browsers change the order
-		// of the attributes
-		chai.assert.isTrue(mediaTagContainer.firstChild.isEqualNode(expectedResult), 'media tag result element is like the expected element');
+			// Compare expected contents
+			// Like this we avoid problems when browsers change the order
+			// of the attributes
+			chai.assert.isTrue(mediaTagContainer.firstChild.isEqualNode(expectedResult), 'media tag result element is like the expected element');
+		});
 	});
 
 	it('can create a media-tag containing an audio', () => {
@@ -40,17 +38,17 @@ describe('Create different media tag contents: ', () => {
 		mediaTagContainer.setAttribute('data-attr-controls', 'controls');
 
 		// Create contents based on the attributes
-		mediaTag(mediaTagContainer);
+		mediaTag(mediaTagContainer).then(() => {
+			// Create the expected element
+			const expectedResult = document.createElement('audio');
+			expectedResult.setAttribute('src', '/assets/audios/alterway.mp3');
+			expectedResult.setAttribute('controls', 'controls');
 
-		// Create the expected element
-		const expectedResult = document.createElement('audio');
-		expectedResult.setAttribute('src', '/assets/audios/alterway.mp3');
-		expectedResult.setAttribute('controls', 'controls');
-
-		// Compare expected contents
-		// Like this we avoid problems when browsers change the order
-		// of the attributes
-		chai.assert.isTrue(mediaTagContainer.firstChild.isEqualNode(expectedResult), 'media tag result element is like the expected element');
+			// Compare expected contents
+			// Like this we avoid problems when browsers change the order
+			// of the attributes
+			chai.assert.isTrue(mediaTagContainer.firstChild.isEqualNode(expectedResult), 'media tag result element is like the expected element');
+		});
 	});
 
 	it('can create a media-tag containing a video', () => {
@@ -62,19 +60,19 @@ describe('Create different media tag contents: ', () => {
 		mediaTagContainer.setAttribute('data-attr-height', '200px');
 
 		// Create contents based on the attributes
-		mediaTag(mediaTagContainer);
+		mediaTag(mediaTagContainer).then(() => {
+			// Create the expected element
+			const expectedResult = document.createElement('video');
+			expectedResult.setAttribute('src', '/assets/videos/bbb.mp4');
+			expectedResult.setAttribute('width', '300px');
+			expectedResult.setAttribute('height', '200px');
+			expectedResult.setAttribute('controls', true);
 
-		// Create the expected element
-		const expectedResult = document.createElement('video');
-		expectedResult.setAttribute('src', '/assets/videos/bbb.mp4');
-		expectedResult.setAttribute('width', '300px');
-		expectedResult.setAttribute('height', '200px');
-		expectedResult.setAttribute('controls', true);
-
-		// Compare expected contents
-		// Like this we avoid problems when browsers change the order
-		// of the attributes
-		chai.assert.isTrue(mediaTagContainer.firstChild.isEqualNode(expectedResult), 'media tag result element is like the expected element');
+			// Compare expected contents
+			// Like this we avoid problems when browsers change the order
+			// of the attributes
+			chai.assert.isTrue(mediaTagContainer.firstChild.isEqualNode(expectedResult), 'media tag result element is like the expected element');
+		});
 	});
 });
 

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>My Page with Media Tag</title>
+</head>
+<body>
+	<script type="text/javascript" src="/ext-lib/nacl-fast.min.js"></script>
+	<script type="text/javascript" src="/ext-lib/fetch.min.js"></script>
+	<script type="text/javascript" src="/ext-lib/nacl-util.min.js"></script>
+
+    <h1>Image without Media Tag</h1>
+    <img src="/assets/images/encrypted/raccoon.png.encrypted"/>
+
+    <h1>Image with Media Tag</h1>
+	<media-tag
+		id="image"
+		data-type="image/png"
+		src="/assets/images/encrypted/raccoon.png.encrypted"
+		data-crypto-key="salsa20poly1305:mhor3LYgGqropiJwFib7yCPD"
+		data-attr-width="900px"
+		data-attr-height="600px"
+		>text <p>aqqq</p><a>qqq</a></media-tag>
+
+
+	<!-- Include Media Tag library -->
+	<script type="text/javascript" src="/media-tag.js"></script>
+	<script>
+		// The only way to use as library is with JavaScript.
+		// You will need to select a DOM element that will be the wrapper
+		// element, for example a div.
+		// Then create a new MediaTag Object passing that element as
+		// parameter.
+		var mediaTagObjImage = MediaTag(document.querySelector('media-tag#image'));
+	</script>
+</body>
+</html>

@@ -13,6 +13,8 @@ class PdfRenderer extends Renderer {
 	 */
 	constructor() {
 		super(Identifier.PDF);
+		this.viewer = PdfRenderer.viewer;
+		this.mode = PdfRenderer.mode;
 	}
 
 	/**
@@ -37,13 +39,13 @@ class PdfRenderer extends Renderer {
 		/**
 		 * When no viewer is set, the pdf is rendered by the browser.
 		 */
-		if (!PdfRenderer.viewer) {
-			PdfRenderer.mode = Mode.DEFAULT;
+		if (!this.viewer) {
+			this.mode = Mode.DEFAULT;
 		}
 
-		switch (PdfRenderer.mode) {
+		switch (this.mode) {
 			case Mode.PDFJS: {
-				const viewerUrl = `${PdfRenderer.viewer}?file=${url}`;
+				const viewerUrl = `${this.viewer}?file=${url}`;
 				const xhr = new XMLHttpRequest();
 
 				xhr.onload = () => {

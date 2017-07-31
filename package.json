@@ -7,12 +7,13 @@
   "license": "Apache-2.0",
   "scripts": {
     "test": "xo && nyc _mocha ./test/media-tag.js",
-    "build": "webpack",
-    "build:amd": "r.js -convert src/ temp/ && babel temp/ -d dist/amd-es5/ --presets=react,es2015,stage-0 && rm -r temp/",
+    "build": "webpack --define process.env.NODE_ENV='development' --config ./webpack.config/media-tag.webpack.config.dev.js --progress --colors",
+    "build:pro": "webpack --define process.env.NODE_ENV='production' --config ./media-tag.webpack.config.pro.js --progress --colors",
+    "build:amd": "babel --presets=react,es2015,stage-0 src/ -d babel/ && r.js -convert babel/ build/amd && rm -r babel/",
+    "build:site": "webpack --define process.env.NODE_ENV='development' --config ./webpack.config/site.webpack.config.dev.js --progress --colors",
     "build:docs": "esdoc",
-    "build:amd-es5": "r.js -convert src/ temp/ && babel temp/ -d dist/amd-es5/ && rm -r temp/",
-    "build:amd-es6": "r.js -convert src/ dist/amd-es6/",
-    "start": "webpack-dev-server",
+    "start": "webpack-dev-server --define process.env.NODE_ENV='development' --config ./webpack.config/media-tag.webpack.config.dev.js --progress --colors",
+    "start:site": "yarn build && cp -v -r dist/ site/www/assets/ && webpack-dev-server --define process.env.NODE_ENV='development' --config ./webpack.config/site.webpack.config.dev.js --progress --colors",
     "xo": "xo",
     "karma": "karma start",
     "mocha": "nyc _mocha ./test/media-tag.js"
@@ -47,10 +48,15 @@
   "xo": {
     "esnext": true,
     "ignores": [
+      "build/**/*",
       "dist/**/*",
       "demo/**/*",
       "test/**/*",
-      "src/**/*/loading*.js"
+      "src/**/*/loading*.js",
+      "src/**/algorithms/*.js",
+      "src/react/**/*",
+      "site/**/*",
+      "karma.conf.js"
     ],
     "overrides": [
       {
@@ -111,7 +117,8 @@
     ],
     "exclude": [
       "demo/",
-      "test/dependencies/"
+      "test/dependencies/",
+      "src/react/"
     ],
     "sourceMap": false,
     "instrument": false,

@@ -1,6 +1,3 @@
-// const debugFactory = require('debug');
-
-// const debug = debugFactory('MT:MediaObject');
 const AttributesObject = require('./attributes-object');
 const Parser = require('./parser');
 
@@ -41,8 +38,6 @@ class MediaObject {
 		for (const property of Object.keys(properties)) {
 			this[property] = properties[property];
 		}
-
-		// console.log(this);
 
 		/**
 		 * @type {HTMLElement} rootElement HTMLElement DOM Node that acts as
@@ -199,8 +194,6 @@ class MediaObject {
 		while (this.hookedFns.hasChildNodes()) {
 			this.hookedFns.removeChild(this.hookedFns.getLastChild());
 		}
-
-		// debug(`All media contents cleared.`);
 	}
 
 	/**
@@ -222,7 +215,6 @@ class MediaObject {
 		 * Adds elements to <media-tag> element. (root)
 		 */
 		elements.forEach(element => this.hookedFns.appendChild(element));
-		// debug(`Media contents replaced.`);
 	}
 
 	/**
@@ -236,7 +228,6 @@ class MediaObject {
 	 * @memberOf MediaObject
 	 */
 	utilsSetAllDataAttributes(element) {
-		// debug(`Setting data attributes.`);
 		const dataAttributes = this.getAllDataAttrKeys();
 		dataAttributes.forEach(dataAttr => element.setAttribute(dataAttr.substr(10), this.getAttribute(dataAttr)));
 	}
@@ -252,7 +243,6 @@ class MediaObject {
 	 * @memberOf MediaObject
 	 */
 	utilsPassAllDataAttributes(element) {
-		// debug(`Passing data attributes.`);
 		const dataAttributes = this.getAllDataAttrKeys();
 		dataAttributes.forEach(dataAttr => element.setAttribute(dataAttr, this.getAttribute(dataAttr)));
 	}

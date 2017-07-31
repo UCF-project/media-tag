@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>My Page with Media Tag</title>
+	<script type="text/javascript" src="/ext-lib/pdf.js"></script>
+	<script type="text/javascript" src="/dist/media-tag.js"></script>
+	<script>
+		/* global document, MediaTag */
+		/**
+		 * Creates a media-tag element added to the DOM when it is loaded.
+		 *
+		 */
+		document.addEventListener('DOMContentLoaded', () => {
+			const mediaElement = document.createElement('media-tag');
+
+			/**
+			 * Sets the source of media-tag and forces its dimensions to fit the screen.
+			 */
+			mediaElement.setAttribute('src', '/assets/documents/file.pdf');
+			mediaElement.setAttribute('data-type', 'application/pdf');
+			mediaElement.setAttribute('data-attr-width', '100%');
+			mediaElement.setAttribute('data-attr-height', document.body.scrollHeight);
+			mediaElement.style = 'display: inline-block; width: 50%;';
+
+			const mediaElement2 = document.createElement('media-tag');
+
+			mediaElement2.setAttribute('src', '/assets/documents/kasukasu-manuel-utilisateur.pdf');
+			mediaElement2.setAttribute('data-type', 'application/pdf');
+			mediaElement2.setAttribute('data-attr-width', '100%');
+			mediaElement2.setAttribute('data-attr-height', document.body.scrollHeight);
+			mediaElement2.style = 'display: inline-block; width: 50%;';
+
+			/**
+			 * Correct default borders to have full page body
+			 */
+			document.body.style = 'margin: 0px; padding: 0px;';
+			document.body.appendChild(mediaElement);
+			document.body.appendChild(mediaElement2);
+
+			/**
+			 * Runs the media-tag process on the media element node.
+			 */
+			MediaTag(mediaElement);
+			MediaTag(mediaElement2);
+		}, true);
+	</script>
+</head>
+<body>
+</body>
+</html>

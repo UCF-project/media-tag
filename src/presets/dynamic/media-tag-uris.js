@@ -1,6 +1,6 @@
 const Type = require('../../enums/type');
 const Identifier = require('../../enums/identifier');
-const MediaTag = require('../media-tag-matchers');
+const MediaTag = require('../media-tag.matchers');
 
 /**
  * MediaTag uri store makes relation between matchers and their other runnable plugin.
