@@ -1,12 +1,12 @@
-const Assert = require('../utils/assert');
-const Configuration = require('../core/configuration');
-const Type = require('../enums/type');
-const PluginUtils = require('../utils/plugin-utils');
-const DownloadPlugin = require('../plugins/download/renderer');
-const Store = require('../stores/store');
-const StackStore = require('./components/stack-store');
-const PluginStack = require('./components/plugin-stack');
-const Stack = require('./components/stack');
+const Assert = require('../../utils/assert');
+const Configuration = require('../../core/configuration');
+const Type = require('../../enums/type');
+const PluginUtils = require('../../utils/plugin-utils');
+const DownloadPlugin = require('../../plugins/download/renderer');
+const Store = require('../../stores/store');
+const StackStore = require('./parts/stack-store');
+const PluginStack = require('./parts/plugin-stack');
+const Stack = require('./parts/stack');
 
 /**
  * Class for processing engine.

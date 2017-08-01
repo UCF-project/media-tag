@@ -1,9 +1,7 @@
 /* global Promise */
 
-const ProcessingEngine = require('../engines/processing-engine');
-const MatchingEngine = require('../engines/matching-engine');
+const ProcessingEngine = require('../engines/processing/processing-engine');
 const PluginStore = require('../stores/plugin-store');
-const UriStore = require('../stores/uri-store');
 const MediaTag = require('./media-tag');
 const Loader = require('./loader');
 
@@ -154,24 +152,9 @@ MediaTagAPI.loadConfigurations = elements => {
 MediaTagAPI.pluginStore = MediaTagAPI.pluginStore || new PluginStore();
 
 /**
- * UriStore instance.
- */
-MediaTagAPI.uriStore = MediaTagAPI.uriStore || new UriStore('../plugins');
-
-/**
  * ProcessingEngine instance.
  */
 MediaTagAPI.processingEngine = MediaTagAPI.processingEngine || new ProcessingEngine(MediaTagAPI.pluginStore);
-
-/**
- * MatchingEngine instance.
- */
-MediaTagAPI.matchingEngine = MediaTagAPI.matchingEngine || new MatchingEngine(MediaTagAPI.pluginStore, MediaTagAPI.uriStore);
-
-/**
- * No loading engine instance : Plugins must loaded by presets.
- */
-MediaTagAPI.loadingEngine = null;
 
 /**
  * Loader with history system to prevent multiple same loadings.

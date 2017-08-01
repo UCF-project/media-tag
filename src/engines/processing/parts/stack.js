@@ -1,4 +1,12 @@
+/**
+ * List of .
+ *
+ * @class      Stack (name)
+ */
 class Stack {
+	/**
+	 * Constructs the object.
+	 */
 	constructor() {
 		this.content = [];
 	}

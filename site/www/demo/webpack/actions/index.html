@@ -2,19 +2,19 @@
 <html>
 <head>
 	<title>Actions</title>
-	<script type="text/javascript" src="/dist/media-tag.js"></script>
-	<script type="text/javascript" src="/ext-lib/offline.min.js"></script>
+	<script type="text/javascript" src="/assets/dist/media-tag.js"></script>
+	<script type="text/javascript" src="/assets/ext-lib/offline.min.js"></script>
 	<script type="text/javascript">
 		/* global document */
 
 		document.addEventListener('DOMContentLoaded', () => {
 			const mediaElement = document.createElement('media-tag');
 
-			/**
-			 * Default configuration of the media-tag.
-			 */
-			mediaElement.setAttribute('data-type', 'video/mp4');
-			mediaElement.setAttribute('src', '/assets/videos/bbb.mp4');
+			// /**
+			//  * Default configuration of the media-tag.
+			//  */
+			// // mediaElement.setAttribute('data-type', 'video/mp4');
+			// // mediaElement.setAttribute('src', '/assets/data/videos/bbb.mp4');
 
 			/**
 			 * Multisources configuration.
@@ -22,43 +22,57 @@
 			mediaElement.setAttribute('sources', `[
 				{
 					"data-type": "video/mp4",
-					"src": "/assets/videos/bbb.mp4",
-					"online": "show"
+					"src": "/assets/data/videos/bbb.mp4",
+					"online": "show",
+					"rules": [
+						{
+							"conditions": [
+								{
+									"network": "up"
+								},
+								{
+									"bandwidth": "> 3250 kbps"
+								}
+							],
+							"action": "activate"
+						},
+						{
+							"conditions": [
+								{
+									"network": "down"
+								}
+							],
+							"action": "hide"
+						}
+					]
 				}, {
 					"data-type": "audio/mp3",
-					"src": "/assets/audios/alterway.mp3",
+					"src": "/assets/data/audios/alterway.mp3",
 					"online": "hide"
 				}, {
 					"data-type": "image/png",
-					"src": "/assets/images/image.png",
+					"src": "/assets/data/images/image.png",
 					"online": "hide"
 				}
 			]`);
 
 			document.body.appendChild(mediaElement);
 
-			MediaTag(mediaElement);
+			// MediaTag(mediaElement);
 			// MediaTag(document.getElementById('media-tag'));
 		});
 	</script>
 </head>
 <body>
-	<!-- <media-tag id="media-tag" sources=`[
-		{
-			"data-type": "video/mp4",
-			"src": "/assets/videos/bbb.mp4",
-			"online": "show"
-		}, {
-			"data-type": "audio/mp3",
-			"src": "/assets/audios/alterway.mp3",
-			"online": "hide"
-		}, {
-			"data-type": "image/png",
-			"src": "/assets/images/image.png",
-			"online": "hide"
-		}
-	]`>
-		<media data-type="video/mp4"></media>
-	</media-tag> -->
+	<media-tag>
+		<media>
+			<rules>
+				<condition>
+				</condition>
+				<action>
+				</action>
+			</rules>
+		</media>
+	</media-tag>
 </body>
 </html>

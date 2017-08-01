@@ -1,4 +1,4 @@
-const Store = require('../../stores/store');
+const Store = require('../../../stores/store');
 
 class StackStore extends Store {
 	/**

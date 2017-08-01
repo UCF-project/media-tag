@@ -36,37 +36,35 @@ class MediaTag {
 			/**
 			 * Fake actions event binding ...
 			 */
-			/*
-			const mediaObjectVideo = this.mediaObjects[0];
-			const mediaObjectImage = this.mediaObjects[2];
+			// const mediaObjectVideo = this.mediaObjects[0];
+			// const mediaObjectImage = this.mediaObjects[2];
 
-			Offline.on('down', () => {
-				Action.activate(mediaObjectImage, this);
-			}, 'down');
+			// Offline.on('down', () => {
+			// 	Action.activate(mediaObjectImage, this);
+			// }, 'down');
 
-			Offline.on('up', () => {
-				Action.activate(mediaObjectVideo, this);
-			}, 'up');
+			// Offline.on('up', () => {
+			// 	Action.activate(mediaObjectVideo, this);
+			// }, 'up');
 
-			const interval = () => {
-				let i = 0;
-				let step = -1;
-				setInterval(() => {
-					console.log(i);
-					if (i === 0 || i === this.mediaObjects.length - 1) {
-						step *= -1;
-					}
-					if (step > 0) {
-						Action.upgrade(this);
-					} else {
-						Action.downgrade(this);
-					}
-					i += step;
-				}, 3000);
-			};
+			// const interval = () => {
+			// 	let i = 0;
+			// 	let step = -1;
+			// 	setInterval(() => {
+			// 		console.log(i);
+			// 		if (i === 0 || i === this.mediaObjects.length - 1) {
+			// 			step *= -1;
+			// 		}
+			// 		if (step > 0) {
+			// 			Action.upgrade(this);
+			// 		} else {
+			// 			Action.downgrade(this);
+			// 		}
+			// 		i += step;
+			// 	}, 3000);
+			// };
 
-			interval();
-			*/
+			// interval();
 		} else {
 			const mediaObject = new MediaObject(mediaTagElement);
 			this.mediaObjects = [mediaObject];

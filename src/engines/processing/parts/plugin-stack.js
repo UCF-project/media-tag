@@ -1,6 +1,6 @@
-const Occurrence = require('../../enums/occurrence');
-const Type = require('../../enums/type');
-const Plugin = require('../../plugins/plugin');
+const Occurrence = require('../../../enums/occurrence');
+const Type = require('../../../enums/type');
+const Plugin = require('../../../plugins/plugin');
 const Stack = require('./stack');
 
 class PluginStack extends Stack {
