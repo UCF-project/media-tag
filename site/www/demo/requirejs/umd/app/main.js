@@ -2,13 +2,6 @@
 
 define(require => {
 	/**
-	 * MediaTag with all this features.
-	 *
-	 * @type       {Function}
-	 */
-	const MediaTag = require('media-tag');
-
-	/**
 	 * Can process on various nodes at same time.
 	 *
 	 * @type       {Array}
