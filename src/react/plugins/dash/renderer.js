@@ -29,11 +29,12 @@ class DashRenderer extends Renderer {
 		mediaObject.utilsSetAllDataAttributes(props);
 		ReactDOM.render(
 			<DashComponent
-				src={mediaObject.getSource()}
+				src={mediaObject.getAttribute('src')}
 				ckkey={mediaObject.getAttribute('key')}
 				ckid={mediaObject.getAttribute('id')}
 				id={mediaObject.getId()}
-				{...props}/>,
+				{...props}
+				controls />,
 			mediaObject.element);
 		mediaObject.return();
 	}

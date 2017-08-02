@@ -1,6 +1,6 @@
 import React from 'react';
 import Page from '../containers/Page.jsx';
-import MediaTag from '../components/MediaTag.jsx';
+import {Component as MediaTag} from '../../www/assets/dist/media-tag-react.js';
 import PluginBlock from '../containers/blocks/plugins/plugin/PluginBlock.jsx';
 
 export default (
@@ -42,7 +42,7 @@ export default (
           viewBody={(
             <MediaTag
               class="flex fit-width v-aligned h-aligned"
-              data-attr-class="fit"
+              data-attr-className="fit"
               data-type="application/dash+xml"
               src="/assets/data/videos/encrypted/bbb_dash_encrypted.mpd"
               data-clear-key="0ebf43152d2de26431e271a9872fbc0a:e2a48174c0c424e605def5368e59636e">

@@ -28,7 +28,8 @@ module.exports = function () {
 		output: {
 			filename: '[name].js',
 			path: path.join(__dirname, '../dist'),
-			library: 'MediaTag'
+			library: 'MediaTag',
+			libraryTarget: 'umd'
 		},
 
 		devServer: {

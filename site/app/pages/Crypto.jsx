@@ -1,6 +1,6 @@
 import React from 'react';
 import Page from '../containers/Page.jsx';
-import MediaTag from '../components/MediaTag.jsx';
+import {Component as MediaTag} from '../../www/assets/dist/media-tag-react.js';
 import PluginBlock from '../containers/blocks/plugins/plugin/PluginBlock.jsx';
 
 export default (
@@ -211,7 +211,7 @@ export default (
           viewBody={(
             <MediaTag
               class="flex fit-width v-aligned h-aligned"
-              data-attr-class="fit"
+              data-attr-className="fit"
               data-type="video/mp4"
               src="/assets/data/videos/encrypted/video-encrypted"
               data-crypto-key="salsa20poly1305:gxGQi0zzmj/w8GrV+/xGgaMI">

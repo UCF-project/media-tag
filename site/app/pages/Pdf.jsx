@@ -1,6 +1,6 @@
 import React from 'react';
 import Page from '../containers/Page.jsx';
-import MediaTag from '../components/MediaTag.jsx';
+import {Component as MediaTag} from '../../www/assets/dist/media-tag-react.js';
 import PluginBlock from '../containers/blocks/plugins/plugin/PluginBlock.jsx';
 
 export default (
@@ -23,13 +23,14 @@ export default (
                 This tag can contain severals attributes but have to contain at least a <b>src</b> and a <b>data-type</b>. <br />
                 Other attributes are optional. <br />
               </p>
-              <pre className={'no-padding no-margin'}>
-{`  <media-tag
-    class="flex fit v-aligned h-aligned bottom-padded"
-    data-attr-class="flex fit-width"
-    src="/assets/data/documents/kasukasu-manuel-utilisateur.pdf"
-    data-type="application/pdf">
-  </media-tag>
+              <pre className={'code-block'}>
+{`
+<media-tag
+  class="flex fit v-aligned h-aligned bottom-padded"
+  data-attr-className="flex fit-width"
+  src="/assets/data/documents/kasukasu-manuel-utilisateur.pdf"
+  data-type="application/pdf">
+</media-tag>
 
 `}
               </pre>
@@ -38,8 +39,10 @@ export default (
           viewTitle={'View'}
           viewBody={(
             <MediaTag
+              configuration="configuration.js"
               class="flex fit v-aligned h-aligned pdf"
-              data-attr-class="flex fit"
+              data-attr-className="flex fit"
+              data-attr-frameBorder="0"
               src="/assets/data/documents/kasukasu-manuel-utilisateur.pdf"
               data-type="application/pdf">
             </MediaTag>

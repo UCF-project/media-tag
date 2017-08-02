@@ -1,6 +1,6 @@
 import React from 'react';
 import Page from '../containers/Page.jsx';
-import MediaTag from '../components/MediaTag.jsx';
+import {Component as MediaTag} from '../../www/assets/dist/media-tag-react.js';
 
 export default (
   <Page class={'flex fit-width page column background-grey scrollable'}>
@@ -30,7 +30,7 @@ export default (
         You have to create a matcher in the folder previously created : <code className={'code'}>/src/plugins/image/matcher.js</code>.<br />
     </p>
     <em>example :</em>
-    <pre className={'code-block'}>
+    <pre className={'prompt'}>
 {` 
   const Identifier =  require('../../enums/identifier');
   const Type =        require('../../enums/type');
@@ -74,7 +74,7 @@ export default (
       You have to create a matcher in the folder previously created : <code className={'code'}>/src/plugins/image/renderer.js</code>.<br />
     </p>
     <em>example: </em>
-    <pre className={'code-block'}>
+    <pre className={'prompt'}>
 {` 
   const Renderer =  require('../renderer');
   const Identifier =  require('../../enums/identifier');
@@ -118,7 +118,7 @@ export default (
       Matchers are registered inside <code className={'code'}>/src/presets/media-tag.matchers.js</code>.<br />
     </p>
     <em>example :</em>
-    <pre className={'code-block'}>
+    <pre className={'prompt'}>
 {` /**
    * Renderer matchers
    */
@@ -170,7 +170,7 @@ export default (
     <p>
       Active parts are registered inside <code className={'code'}>/src/presets/media-tag.plugins.js</code>.<br />
     </p>
-    <pre className={'code-block'}>
+    <pre className={'prompt'}>
 {`  ...
 
   /**
@@ -229,7 +229,7 @@ export default (
       Now our image plugin is ready for the use.<br />
       It is time to create our html page to test it under <code className={'code'}>/demo/webpack/plugins/image/index.html</code><br />
       <em>example :</em>
-      <pre className={'code-block'}>
+      <pre className={'prompt'}>
 {`
   <!DOCTYPE html>
   <html>

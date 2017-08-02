@@ -23,7 +23,7 @@ class AudioRenderer extends Renderer {
 
 		mediaObject.utilsSetAllDataAttributes(props);
 		ReactDOM.render(
-			<AudioComponent src={mediaObject.getSource()} {...props} />,
+			<AudioComponent src={mediaObject.getAttribute('src')} {...props} />,
 			mediaObject.element);
 		mediaObject.return();
 	}

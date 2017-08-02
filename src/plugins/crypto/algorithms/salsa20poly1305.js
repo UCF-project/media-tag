@@ -211,14 +211,6 @@ function algorithm(mediaObject) {
 			mediaObject.setAttribute('src', url);
 			mediaObject.removeAttribute('data-crypto-key');
 
-			if (!mediaObject.hasAttribute('data-type')) { // TODO TEST AND REMOVE IT
-				applyMetadata(mediaObject, {
-					type: 'image',
-					extension: 'png',
-					mime: 'image/png'
-				});
-			}
-
 			/**
 			 * Filters must call chain to try if the
 			 * current mediaObject matches other filters.

@@ -1,6 +1,6 @@
 import React from 'react';
 import Page from '../containers/Page.jsx';
-import MediaTag from '../components/MediaTag.jsx';
+import {Component as MediaTag} from '../../www/assets/dist/media-tag-react.js';
 
 export default (
 	<Page class='flex fit-width page column background-grey scrollable'>

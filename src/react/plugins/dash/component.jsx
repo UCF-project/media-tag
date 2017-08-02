@@ -25,10 +25,10 @@ class DashComponent extends React.Component {
 	 * @return     { description_of_the_return_value }
 	 */
 	video() {
-		const { ckkey, ckid, ...rest } = this.props;
+		const { classname, ckkey, ckid, ...rest } = this.props;
 
 		return (
-			<video {...rest}></video>
+			<video className={classname} {...rest}></video>
 		);
 	}
 

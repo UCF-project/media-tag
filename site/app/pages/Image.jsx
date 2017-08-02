@@ -1,6 +1,6 @@
 import React from 'react';
 import Page from '../containers/Page.jsx';
-import MediaTag from '../components/MediaTag.jsx';
+import {Component as MediaTag} from '../../www/assets/dist/media-tag-react.js';
 import PluginBlock from '../containers/blocks/plugins/plugin/PluginBlock.jsx';
 
 export default (
@@ -28,13 +28,14 @@ export default (
             This tag can contain severals attributes but have to contain at least a <b>src</b> and a <b>data-type</b>. <br />
             Other attributes are optional. <br />
           </p>
-          <pre className={'no-padding no-margin'}>
-{`  <media-tag
-    class="flex fit-height v-aligned h-aligned"
-    data-attr-class="fit"
-    src="/assets/data/images/media-tag-logo-text.png"
-    data-type="image/png">
-  </media-tag>
+          <pre className={'code-block'}>
+{`
+<media-tag
+  class="flex fit-height v-aligned h-aligned"
+  data-attr-className="fit"
+  src="/assets/data/images/media-tag-logo-text.png"
+  data-type="image/png">
+</media-tag>
 
 `}
           </pre>
@@ -44,7 +45,7 @@ export default (
       viewBody={(
         <MediaTag
           class="flex fit v-aligned h-aligned"
-          data-attr-class="fit"
+          data-attr-className="fit"
           src="/assets/data/images/media-tag-logo-text.png"
           data-type="image/png">
         </MediaTag>

@@ -19,8 +19,10 @@ class PdfComponent extends React.Component {
 	 * @return     { description_of_the_return_value }
 	 */
 	render() {
+		const {classname, ...props} = this.props;
+
 		return (
-			<iframe {...this.props}></iframe>
+			<iframe className={classname} {...props}></iframe>
 		);
 	}
 }

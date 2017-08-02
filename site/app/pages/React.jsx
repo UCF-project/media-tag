@@ -1,6 +1,6 @@
 import React from 'react';
 import Page from '../containers/Page.jsx';
-import MediaTag from '../components/MediaTag.jsx';
+import {Component as MediaTag} from '../../www/assets/dist/media-tag-react.js';
 import PluginBlock from '../containers/blocks/plugins/plugin/PluginBlock.jsx';
 
 export default (
@@ -9,12 +9,38 @@ export default (
   	<p>
   		Media-Tag has React implementation.<br />
   	</p>
+  	<h3>Usage</h3>
+  	<p>
+  		Import the library <code className={'code'}>media-tag-react.js</code> as MediaTag in your code or <pre className={'prompt'}>{`<script src='media-tag-react.js'></script>`}</pre> in your page.<br />
+  		Now, window should has MediaTag and this version of the library is divided into the React component and the api.<br />
+  	</p>
+  	<em>example:</em>
+  	<pre className={'prompt'}>
+{`
+MediaTag.API(elements); # Runs a Media-Tag processing on standard DOM elements to produce a render in React.
+MediaTag.Component; 	# Is the React component for Media-Tag.
+
+# Usage in code.
+
+import {Component as MediaTag} from '../../www/assets/dist/media-tag-react.js';
+...
+
+#Somewhere in a React render function
+
+<MediaTag
+	class="flex fit v-aligned h-aligned"
+	data-attr-className="fit"
+	src="/assets/data/images/media-tag-logo-text.png"
+	data-type="image/png">
+</MediaTag>
+`}
+  	</pre>
   	<h3>Components</h3>
   	<h5>Media-Tag</h5>
   	<p>
   		Media-Tag is the entry point component of the application.<br />
   	</p>
-  	<pre className={'code-block'}>
+  	<pre className={'prompt'}>
 {`
 import React from 'react';
 
@@ -74,7 +100,7 @@ module.exports = MediaTag;
 		This is an example for image plugin.<br />
 	</p>
 	<em>renderer.js : </em>
-	<pre className={'code-block'}>
+	<pre className={'prompt'}>
 {`
 /* global ReactDOM */
 const Renderer =	require('../../../plugins/renderer');
@@ -112,7 +138,7 @@ module.exports = ImageRenderer;
 `}
 	</pre>
 	<em>component.js : </em>
-	<pre className={'code-block'}>
+	<pre className={'prompt'}>
 {`
 import React from 'react';
 

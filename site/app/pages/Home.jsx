@@ -1,6 +1,6 @@
 import React from 'react';
 import Page from '../containers/Page.jsx';
-import MediaTag from '../components/MediaTag.jsx';
+import {Component as MediaTag} from '../../www/assets/dist/media-tag-react.js';
 import PluginBlock from '../containers/blocks/plugins/plugin/PluginBlock.jsx';
 
 export default (
@@ -65,8 +65,8 @@ Somewhere in your html page ...
 			</pre>
 			<MediaTag
 		          class="flex fit v-aligned h-aligned"
-		          data-attr-class="flex split"
-		          data-attr-autoplay
+		          data-attr-className="flex split"
+		          data-attr-autoPlay
 		          src="/assets/data/videos/bbb.mp4"
 		          data-type="video/mp4" />
 			

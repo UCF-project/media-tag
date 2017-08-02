@@ -1,4 +1,5 @@
 /* global document, MutationObserver */
+const mediaTagComponent = require('../react/media-tag.jsx');
 const mediaTagAPI = require('./media-tag.react.plugins');
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -121,4 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	launch(Array.from(document.getElementsByTagName('media-tag')));
 });
 
-module.exports = mediaTagAPI;
+module.exports = {
+	API: mediaTagAPI,
+	Component: mediaTagComponent
+};

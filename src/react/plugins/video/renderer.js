@@ -23,7 +23,7 @@ class VideoRenderer extends Renderer {
 
 		mediaObject.utilsSetAllDataAttributes(props);
 		ReactDOM.render(
-			<VideoComponent src={mediaObject.getSource()} {...props} />,
+			<VideoComponent src={mediaObject.getAttribute('src')} {...props} />,
 			mediaObject.element);
 		mediaObject.return();
 	}

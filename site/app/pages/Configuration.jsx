@@ -20,7 +20,7 @@ export default (
               You need to create a configuration file like "configuration.js".<br />
             </p>
             <em>example:</em>
-            <pre className={'code-block'}>
+            <pre className={'prompt'}>
 {`  (function () {
       const event = new Event('Configuration');
 
@@ -47,7 +47,7 @@ export default (
               The configuration allows to define directly all needed dependencies into one field.<br /><br />
             </p>
             <em>example :</em><br /><br />
-            <pre className={'code-block'}>
+            <pre className={'prompt'}>
 {`  event.configuration = {
       dependencies: [
         'https://cdnjs.cloudflare.com/ajax/libs/shaka-player/2.1.3/shaka-player.compiled.js',
@@ -76,7 +76,7 @@ export default (
 
             <em>example:</em><br /><br />
 
-            <pre className={'code-block'}>
+            <pre className={'prompt'}>
 {`  permission: {
       image: 'forbidden',
       audio: 'forbidden',
@@ -90,7 +90,7 @@ export default (
               You can configure the default processing engine behavior.
             </p>
             <em>example:</em>
-            <pre className={'code-block'}>
+            <pre className={'prompt'}>
 {`  processing-engine: {
       defaultPlugin: 'failure'  # The plugin identified as 'failure' will be used as default rendering one.
     }
@@ -106,7 +106,7 @@ export default (
               Pdf plugin is in this case and can have the pdfjs viewer as main rendering method. <br />
               This example illustrate how define and configure the pdf plugin : <br />
             </p>
-            <pre className={'code-block'}>
+            <pre className={'prompt'}>
 {`  event.configuration = {
     /*
      * Defines several plugins here

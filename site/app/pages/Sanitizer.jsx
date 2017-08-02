@@ -1,6 +1,6 @@
 import React from 'react';
 import Page from '../containers/Page.jsx';
-import MediaTag from '../components/MediaTag.jsx';
+import {Component as MediaTag} from '../../www/assets/dist/media-tag-react.js';
 import PluginBlock from '../containers/blocks/plugins/plugin/PluginBlock.jsx';
 
 export default (
@@ -26,7 +26,7 @@ export default (
           viewBody={(
             <MediaTag
               class="flex fit v-aligned h-aligned"
-              data-attr-class="fit"
+              data-attr-className="fit"
               src="/assets/data/images/media-tag-logo-text.png"
               data-type="image/png">
             </MediaTag>

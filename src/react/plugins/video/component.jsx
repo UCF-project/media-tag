@@ -19,8 +19,10 @@ class VideoComponent extends React.Component {
 	 * @return     { description_of_the_return_value }
 	 */
 	render() {
+		const {classname, autoplay, ...props} = this.props;
+
 		return (
-			<video {...this.props} controls></video>
+			<video {...props} className={classname} autoPlay={autoplay} controls></video>
 		);
 	}
 }

@@ -7,13 +7,12 @@
   "license": "Apache-2.0",
   "scripts": {
     "test": "xo && nyc _mocha ./test/media-tag.js",
-    "build": "webpack --define process.env.NODE_ENV='development' --config ./webpack.config/media-tag.webpack.config.dev.js --progress --colors",
+    "build:dev": "webpack --define process.env.NODE_ENV='development' --config ./webpack.config/media-tag.webpack.config.dev.js --progress --colors",
     "build:pro": "webpack --define process.env.NODE_ENV='production' --config ./media-tag.webpack.config.pro.js --progress --colors",
     "build:amd": "babel --presets=react,es2015,stage-0 src/ -d babel/ && r.js -convert babel/ build/amd && rm -r babel/",
     "build:site": "webpack --define process.env.NODE_ENV='development' --config ./webpack.config/site.webpack.config.dev.js --progress --colors",
     "build:docs": "esdoc",
-    "start": "webpack-dev-server --define process.env.NODE_ENV='development' --config ./webpack.config/media-tag.webpack.config.dev.js --progress --colors",
-    "start:site": "yarn build && cp -v -r dist/ site/www/assets/ && webpack-dev-server --define process.env.NODE_ENV='development' --config ./webpack.config/site.webpack.config.dev.js --progress --colors",
+    "start": "yarn build:dev && cp -v -r dist/ site/www/assets/ && webpack-dev-server --define process.env.NODE_ENV='development' --config ./webpack.config/site.webpack.config.dev.js --progress --colors",
     "xo": "xo",
     "karma": "karma start",
     "mocha": "nyc _mocha ./test/media-tag.js"
@@ -118,7 +117,8 @@
     "exclude": [
       "demo/",
       "test/dependencies/",
-      "src/react/"
+      "src/react/",
+      "site/**/*"
     ],
     "sourceMap": false,
     "instrument": false,

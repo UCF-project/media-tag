@@ -23,7 +23,7 @@ class ImageRenderer extends Renderer {
 
 		mediaObject.utilsSetAllDataAttributes(props);
 		ReactDOM.render(
-			<ImageComponent src={mediaObject.getSource()} {...props} />,
+			<ImageComponent src={mediaObject.getAttribute('src')} {...props} />,
 			mediaObject.element);
 		mediaObject.return();
 	}
