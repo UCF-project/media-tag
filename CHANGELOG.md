@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/) and
 [Keep a CHANGELOG](http://keepachangelog.com/).
 
+## v0.2.7:
+- Add React components.
+- Add website.
+- Hide demo equivalent under the website.
+- Remove the ambiguous AMD support.
+- Multiple fixes about dynamic rendering.
+- Readme update.
+
 ## v0.2.6:
 Changed : 
 - Processing engine fixes to counter multiple onload into imbricated iframes.
