@@ -31,7 +31,7 @@ export default (
 			To illustrate lets see the base plugin class.<br />
 		</p>
 		<em>example :</em>
-		<pre className={'code-block'}>
+		<pre className={'prompt'}>
 {`
 class Plugin {
 	/**
@@ -78,7 +78,7 @@ module.exports = Plugin;
 			It is used to trigger when an other Plugin have to be called.<br />
 		</p>
 		<em>example :</em>
-		<pre className={'code-block'}>
+		<pre className={'prompt'}>
 {`
 const Type = 		require('../enums/type');
 const Occurrence = 	require('../enums/occurrence');
@@ -117,7 +117,7 @@ module.exports = Matcher;
 			The Renderer is specialized in MediaObject rendering.<br />
 			It is the final Plugin called during a processing chain.<br />
 		</p>
-		<pre className={'code-block'}>
+		<pre className={'prompt'}>
 {`
 const Type = 		require('../enums/type');
 const Occurrence = 	require('../enums/occurrence');
@@ -145,7 +145,7 @@ module.exports = Renderer;
 			The Filter is specialized in MediaObject filtering.<br />
 			It modifies MediaObject attributes and data.<br />
 		</p>
-		<pre className={'code-block'}>
+		<pre className={'prompt'}>
 {`
 const Type = 		require('../enums/type');
 const Occurrence = 	require('../enums/occurrence');
@@ -173,7 +173,7 @@ module.exports = Filter;
 			The Sanitizer is specialized in MediaObject sanitizing.<br />
 			A Sanitizer is call between each processing step to clean MediaObject.<br />
 		</p>
-		<pre className={'code-block'}>
+		<pre className={'prompt'}>
 {`
 const Type = 		require('../enums/type');
 const Occurrence = 	require('../enums/occurrence');
@@ -200,7 +200,7 @@ module.exports = Sanitizer;
 			The Group is specialized in plugin vectorization.<br />
 			Has no specific type, but it can be useful to chain several plugin in a specific order.<br />
 		</p>
-		<pre className={'code-block'}>
+		<pre className={'prompt'}>
 {`
 const Plugin = require('./plugin');
 
