@@ -1,7 +1,10 @@
 const path = require('path');
 const webpack = require('webpack');
 
-const plugin = [
+// Seems no work using webpack configuration, parameters ...
+process.env.NODE_ENV = 'development';
+
+const pluginList = [
 	new webpack.LoaderOptionsPlugin({
 		minimize: false,
 		debug: false,
@@ -41,6 +44,7 @@ module.exports = function () {
 			rules: [
 				{
 					test: /\.css?$/,
+					exclude: /(node_modules|assets)/,
 					use: [
 						'style-loader',
 						'css-loader'
@@ -51,13 +55,13 @@ module.exports = function () {
 					exclude: /(node_modules|assets)/,
 					loader: 'babel-loader',
 					query: {
-						presets: ['react', 'stage-0'],
+						presets: ['env'],
 						cacheDirectory: true
 					}
 				}
 			]
 		},
 
-		plugins: plugin
+		plugins: pluginList
 	};
 };

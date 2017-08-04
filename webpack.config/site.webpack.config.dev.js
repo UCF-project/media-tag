@@ -2,6 +2,9 @@ const path = require('path');
 const webpack = require('webpack');
 const TransferWebpackPlugin = require('transfer-webpack-plugin');
 
+// Seems no work using webpack configuration, parameters ...
+process.env.NODE_ENV = 'production';
+
 const config = {
 	// Entry points to the project
 	entry: {
