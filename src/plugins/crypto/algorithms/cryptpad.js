@@ -316,8 +316,17 @@ function algorithm(mediaObject) {
     var uid = [src, strKey].join('');
 
     var followUp = function (decrypted) {
+        var next = function (f) {
+            /**
+             * Filters must call chain to try if the
+             * current mediaObject matches other filters.
+             */
+            MediaTag.processingEngine.return(mediaObject);
+            if (typeof(f) === 'function') { f(mediaObject); }
+        };
+
         // Metadata must be set before the blob construction.
-        const decryptionEvent = new Event('decryption');
+        const decryptionEvent = {};
         decryptionEvent.metadata = decrypted.metadata;
         applyMetadata(mediaObject, decrypted.metadata);
 
@@ -355,16 +364,14 @@ function algorithm(mediaObject) {
         //console.log(decrypted.metadata);
         applyMetadata(mediaObject, decrypted.metadata);
 
-        decryptionEvent.callback = function (f) {
-            /**
-             * Filters must call chain to try if the
-             * current mediaObject matches other filters.
-             */
-            MediaTag.processingEngine.return(mediaObject);
-            if (typeof(f) === 'function') { f(mediaObject); }
-        };
+        decryptionEvent.callback = next;
 
-        window.document.dispatchEvent(decryptionEvent);
+        if (!window.MediaTag_onDecrypted) {
+            setTimeout(next);
+            return;
+        }
+
+        window.MediaTag_onDecrypted(decryptionEvent);
     };
 
     var Cache = MediaTag.__Cryptpad_Cache = MediaTag.__Cryptpad_Cache || {};

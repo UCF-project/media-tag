@@ -21,6 +21,7 @@ const pluginList = [
 module.exports = function () {
 	return {
 		entry: {
+			'media-tag-nacl': './src/presets/media-tag-nacl.js',
 			'media-tag': './src/presets/media-tag.js',
 			'media-tag-react': './src/presets/media-tag.react.js',
 			'media-tag-core': './src/core/media-tag-api.js',
