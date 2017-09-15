@@ -1,4 +1,4 @@
-![logo](./site/www/assets/data/images/media-tag-logo-text.png)
+[![logo](./site/www/assets/data/images/media-tag-logo-github.png) ](https://ucf-project.github.io/media-tag/ 'Media-Tag Project')
 
 # Presentation
 
@@ -114,4 +114,5 @@ $ yarn run build:docs
 # Find more information
 
 The site is included to the project, so your can run `yarn start` after your installation to find needed information.
-Or you can follow this link : [Media-Tag](http://www.google.com)
+
+Or you can follow this link : [Media-Tag's presentation website](https://ucf-project.github.io/media-tag/ 'Media-Tag Project')
