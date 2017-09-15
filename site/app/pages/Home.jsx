@@ -9,7 +9,7 @@ export default (
 			<div className={'flex'}>
 				<MediaTag
 					class={'flex fit-width v-aligned'}
-					src={'/assets/data/images/media-tag-logo-text.png'}
+					src={'./assets/data/images/media-tag-logo-text.png'}
 					data-type={'image/png'}
 					data-attr-width={'30%'}
 					data-attr-height={'100%'}
@@ -57,7 +57,7 @@ Somewhere in your html page ...
 	class="flex fit v-aligned h-aligned"	# Defines the media-tag container css classes
 	data-attr-class="flex split"		# Defines content/render css classes
 	data-attr-autoplay			# Sets up video autoplay
-	src="/assets/data/videos/bbb.mp4"		# Sets a content source
+	src="./assets/data/videos/bbb.mp4"		# Sets a content source
 	data-type="video/mp4">			# Sets the content type
 </media-tag>
 
@@ -67,7 +67,7 @@ Somewhere in your html page ...
 		          class="flex fit v-aligned h-aligned"
 		          data-attr-className="flex split"
 		          data-attr-autoPlay
-		          src="/assets/data/videos/bbb.mp4"
+		          src="./assets/data/videos/bbb.mp4"
 		          data-type="video/mp4" />
 			
 			<h3>Modular</h3>

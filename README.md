@@ -7,7 +7,7 @@ Media-Tag is an open source project related in Ubiquitous Content Framework deve
 Based on common web technologies like HTML5 and JavaScript, it goal is provide an unified interface about rich content presentation.
 
 ## Modular
-			
+
 Media-Tag is able to render medias like, images, audios, videos, dash and pdf.
 Each of theses features take form from a set of plugin registered to Media-Tag stores.
 You can enrich the current version of Media-Tag with new features.
@@ -15,7 +15,7 @@ Media-Tag provides you various maner to add your own awesome plugins.
 
 
 ## Complexe
-			
+
 Media-Tag provides several plugin types able have complex behaviours.
 For example, Media-Tag contains features like crypto filter able to decrypt a Media-Tag content before it rendering.
 

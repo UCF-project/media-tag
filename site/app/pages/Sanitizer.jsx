@@ -27,7 +27,7 @@ export default (
             <MediaTag
               class="flex fit v-aligned h-aligned"
               data-attr-className="fit"
-              src="/assets/data/images/media-tag-logo-text.png"
+              src="./assets/data/images/media-tag-logo-text.png"
               data-type="image/png">
             </MediaTag>
           )}

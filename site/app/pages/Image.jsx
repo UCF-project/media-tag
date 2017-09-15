@@ -33,7 +33,7 @@ export default (
 <media-tag
   class="flex fit-height v-aligned h-aligned"
   data-attr-className="fit"
-  src="/assets/data/images/media-tag-logo-text.png"
+  src="./assets/data/images/media-tag-logo-text.png"
   data-type="image/png">
 </media-tag>
 
@@ -46,7 +46,7 @@ export default (
         <MediaTag
           class="flex fit v-aligned h-aligned"
           data-attr-className="fit"
-          src="/assets/data/images/media-tag-logo-text.png"
+          src="./assets/data/images/media-tag-logo-text.png"
           data-type="image/png">
         </MediaTag>
       )}

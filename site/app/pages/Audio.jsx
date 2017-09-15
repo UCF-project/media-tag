@@ -31,7 +31,7 @@ export default (
 {`
 <media-tag
   class="flex fit v-aligned h-aligned"
-  src="/assets/data/audios/alterway.mp3"
+  src="./assets/data/audios/alterway.mp3"
   data-type="audio/mp3">
 </media-tag>
 
@@ -43,7 +43,7 @@ export default (
       viewBody={(
         <MediaTag
           class="flex fit v-aligned h-aligned"
-          src="/assets/data/audios/alterway.mp3"
+          src="./assets/data/audios/alterway.mp3"
           data-type="audio/mp3">
         </MediaTag>
       )}

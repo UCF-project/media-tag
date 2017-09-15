@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Media Tag Decryption</title>
+    <style>
+        .steps {
+            display: flex;
+        }
+        .step {
+            margin: 5px;
+            border: 1px solid #bbb;
+            background: #f3f3f3;
+            width: 25%;
+            height: 400px;
+        }
+        .download {
+            cursor: pointer;
+            color: blue;
+        }
+        .contents {
+            max-height: 300px;
+            overflow: auto;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+<div class="key">Key: <input><button>generate key</button></div>
+<div class="nonce">Nonce: <input><button>generate nonce</button></div>
+<div class="steps encrypt">
+	<div class="step upload">
+		<h2>Upload</h2>
+		<input type="file" name="file" />
+	</div>
+	<div class="step sent">
+		<h2>Image sent</h2>
+		<div class="contents"></div>
+	</div>
+	<div class="step enc">
+		<h2>Image encrypted</h2>
+		<div class="contents"></div>
+		<div class="download">download file</div>
+	</div>
+	<div class="step dec">
+		<h2>Image decrypted</h2>
+		<div class="contents"></div>
+	</div>
+</div>
+<div class="steps decrypt">
+	<div class="step upload">
+		<h2>Upload</h2>
+		<input type="file" name="file" />
+	</div>
+	<div class="step sent">
+		<h2>Image sent</h2>
+		<div class="contents"></div>
+	</div>
+	<div class="step enc">
+		<h2>Image decrypted</h2>
+		<div class="contents"></div>
+	</div>
+	<div class="step dec">
+		<h2>Image view</h2>
+		<div class="contents"></div>
+	</div>
+</div>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.3/FileSaver.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tweetnacl/0.14.5/nacl-fast.min.js"></script>
+<script type="text/javascript" src="enc.js"></script>
+</body>
+</html>

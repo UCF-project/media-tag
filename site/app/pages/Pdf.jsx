@@ -5,14 +5,14 @@ import PluginBlock from '../containers/blocks/plugins/plugin/PluginBlock.jsx';
 
 export default (
   <Page class={'flex fit-width page column background-grey'}>
-  	<PluginBlock 
+  	<PluginBlock
           htmlTitle={'Pdf'}
           htmlBody={
             <div className={'flex column fit'}>
               <h4>Description</h4>
               <p>
                 PDF plugin is able to render pdfs.<br />
-                Type : <br /> 
+                Type : <br />
               </p>
               <ul>
                 <li>application/pdf</li>
@@ -28,7 +28,7 @@ export default (
 <media-tag
   class="flex fit v-aligned h-aligned bottom-padded"
   data-attr-className="flex fit-width"
-  src="/assets/data/documents/kasukasu-manuel-utilisateur.pdf"
+  src="./assets/data/documents/kasukasu-manuel-utilisateur.pdf"
   data-type="application/pdf">
 </media-tag>
 
@@ -43,7 +43,7 @@ export default (
               class="flex fit v-aligned h-aligned pdf"
               data-attr-className="flex fit"
               data-attr-frameBorder="0"
-              src="/assets/data/documents/kasukasu-manuel-utilisateur.pdf"
+              src="./assets/data/documents/kasukasu-manuel-utilisateur.pdf"
               data-type="application/pdf">
             </MediaTag>
           )}

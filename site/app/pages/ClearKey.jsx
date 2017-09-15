@@ -25,7 +25,7 @@ export default (
 {`  <media-tag
       id="dash"
       data-type="application/dash+xml"
-      src="/assets/data/videos/encrypted/bbb_dash_encrypted.mpd"
+      src="./assets/data/videos/encrypted/bbb_dash_encrypted.mpd"
       data-clear-key=
         "0ebf43152d2de26431e271a9872fbc0a:e2a48174c0c424e605def5368e59636e"
       data-attr-width="1240px"
@@ -44,7 +44,7 @@ export default (
               class="flex fit-width v-aligned h-aligned"
               data-attr-className="fit"
               data-type="application/dash+xml"
-              src="/assets/data/videos/encrypted/bbb_dash_encrypted.mpd"
+              src="./assets/data/videos/encrypted/bbb_dash_encrypted.mpd"
               data-clear-key="0ebf43152d2de26431e271a9872fbc0a:e2a48174c0c424e605def5368e59636e">
             </MediaTag>
           )}

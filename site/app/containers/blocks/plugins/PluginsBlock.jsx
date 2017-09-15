@@ -43,7 +43,7 @@ function subPage(identifier) {
 {`  <media-tag
     class="flex fit-height v-aligned h-aligned"
     data-attr-class="fit"
-    src="/assets/images/media-tag-logo-text.png"
+    src="./assets/images/media-tag-logo-text.png"
     data-type="image/png">
   </media-tag>
 
@@ -56,7 +56,7 @@ function subPage(identifier) {
             <MediaTag
               class="flex fit-height v-aligned h-aligned"
               data-attr-class="fit"
-              src="/assets/images/media-tag-logo-text.png"
+              src="./assets/images/media-tag-logo-text.png"
               data-type="image/png">
             </MediaTag>
           )}
@@ -90,7 +90,7 @@ function subPage(identifier) {
                 <pre className={'no-padding no-margin'}>
 {`  <media-tag
     class="flex fit v-aligned h-aligned"
-    src="/assets/audios/alterway.mp3"
+    src="./assets/audios/alterway.mp3"
     data-type="audio/mp3">
   </media-tag>
 
@@ -102,7 +102,7 @@ function subPage(identifier) {
           viewBody={(
             <MediaTag
               class="flex fit v-aligned h-aligned"
-              src="/assets/audios/alterway.mp3"
+              src="./assets/audios/alterway.mp3"
               data-type="audio/mp3">
             </MediaTag>
           )}
@@ -137,7 +137,7 @@ function subPage(identifier) {
 {`  <media-tag
     class="flex fit v-aligned h-aligned"
     data-attr-class="flex fit-width"
-    src="/assets/videos/bbb.mp4"
+    src="./assets/videos/bbb.mp4"
     data-type="video/mp4">
   </media-tag>
 
@@ -150,7 +150,7 @@ function subPage(identifier) {
             <MediaTag
               class="flex fit v-aligned h-aligned"
               data-attr-class="flex fit-width"
-              src="/assets/videos/bbb.mp4"
+              src="./assets/videos/bbb.mp4"
               data-type="video/mp4">
             </MediaTag>
           )}
@@ -181,7 +181,7 @@ function subPage(identifier) {
 {`  <media-tag
     class="flex fit v-aligned h-aligned bottom-padded"
     data-attr-class="flex fit-width"
-    src="/assets/documents/kasukasu-manuel-utilisateur.pdf"
+    src="./assets/documents/kasukasu-manuel-utilisateur.pdf"
     data-type="application/pdf">
   </media-tag>
 
@@ -194,7 +194,7 @@ function subPage(identifier) {
             <MediaTag
               class="flex fit v-aligned h-aligned bottom-padded"
               data-attr-class="flex fit"
-              src="/assets/documents/kasukasu-manuel-utilisateur.pdf"
+              src="./assets/documents/kasukasu-manuel-utilisateur.pdf"
               data-type="application/pdf">
             </MediaTag>
           )}
@@ -225,7 +225,7 @@ function subPage(identifier) {
 {`  <media-tag
     class="flex fit v-aligned h-aligned"
     data-attr-class="flex fit-width"
-    src="/assets/videos/bbb_dash.mpd"
+    src="./assets/videos/bbb_dash.mpd"
     data-type="application/dash+xml">
   </media-tag>
 
@@ -242,7 +242,7 @@ function subPage(identifier) {
             <MediaTag
               class="flex fit v-aligned h-aligned"
               data-attr-class="flex fit-width"
-              src="/assets/videos/bbb_dash.mpd"
+              src="./assets/videos/bbb_dash.mpd"
               data-type="application/dash+xml">
             </MediaTag>
           )}
@@ -273,7 +273,7 @@ function subPage(identifier) {
 {`  <media-tag
     class="flex fit v-aligned h-aligned"
     data-attr-class="flex fit-width"
-    src="/assets/videos/bbb.mp4"
+    src="./assets/videos/bbb.mp4"
     data-type="download">
   </media-tag>
 
@@ -291,7 +291,7 @@ function subPage(identifier) {
             <MediaTag
               class="flex fit v-aligned h-aligned"
               data-attr-class="flex fit-width h-aligned v-aligned"
-              src="/assets/videos/bbb.mp4"
+              src="./assets/videos/bbb.mp4"
               data-type="download">
             </MediaTag>
           )}
@@ -320,7 +320,7 @@ function subPage(identifier) {
 {`  <media-tag
     id="video"
     data-type="video/mp4"
-    src="/assets/videos/encrypted/video-encrypted"
+    src="./assets/videos/encrypted/video-encrypted"
     data-crypto-key="salsa20poly1305:gxGQi0zzmj/w8GrV+/xGgaMI"
     data-attr-width="600px"
     data-attr-height="400px"
@@ -509,7 +509,7 @@ function subPage(identifier) {
               class="flex fit-width v-aligned h-aligned"
               data-attr-class="fit"
               data-type="video/mp4"
-              src="/assets/videos/encrypted/video-encrypted"
+              src="./assets/videos/encrypted/video-encrypted"
               data-crypto-key="salsa20poly1305:gxGQi0zzmj/w8GrV+/xGgaMI">
             </MediaTag>
           )}
@@ -538,7 +538,7 @@ function subPage(identifier) {
 {`  <media-tag
       id="dash"
       data-type="application/dash+xml"
-      src="/assets/videos/encrypted/bbb_dash_encrypted.mpd"
+      src="./assets/videos/encrypted/bbb_dash_encrypted.mpd"
       data-clear-key=
         "0ebf43152d2de26431e271a9872fbc0a:e2a48174c0c424e605def5368e59636e"
       data-attr-width="1240px"
@@ -557,7 +557,7 @@ function subPage(identifier) {
               class="flex fit-width v-aligned h-aligned"
               data-attr-class="fit"
               data-type="application/dash+xml"
-              src="/assets/videos/encrypted/bbb_dash_encrypted.mpd"
+              src="./assets/videos/encrypted/bbb_dash_encrypted.mpd"
               data-clear-key="0ebf43152d2de26431e271a9872fbc0a:e2a48174c0c424e605def5368e59636e">
             </MediaTag>
           )}
@@ -588,7 +588,7 @@ function subPage(identifier) {
             <MediaTag
               class="flex fit-height v-aligned h-aligned"
               data-attr-class="fit"
-              src="/assets/images/media-tag-logo-text.png"
+              src="./assets/images/media-tag-logo-text.png"
               data-type="image/png">
             </MediaTag>
           )}

@@ -239,7 +239,7 @@ export default (
   </head>
   <body>
     <media-tag
-      src="/assets/data/images/image.svg"
+      src="./assets/data/images/image.svg"
       data-type="image/svg+xml"
       data-attr-width="300px"
       data-attr-height="200px"></media-tag>

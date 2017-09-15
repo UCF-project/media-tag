@@ -23,7 +23,7 @@ const config = {
 	},
 	devtool: 'eval',
 	output: {
-		path: path.resolve(__dirname, '../build'), // Path of output file
+		path: path.resolve(__dirname, '../docs'), // Path of output file
 		filename: 'app.js'
 	},
 	plugins: [

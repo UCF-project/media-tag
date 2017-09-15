@@ -28,7 +28,7 @@ export default (
 <media-tag
 	class="flex fit v-aligned h-aligned"
 	data-attr-className="flex fit-width"
-	src="/assets/data/videos/bbb.mp4"
+	src="./assets/data/videos/bbb.mp4"
 	data-type="download">
 </media-tag>
 
@@ -46,7 +46,7 @@ export default (
 				<MediaTag
 					class="flex fit v-aligned h-aligned"
 					data-attr-className="flex fit-width h-aligned v-aligned"
-					src="/assets/data/videos/bbb.mp4"
+					src="./assets/data/videos/bbb.mp4"
 					data-type="download">
 				</MediaTag>
 			)}

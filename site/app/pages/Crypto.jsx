@@ -25,7 +25,7 @@ export default (
 {`  <media-tag
     id="video"
     data-type="video/mp4"
-    src="/assets/data/videos/encrypted/video-encrypted"
+    src="./assets/data/videos/encrypted/video-encrypted"
     data-crypto-key="salsa20poly1305:gxGQi0zzmj/w8GrV+/xGgaMI"
     data-attr-width="600px"
     data-attr-height="400px"
@@ -213,7 +213,7 @@ export default (
               class="flex fit-width v-aligned h-aligned"
               data-attr-className="fit"
               data-type="video/mp4"
-              src="/assets/data/videos/encrypted/video-encrypted"
+              src="./assets/data/videos/encrypted/video-encrypted"
               data-crypto-key="salsa20poly1305:gxGQi0zzmj/w8GrV+/xGgaMI">
             </MediaTag>
           )}
