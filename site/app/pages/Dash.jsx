@@ -28,7 +28,7 @@ export default (
 <media-tag
   class="flex fit v-aligned h-aligned"
   data-attr-className="flex fit-width"
-  src="./assets/data/videos/bbb_dash.mpd"
+  src="https://storage.googleapis.com/shaka-demo-assets/sintel/dash.mpd"
   data-type="application/dash+xml">
 </media-tag>
 
@@ -45,7 +45,7 @@ export default (
             <MediaTag
               class="flex fit v-aligned h-aligned"
               data-attr-className="flex fit-width"
-              src="./assets/data/videos/bbb_dash.mpd"
+              src="https://storage.googleapis.com/shaka-demo-assets/sintel/dash.mpd"
               data-type="application/dash+xml">
             </MediaTag>
           )}

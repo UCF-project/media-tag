@@ -57,65 +57,110 @@ class Main extends React.Component {
 				<Layer class='flex fit'>
 					<Menu class='nav scrollable'>
 						<List>
-							<ListItem onClick={() => {this.load(Home)}}>
-								<ListItemContent icon='home'>Home</ListItemContent>
+							<ListItem onClick={() => {
+								window.location.hash = 'home';
+								this.load(Home)
+							}}>
+								<ListItemContent className='menu-item' icon='home'>Home</ListItemContent>
 							</ListItem>
-							<ListItem onClick={() => {this.load(Installation)}}>
-								<ListItemContent icon='assignment'>Installation</ListItemContent>
+							<ListItem onClick={() => {
+								window.location.hash = 'installation';
+								this.load(Installation)
+							}}>
+								<ListItemContent className='menu-item' icon='assignment'>Installation</ListItemContent>
 							</ListItem>
-							<ListItem onClick={() => {this.load(Configuration)}}>
-								<ListItemContent icon='settings'>Configuration</ListItemContent>
+							<ListItem onClick={() => {
+								window.location.hash = 'configuration';
+								this.load(Configuration)
+							}}>
+								<ListItemContent className='menu-item' icon='settings'>Configuration</ListItemContent>
 							</ListItem>
-							<ListItem onClick={() => {this.load(Extension)}}>
-								<ListItemContent icon='build'>Extension</ListItemContent>
+							<ListItem onClick={() => {
+								window.location.hash = 'extension';
+								this.load(Extension)
+							}}>
+								<ListItemContent className='menu-item' icon='build'>Extension</ListItemContent>
 							</ListItem>
-							<ListItem onClick={() => {this.load(Reacts)}}>
-								<ListItemContent icon='build'>React</ListItemContent>
+							<ListItem onClick={() => {
+								window.location.hash = 'react';
+								this.load(Reacts)
+							}}>
+								<ListItemContent className='menu-item' icon='build'>React</ListItemContent>
 							</ListItem>
-							<ListItem onClick={() => {this.load(Plugins)}}>
-								<ListItemContent icon='star'>Plugins</ListItemContent>
+							<ListItem onClick={() => {
+								window.location.hash = 'plugins';
+								this.load(Plugins)
+							}}>
+								<ListItemContent className='menu-item' icon='star'>Plugins</ListItemContent>
 							</ListItem>
 
 			                <ListItem>
 			                  Renderers
 			                </ListItem>
 
-			                <ListItem onClick={() => {this.load(Image)}}>
-			                  <ListItemContent icon='image'>Image</ListItemContent>
+			                <ListItem onClick={() => {
+												window.location.hash = 'image';
+												this.load(Image)
+											}}>
+			                  <ListItemContent className='menu-item' icon='image'>Image</ListItemContent>
 			                </ListItem>
-			                <ListItem onClick={() => {this.load(Audio)}}>
-			                  <ListItemContent icon='music_note'>Audio</ListItemContent>
+			                <ListItem onClick={() => {
+												window.location.hash = 'audio';
+												this.load(Audio)
+											}}>
+			                  <ListItemContent className='menu-item' icon='music_note'>Audio</ListItemContent>
 			                </ListItem>
-			                <ListItem onClick={() => {this.load(Video)}}>
-			                  <ListItemContent icon='movie'>Video</ListItemContent>
+			                <ListItem onClick={() => {
+												window.location.hash = 'video';
+												this.load(Video)
+											}}>
+			                  <ListItemContent className='menu-item' icon='movie'>Video</ListItemContent>
 			                </ListItem>
-			                <ListItem onClick={() => {this.load(Pdf)}}>
-			                  <ListItemContent icon='description'>Pdf</ListItemContent>
+			                <ListItem onClick={() => {
+												window.location.hash = 'pdf';
+												this.load(Pdf)
+											}}>
+			                  <ListItemContent className='menu-item' icon='description'>Pdf</ListItemContent>
 			                </ListItem>
-			                <ListItem onClick={() => {this.load(Dash)}}>
-			                  <ListItemContent icon='video_label'>Dash</ListItemContent>
+			                <ListItem onClick={() => {
+												window.location.hash = 'dash';
+												this.load(Dash)
+											}}>
+			                  <ListItemContent className='menu-item' icon='video_label'>Dash</ListItemContent>
 			                </ListItem>
-			                <ListItem onClick={() => {this.load(Download)}}>
-			                  <ListItemContent icon='file_download'>Download</ListItemContent>
+			                <ListItem onClick={() => {
+												window.location.hash = 'download';
+												this.load(Download)
+											}}>
+			                  <ListItemContent className='menu-item' icon='file_download'>Download</ListItemContent>
 			                </ListItem>
 
 			                <ListItem>
 			                  Filters
 			                </ListItem>
 
-			                <ListItem onClick={() => {this.load(Crypto)}}>
-			                  <ListItemContent icon='build'>Crypto</ListItemContent>
+			                <ListItem onClick={() => {
+												window.location.hash = 'crypto';
+												this.load(Crypto)
+											}}>
+			                  <ListItemContent className='menu-item' icon='build'>Crypto</ListItemContent>
 			                </ListItem>
-			                <ListItem onClick={() => {this.load(ClearKey)}}>
-			                  <ListItemContent icon='build'>ClearKey</ListItemContent>
+			                <ListItem onClick={() => {
+												window.location.hash = 'clear-key';
+												this.load(ClearKey)
+											}}>
+			                  <ListItemContent className='menu-item' icon='build'>ClearKey</ListItemContent>
 			                </ListItem>
 
 			                <ListItem>
 			                  Sanitizers
 			                </ListItem>
 
-			                <ListItem onClick={() => {this.load(Sanitizer)}}>
-			                  <ListItemContent icon='healing'>Sanitizer</ListItemContent>
+			                <ListItem onClick={() => {
+												window.location.hash = 'sanitizer';
+												this.load(Sanitizer)
+											}}>
+			                  <ListItemContent className='menu-item' icon='healing'>Sanitizer</ListItemContent>
 			                </ListItem>
 						</List>
 					</Menu>

@@ -52,7 +52,7 @@ html, body {
 }
 
 .v-aligned {
-	justify-content: center;	
+	justify-content: center;
 }
 
 .h-aligned {
@@ -169,4 +169,13 @@ html, body {
 
 .pdf {
 	height: 95%;
+}
+
+.menu-item {
+  cursor: pointer;
+}
+
+.ghbtns-container {
+  width: 25%;
+  padding-left: 3.5%;
 }
