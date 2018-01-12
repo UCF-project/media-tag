@@ -12,7 +12,7 @@
     "build:amd": "babel --presets=react,es2015,stage-0 src/ -d babel/ && r.js -convert babel/ build/amd && rm -r babel/",
     "build:site": "webpack --config ./webpack.config/site.webpack.config.dev.js --progress --colors",
     "build:docs": "esdoc",
-    "start": "yarn build:dev && cp -v -r dist/ site/www/assets/ && webpack-dev-server --define process.env.NODE_ENV='development' --config ./webpack.config/site.webpack.config.dev.js --progress --colors",
+    "start": "yarn build:dev && cp -v -R dist/ site/www/assets/dist/ && webpack-dev-server --define process.env.NODE_ENV='development' --config ./webpack.config/site.webpack.config.dev.js --progress --colors",
     "xo": "xo",
     "karma": "karma start",
     "mocha": "nyc _mocha ./test/media-tag.js"
