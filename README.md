@@ -66,6 +66,8 @@ yarn build:docs
 
 ```
 $ yarn start
+
+#website is accessible @ http://localhost:3000/
 ```
 
 Builds and launches the site with the lastest media-tag modifications in development mode.
