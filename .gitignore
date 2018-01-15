@@ -7,3 +7,4 @@ build/
 temp/
 *.swp
 ./site/www/dist/
+*.DS_Store
