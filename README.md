@@ -14,7 +14,7 @@ You can enrich the current version of Media-Tag with new features.
 Media-Tag provides you various maner to add your own awesome plugins.
 
 
-## Complexe
+## Complex
 
 Media-Tag provides several plugin types able have complex behaviours.
 For example, Media-Tag contains features like crypto filter able to decrypt a Media-Tag content before it rendering.
