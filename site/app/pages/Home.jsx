@@ -57,7 +57,7 @@ export default (
 Somewhere in your html page ...
 
 <media-tag
-	class="flex fit v-aligned h-aligned"	# Defines the media-tag container css classes
+	class="flex v-aligned h-aligned"	# Defines the media-tag container css classes
 	data-attr-class="flex split"		# Defines content/render css classes
 	data-attr-autoplay			# Sets up video autoplay
 	src="./assets/data/videos/bbb.mp4"		# Sets a content source
@@ -67,7 +67,7 @@ Somewhere in your html page ...
 `}
 			</pre>
 			<MediaTag
-		          class="flex fit v-aligned h-aligned"
+		          class="flex v-aligned h-aligned"
 		          data-attr-className="flex split"
 		          data-attr-autoPlay
 		          src="./assets/data/videos/bbb.mp4"
