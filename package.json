@@ -22,12 +22,12 @@
     "destination": "./dist/docs",
     "manual": {
       "design": [
-        "./docs/proposal.md",
-        "./docs/plugin.md",
-        "./docs/filter.md"
+        "./markdown/proposal.md",
+        "./markdown/plugin.md",
+        "./markdown/filter.md"
       ],
       "usage": [
-        "./docs/integration.md"
+        "./markdown/integration.md"
       ],
       "changelog": [
         "./CHANGELOG.md"
