@@ -95,6 +95,9 @@
     "tweetnacl-util": "^0.15.0",
     "yarn": "^0.21.3"
   },
+  "resolutions": {
+    "marked": "^0.3.9"
+  },
   "babel": {
     "presets": [
       "react",
