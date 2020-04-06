@@ -93,7 +93,7 @@
     "requirejs": "^2.3.3",
     "tweetnacl": "^1.0.0",
     "tweetnacl-util": "^0.15.0",
-    "yarn": "^0.21.3"
+    "yarn": "^1.22.4"
   },
   "resolutions": {
     "marked": "^0.3.9"
